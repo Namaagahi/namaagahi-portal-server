@@ -1,0 +1,3 @@
+20230509	10:24:10	807d82cf-4652-456b-8a1d-5c289ed4f1c0	Error: Not allowed by CORS
+20230509	10:24:23	4996d5a1-40c0-4e23-81c2-ad8337de4b3d	Error: Not allowed by CORS
+20230509	15:28:13	13fb7cbf-b463-46e8-bbfd-21bf5f9c9c5b	Error: Cannot set headers after they are sent to the client
