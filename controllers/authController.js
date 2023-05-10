@@ -1,19 +1,14 @@
-const usersDB = {
-    users: require('../model/users.json'),
-    setUsers: function (data) { this.users = data }
-}
+const User = require('../model/User')
 const bcrypt = require('bcrypt')
 const JWT = require('jsonwebtoken')
-const fsPromises = require('fs').promises
-const path = require('path')
 
 const handleLogin = async (req, res) => {
-    const { user, password } = req.body
-    if(!user || !password) return res.status(400).json({ 'msg': 'Username and password are required' })
+    const { username, password } = req.body
+    if(!username || !password) return res.status(400).json({ 'msg': 'BAD REQUEST: Username and password are required' })
 
     // find the requested user
-    const foundUser = usersDB.users.find(person => person.username === user)
-    if(!foundUser) return res.status(401).json({ 'msg': 'Username not found!' }) 
+    const foundUser = await User.findOne({ username }).exec()
+    if(!foundUser) return res.status(401).json({ 'msg': 'UNAUTHORIZED: Username not found!' }) 
 
     // evaluate password
     const match = await bcrypt.compare(password, foundUser.password)
@@ -22,7 +17,7 @@ const handleLogin = async (req, res) => {
         const accessToken = JWT.sign(
             { "UserInfo": { "username": foundUser.username, "roles" : roles } },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '30s' }
+            { expiresIn: '300s' }
         )
         const refreshToken = JWT.sign(
             { "username": foundUser.username },
@@ -31,17 +26,14 @@ const handleLogin = async (req, res) => {
         )
 
         // saving refresh token with current user
-        const otherUsers = usersDB.users.filter(person => person.username !== foundUser.username)
-        const currentUser = { ...foundUser, refreshToken }
-        usersDB.setUsers([...otherUsers, currentUser])
-        await fsPromises.writeFile(
-            path.join(__dirname, '..', 'model', 'users.json'),
-            JSON.stringify(usersDB.users)
-        )
+        foundUser.refreshToken = refreshToken
+        const result = await foundUser.save()
+        console.log(result)
+
         res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None',  maxAge: 24 * 60 * 60 * 1000 }) // add secure: true option for production
         res.json({ accessToken })
     } else {
-        res.status(401).json({ 'msg': 'Unauthorized!' }) 
+        res.status(401).json({ 'msg': 'UNAUTHORIZED!' }) 
     }
 }
 

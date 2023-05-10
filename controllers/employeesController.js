@@ -1,50 +1,55 @@
-const data = {
-    employees: require('../model/employees.json'),
-    setEmployees: function (data) { this.employees = data }
+const Employee = require('../model/Employee')
+
+const getAllEmployees = async(req, res) => {
+    const employees = await Employee.find()
+    if(!employees) return res.status(204).json({ 'msg': 'NO CONTENT: No employees found!' })
+    res.json(employees)
 }
 
-const getAllEmployees = (req, res) => res.json(data.employees)
-
-const createNewEmployee = (req, res) => {
-    const newEmployee = {
-        id: data.employees?.length ? data.employees[data.employees.length - 1].id + 1 : 1,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname
+const createNewEmployee = async(req, res) => {
+    if (!req?.body?.firstname || !req?.body?.lastname) return res.status(400).json({ 'msg': 'BAD REQUEST: First and last names are required' })
+    try {
+        const result = await Employee.create({
+            firstname: req.body.firstname,
+            lastname: req.body.lastname
+        })
+        
+        res.status(201).json({ 'msg': `CREATED: Employee ${req.body.firstname} created successfully!`  })
+    } catch (error) {
+        console.error(error)
     }
-
-    if(!newEmployee.firstname || !newEmployee.lastname) return res.status(400).json({ 'msg' : 'First and last names are required' })
-
-    data.setEmployees([...data.employees, newEmployee])
-    res.status(201).json(data.employees)
 }
 
-const editEmployee = (req, res) => {
-    const employee = data.employees.find(emp => emp.id === parseInt(req.body.id))
+const editEmployee = async(req, res) => {
+    if(!req?.body?.id) return res.status(400).json({ 'msg': 'BAD REQUEST: id parameter is required' })
 
-    if(!employee) return res.status(400).json({ 'msg' : `Employee ID ${req.body.id} not found.` }) 
-    if(req.body.firstname) employee.firstname = req.body.firstname 
-    if(req.body.lastname) employee.lastname = req.body.lastname 
-    const filteredArray = data.employees.filter(emp => emp.id !== parseInt(req.body.id))
-    const unsortedArray = [...filteredArray, employee]
+    const employee = await Employee.findOne({ _id: req.body.id }).exec()
 
-    data.setEmployees(unsortedArray.sort((a, b) => a.id > b.id ? 1 : a.id < b.id ? -1 : 0))
-    res.status(201).json(data.employees)
+    if(!employee) return res.status(201).json({ 'msg' : `NO CONTENT: No employee matches the id: ${req.body.id} ` }) 
+    if(req.body?.firstname) employee.firstname = req.body.firstname 
+    if(req.body?.lastname) employee.lastname = req.body.lastname 
+
+    const result = await employee.save()
+    console.log(result)
+
+    res.status(201).json(result)
 }
 
-const deleteEmployee = (req, res) => {
-    const employee = data.employees.find(emp => emp.id === parseInt(req.body.id))
+const deleteEmployee = async(req, res) => {
+    if(!req.body?.id) return res.status(400).json({ 'msg': 'BAD REQUEST: Employee id required' })
+    const employee =  await Employee.findOne({ _id: req.body.id }).exec()
     
-    if(!employee) return res.status(400).json({ 'msg' : `Employee ID ${req.body.id} not found.` }) 
-    const filteredArray = data.employees.filter(emp => emp.id !== parseInt(req.body.id))
+    if(!employee) return res.status(201).json({ 'msg' : `NO CONTENT: No employee matches the id: ${req.body.id} ` }) 
+    const result = await employee.deleteOne({ _id: req.body.id })
 
-    data.setEmployees([...filteredArray])
-    res.status(201).json(data.employees)
+    res.status(201).json(result)
 }
 
-const getSingleEmployee = (req, res) => {
-    const employee = data.employees.find(emp => emp.id === parseInt(req.params.id))
+const getSingleEmployee = async(req, res) => {
+    if(!req.params?.id) return res.status(400).json({ 'msg': 'BAD REQUEST: Employee id required' })
+    const employee = await Employee.findOne({ _id: req.params.id }).exec()
 
-    if(!employee) return res.status(400).json({ 'msg' : `Employee ID ${req.body.id} not found.` }) 
+    if(!employee) return res.status(201).json({ 'msg' : `NO CONTENT: No employee matches the id: ${req.params.id} ` }) 
 
     res.status(201).json(employee)
 }
@@ -55,5 +60,4 @@ module.exports = {
     editEmployee,
     deleteEmployee,
     getSingleEmployee,
-}
-
+} 

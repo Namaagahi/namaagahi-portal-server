@@ -45,6 +45,7 @@ app.use('/refresh', require('./routes/api/refresh'))
 app.use('/logout', require('./routes/api/logout'))
 app.use(verifyJWT)
 app.use('/employees', require('./routes/api/employees'))
+app.use('/users', require('./routes/api/users'))
 
 // Custom 404 page
 app.all('*', (req, res) => {
