@@ -214,3 +214,8 @@
 20230510	12:23:35	2dff4430-21bc-4654-ae29-a2f897f8d0df	DELETE	undefined	/users
 20230510	12:23:41	c70e5b82-656e-418d-adfb-31c17e5e29b1	DELETE	undefined	/users
 20230510	12:23:51	5686369d-34f6-4eaf-8d9b-f9c1fd6a072b	GET	undefined	/users
+20230510	15:41:44	45da79ae-d77a-4dc8-bbc3-7920d08bf1cf	POST	undefined	/auth
+20230510	15:41:56	64a5e480-ca0e-40bb-b348-7f657b09c777	GET	undefined	/packages
+20230510	15:42:33	b6bbf7ac-c905-4b2a-aff3-f85173620be0	POST	undefined	/packages
+20230510	15:42:54	ffad0d2d-7732-4d77-b7d8-b611a2813ee0	GET	undefined	/packages
+20230510	15:43:35	84f784ad-2d36-4a72-a36b-4af7ab8664a0	GET	undefined	/packages/645b8a3174d988101939667a

@@ -1,0 +1,24 @@
+[
+    {
+        "boxName" : "box1",
+        "path" : "path1",
+        "address" : "address1",
+        "sysCode" : 111,
+        "structureType" : "billboard",
+        "faceType" : "facetype1",
+        "district" : "district1",
+        "fee" : 1,
+        "dimensions" : 1,
+        "printSize" : 1,
+        "currentSize" : 1,
+        "pricePerMeter" : 1,
+        "buyMonthlyFee" : 1,
+        "maintenance" : 1,
+        "monthlyColoring" : 1,
+        "electrical" : 1,
+        "sellMonthlyFee" : 1,
+        "constantDailyFee" : 1,
+        "startDate" : 1,
+        "endDay" : 1
+    }
+]
