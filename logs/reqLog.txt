@@ -271,3 +271,10 @@
 20230513	10:36:42	48ae6386-ee79-43d7-9c4a-0106bdf34c6e	GET	undefined	/plans
 20230513	10:36:45	8240a11f-691e-4cfb-a6af-42cf59949341	GET	undefined	/plans
 20230513	10:36:51	fe7a9bce-28c2-4662-9244-d138a221c070	GET	undefined	/plans/645f336142bdb77c9772e13d
+20230513	16:12:45	ff14b88d-738f-457c-8dbe-10bdbd43c3a2	POST	undefined	/auth
+20230513	16:12:59	e9351672-2d08-4cd2-9a5b-1eb9fea479c9	GET	undefined	/users
+20230513	16:40:40	ad9aec44-799a-4b15-a783-c0be9db16257	OPTIONS	http://localhost:3000	/auth
+20230513	16:41:21	51f878ab-25b2-498a-a416-b3abc3b6a45f	OPTIONS	http://localhost:3000	/auth
+20230513	16:41:21	290f806d-d74e-4632-9948-d70f9a4db470	POST	http://localhost:3000	/auth
+20230513	16:44:48	d6e9e79b-9348-43b5-a34f-8f8f3f88e888	OPTIONS	http://localhost:3000	/auth
+20230513	16:44:48	0a102f6d-7702-4b53-884b-c1b9b15ece50	POST	http://localhost:3000	/auth

@@ -1,10 +1,9 @@
 const Plan = require('../model/Plan')
-const packageController =  require('./packageController')
 
 const getAllPlans = async(req, res) => {
-    const thisPlan = await Plan.find()
-    if(!thisPlan) return res.status(204).json({ 'msg': 'NO CONTENT: No Plan found!' })
-    res.json(thisPlan)
+    const allPlans = await Plan.find()
+    if(!allPlans) return res.status(204).json({ 'msg': 'NO CONTENT: No Plan found!' })
+    res.json(allPlans)
 }
 
 const createNewPlan = async(req, res) => {
@@ -86,10 +85,10 @@ const editPlan = async(req, res) => {
 
 const deletePlan = async(req, res) => {
     if(!req.body?.id) return res.status(400).json({ 'msg': 'BAD REQUEST: Plan id required' })
-    const thisPackage =  await Plan.findOne({ _id: req.body.id }).exec()
+    const thisPlan =  await Plan.findOne({ _id: req.body.id }).exec()
     
-    if(!thisPackage) return res.status(201).json({ 'msg' : `NO CONTENT: No Plan matches the id: ${req.body.id} ` }) 
-    const result = await thisPackage.deleteOne({ _id: req.body.id })
+    if(!thisPlan) return res.status(201).json({ 'msg' : `NO CONTENT: No Plan matches the id: ${req.body.id} ` }) 
+    const result = await thisPlan.deleteOne({ _id: req.body.id })
 
     res.status(201).json(result)
 }

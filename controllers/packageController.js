@@ -1,9 +1,9 @@
 const Package = require('../model/Package')
 
 const getAllPackages = async(req, res) => {
-    const thisPackage = await Package.find()
-    if(!thisPackage) return res.status(204).json({ 'msg': 'NO CONTENT: No packages found!' })
-    res.json(thisPackage)
+    const allPackages = await Package.find()
+    if(!allPackages) return res.status(204).json({ 'msg': 'NO CONTENT: No packages found!' })
+    res.json(allPackages)
 }
 
 const createNewPackage = async(req, res) => {
@@ -70,33 +70,33 @@ const createNewPackage = async(req, res) => {
 const editPackage = async(req, res) => {
     if(!req?.body?.id) return res.status(400).json({ 'msg': 'BAD REQUEST: id parameter is required' })
 
-    const package = await Package.findOne({ _id: req.body.id }).exec()
+    const thisPackage = await Package.findOne({ _id: req.body.id }).exec()
 
-    if(!package) return res.status(201).json({ 'msg' : `NO CONTENT: No package matches the id: ${req.body.id} ` }) 
+    if(!thisPackage) return res.status(201).json({ 'msg' : `NO CONTENT: No package matches the id: ${req.body.id} ` }) 
 
-    if(req.body?.boxName) package.boxName = req.body.boxName 
-    if(req.body?.path) package.path = req.body.path 
-    if(req.body?.address) package.address = req.body.address 
-    if(req.body?.sysCode) package.sysCode = req.body.sysCode 
-    if(req.body?.structureType) package.structureType = req.body.structureType 
-    if(req.body?.faceType) package.faceType = req.body.faceType 
-    if(req.body?.district) package.district = req.body.district 
-    if(req.body?.fee) package.fee = req.body.fee 
-    if(req.body?.dimensions) package.dimensions = req.body.dimensions 
-    if(req.body?.printSize) package.printSize = req.body.printSize 
-    if(req.body?.currentSize) package.currentSize = req.body.currentSize 
-    if(req.body?.pricePerMeter) package.pricePerMeter = req.body.pricePerMeter 
-    if(req.body?.buyMonthlyFee) package.buyMonthlyFee = req.body.buyMonthlyFee 
-    if(req.body?.maintenance) package.maintenance = req.body.maintenance 
-    if(req.body?.monthlyColoring) package.monthlyColoring = req.body.monthlyColoring 
-    if(req.body?.electrical) package.electrical = req.body.electrical 
-    if(req.body?.finalCost) package.finalCost = req.body.finalCost 
-    if(req.body?.sellMonthlyFee) package.sellMonthlyFee = req.body.sellMonthlyFee 
-    if(req.body?.constantDailyFee) package.constantDailyFee = req.body.constantDailyFee 
-    if(req.body?.startDate) package.startDate = req.body.startDate 
-    if(req.body?.endDay) package.endDay = req.body.endDay 
+    if(req.body?.boxName) thisPackage.boxName = req.body.boxName 
+    if(req.body?.path) thisPackage.path = req.body.path 
+    if(req.body?.address) thisPackage.address = req.body.address 
+    if(req.body?.sysCode) thisPackage.sysCode = req.body.sysCode 
+    if(req.body?.structureType) thisPackage.structureType = req.body.structureType 
+    if(req.body?.faceType) thisPackage.faceType = req.body.faceType 
+    if(req.body?.district) thisPackage.district = req.body.district 
+    if(req.body?.fee) thisPackage.fee = req.body.fee 
+    if(req.body?.dimensions) thisPackage.dimensions = req.body.dimensions 
+    if(req.body?.printSize) thisPackage.printSize = req.body.printSize 
+    if(req.body?.currentSize) thisPackage.currentSize = req.body.currentSize 
+    if(req.body?.pricePerMeter) thisPackage.pricePerMeter = req.body.pricePerMeter 
+    if(req.body?.buyMonthlyFee) thisPackage.buyMonthlyFee = req.body.buyMonthlyFee 
+    if(req.body?.maintenance) thisPackage.maintenance = req.body.maintenance 
+    if(req.body?.monthlyColoring) thisPackage.monthlyColoring = req.body.monthlyColoring 
+    if(req.body?.electrical) thisPackage.electrical = req.body.electrical 
+    if(req.body?.finalCost) thisPackage.finalCost = req.body.finalCost 
+    if(req.body?.sellMonthlyFee) thisPackage.sellMonthlyFee = req.body.sellMonthlyFee 
+    if(req.body?.constantDailyFee) thisPackage.constantDailyFee = req.body.constantDailyFee 
+    if(req.body?.startDate) thisPackage.startDate = req.body.startDate 
+    if(req.body?.endDay) thisPackage.endDay = req.body.endDay 
 
-    const result = await package.save()
+    const result = await thisPackage.save()
     console.log(result)
 
     res.status(201).json(result)
@@ -104,21 +104,21 @@ const editPackage = async(req, res) => {
 
 const deletePackage = async(req, res) => {
     if(!req.body?.id) return res.status(400).json({ 'msg': 'BAD REQUEST: Package id required' })
-    const package =  await Package.findOne({ _id: req.body.id }).exec()
+    const thisPackage =  await Package.findOne({ _id: req.body.id }).exec()
     
-    if(!package) return res.status(201).json({ 'msg' : `NO CONTENT: No package matches the id: ${req.body.id} ` }) 
-    const result = await package.deleteOne({ _id: req.body.id })
+    if(!thisPackage) return res.status(201).json({ 'msg' : `NO CONTENT: No package matches the id: ${req.body.id} ` }) 
+    const result = await thisPackage.deleteOne({ _id: req.body.id })
 
     res.status(201).json(result)
 }
 
 const getSinglePackage = async(req, res) => {
     if(!req.params?.id) return res.status(400).json({ 'msg': 'BAD REQUEST: Package id required' })
-    const package = await Package.findOne({ _id: req.params.id }).exec()
+    const thisPackage = await Package.findOne({ _id: req.params.id }).exec()
 
-    if(!package) return res.status(201).json({ 'msg' : `NO CONTENT: No package matches the id: ${req.params.id} ` }) 
+    if(!thisPackage) return res.status(201).json({ 'msg' : `NO CONTENT: No package matches the id: ${req.params.id} ` }) 
 
-    res.status(201).json(package)
+    res.status(201).json(thisPackage)
 }
 
 module.exports = {
