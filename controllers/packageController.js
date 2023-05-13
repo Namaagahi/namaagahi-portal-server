@@ -1,37 +1,14 @@
 const Package = require('../model/Package')
 
-// const conditions = [
-//     req?.body?.boxName,
-//     req?.body?.path,
-//     req?.body?.address,
-//     req?.body?.sysCode,
-//     req?.body?.structureType,
-//     req?.body?.faceType,
-//     req?.body?.district,
-//     req?.body?.fee,
-//     req?.body?.dimensions,
-//     req?.body?.printSize,
-//     req?.body?.currentSize,
-//     req?.body?.pricePerMeter,
-//     req?.body?.buyMonthlyFee,
-//     req?.body?.maintenance,
-//     req?.body?.monthlyColoring,
-//     req?.body?.electrical,
-//     req?.body?.sellMonthlyFee,
-//     req?.body?.constantDailyFee,
-//     req?.body?.startDate,
-//     req?.body?.endDay
-// ]
-
-// const allConditionsMet = conditions.every(condition => condition)
-
 const getAllPackages = async(req, res) => {
-    const package = await Package.find()
-    if(!package) return res.status(204).json({ 'msg': 'NO CONTENT: No packages found!' })
-    res.json(package)
+    const thisPackage = await Package.find()
+    if(!thisPackage) return res.status(204).json({ 'msg': 'NO CONTENT: No packages found!' })
+    res.json(thisPackage)
 }
 
 const createNewPackage = async(req, res) => {
+    const { boxName } = req.body
+
     if (
         !req?.body?.boxName ||
         !req?.body?.path ||
@@ -49,13 +26,18 @@ const createNewPackage = async(req, res) => {
         !req?.body?.maintenance ||
         !req?.body?.monthlyColoring ||
         !req?.body?.electrical ||
+        !req?.body?.finalCost ||
         !req?.body?.sellMonthlyFee ||
         !req?.body?.constantDailyFee ||
         !req?.body?.startDate ||
         !req?.body?.endDay
         ) return res.status(400).json({ 'msg': 'BAD REQUEST: all fields are required!' })
+
+        const duplicate = await Package.findOne({ boxName }).exec()
+        if(duplicate) return res.status(409).json({ 'msg': 'CONFLICT: This package already exists!' })
+
     try {
-        const result = await Package.create({
+        await Package.create({
             boxName: req.body.boxName,
             path: req.body.path,
             address: req.body.address,
@@ -72,6 +54,7 @@ const createNewPackage = async(req, res) => {
             maintenance: req.body.maintenance,
             monthlyColoring: req.body.monthlyColoring,
             electrical: req.body.electrical,
+            finalCost: req.body.finalCost,
             sellMonthlyFee: req.body.sellMonthlyFee,
             constantDailyFee: req.body.constantDailyFee,
             startDate: req.body.startDate,
@@ -107,6 +90,7 @@ const editPackage = async(req, res) => {
     if(req.body?.maintenance) package.maintenance = req.body.maintenance 
     if(req.body?.monthlyColoring) package.monthlyColoring = req.body.monthlyColoring 
     if(req.body?.electrical) package.electrical = req.body.electrical 
+    if(req.body?.finalCost) package.finalCost = req.body.finalCost 
     if(req.body?.sellMonthlyFee) package.sellMonthlyFee = req.body.sellMonthlyFee 
     if(req.body?.constantDailyFee) package.constantDailyFee = req.body.constantDailyFee 
     if(req.body?.startDate) package.startDate = req.body.startDate 

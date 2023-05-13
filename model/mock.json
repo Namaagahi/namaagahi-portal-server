@@ -16,9 +16,27 @@
         "maintenance" : 1,
         "monthlyColoring" : 1,
         "electrical" : 1,
+        "finalCost" : 12,
         "sellMonthlyFee" : 1,
         "constantDailyFee" : 1,
         "startDate" : 1,
         "endDay" : 1
+    },
+    {
+        "planNo" : "plan1", 
+        "customerName" : "cus1", 
+        "brand" : "brand1", 
+        "startDate" : 1, 
+        "endDate" : 1, 
+        "duration" : 1, 
+        "sysCode" : 1, 
+        "address" : "addr", 
+        "printSize" : 1, 
+        "sellMonthlyFee" : 1, 
+        "discountPercentage" : 1, 
+        "sellDaycount" : 1, 
+        "feeAfterDiscount" : 1, 
+        "packagePrice" : 1, 
+        "status" : "plan1"
     }
 ]

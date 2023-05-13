@@ -1,3 +1,5 @@
 20230509	10:24:10	807d82cf-4652-456b-8a1d-5c289ed4f1c0	Error: Not allowed by CORS
 20230509	10:24:23	4996d5a1-40c0-4e23-81c2-ad8337de4b3d	Error: Not allowed by CORS
 20230509	15:28:13	13fb7cbf-b463-46e8-bbfd-21bf5f9c9c5b	Error: Cannot set headers after they are sent to the client
+20230513	10:35:00	fa805d13-beeb-4501-a76a-ccb1922ec1b4	SyntaxError: Unexpected token , in JSON at position 539
+20230513	10:35:05	36ab3bbd-541e-427f-9008-f42279066711	SyntaxError: Unexpected token , in JSON at position 538

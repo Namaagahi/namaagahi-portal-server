@@ -66,6 +66,10 @@ const packageSchema = new Schema({
         type: Number,
         required: true
     },
+    finalCost: {
+        type: Number,
+        required: true
+    },
     sellMonthlyFee: {
         type: Number,
         required: true
@@ -75,11 +79,11 @@ const packageSchema = new Schema({
         required: true
     },
     startDate: {
-        type: Number,
+        type: Date,
         required: true
     },
     endDay: {
-        type: Number,
+        type: Date,
         required: true
     },
 })

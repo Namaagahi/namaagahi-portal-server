@@ -47,6 +47,7 @@ app.use(verifyJWT)
 app.use('/users', require('./routes/api/users'))
 app.use('/employees', require('./routes/api/employees'))
 app.use('/packages', require('./routes/api/packages'))
+app.use('/plans', require('./routes/api/plans'))
 
 // Custom 404 page
 app.all('*', (req, res) => {
