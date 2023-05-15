@@ -13,7 +13,7 @@ const handleLogin = async (req, res) => {
     // evaluate password
     const match = await bcrypt.compare(password, foundUser.password)
     if(match) {
-        const roles = Object.values(foundUser.roles)
+        const roles = Object.values(foundUser.roles).filter(Boolean)
         const accessToken = JWT.sign(
             { "UserInfo": { "username": foundUser.username, "roles" : roles } },
             process.env.ACCESS_TOKEN_SECRET,
@@ -31,7 +31,7 @@ const handleLogin = async (req, res) => {
         console.log(result)
 
         res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None',  maxAge: 24 * 60 * 60 * 1000 }) // add secure: true option for production
-        res.json({ accessToken })
+        res.json({ roles, accessToken })
     } else {
         res.status(401).json({ 'msg': 'UNAUTHORIZED!' }) 
     }

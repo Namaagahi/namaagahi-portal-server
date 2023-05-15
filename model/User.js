@@ -6,6 +6,14 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    password: {
+        type: String,
+        required: true
+    },
+    avatar: {
+        type: String,
+        default: 'https://drive.google.com/file/d/1pimt-vh4uvErhnTmg5wk6rNcGk7KP_vG/view?usp=share_link'
+    },
     roles: {
         Planner: {
             type: Number,
@@ -14,10 +22,7 @@ const userSchema = new Schema({
         MediaManager: Number,
         Admin: Number
     },
-    password: {
-        type: String,
-        required: true
-    },
+
     refreshToken: String
 })
 
