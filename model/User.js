@@ -12,7 +12,7 @@ const userSchema = new Schema({
     },
     avatar: {
         type: String,
-        default: 'https://drive.google.com/file/d/1pimt-vh4uvErhnTmg5wk6rNcGk7KP_vG/view?usp=share_link'
+        default: 'https://s8.uupload.ir/files/profile-fallback_qieo.png'
     },
     roles: {
         Planner: {
@@ -23,7 +23,7 @@ const userSchema = new Schema({
         Admin: Number
     },
 
-    refreshToken: String
+    refreshToken: [String]
 })
 
 module.exports = mongoose.model('User', userSchema)
