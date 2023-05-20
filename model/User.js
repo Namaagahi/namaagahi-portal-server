@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         required: true
@@ -14,13 +18,13 @@ const userSchema = new Schema({
         type: String,
         default: 'https://s8.uupload.ir/files/profile-fallback_qieo.png'
     },
-    roles: {
-        Planner: {
-            type: Number,
-            default: 1002
-        },
-        MediaManager: Number,
-        Admin: Number
+    roles: [{
+        type: String,
+        default: "Planner"
+    }],
+    active: {
+        type: Boolean,
+        default: true
     },
 
     refreshToken: [String]

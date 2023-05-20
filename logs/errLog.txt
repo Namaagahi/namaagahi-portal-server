@@ -4,3 +4,15 @@
 20230513	10:35:00	fa805d13-beeb-4501-a76a-ccb1922ec1b4	SyntaxError: Unexpected token , in JSON at position 539
 20230513	10:35:05	36ab3bbd-541e-427f-9008-f42279066711	SyntaxError: Unexpected token , in JSON at position 538
 20230513	16:40:40	99b9535c-2017-498d-a968-965840430348	Error: Not allowed by CORS
+20230520	13:00:45	53b5ef16-4261-4100-a8fa-d1a69a7ca82e	SyntaxError: Unexpected token } in JSON at position 111	POST	/users	undefined}
+20230520	13:05:22	11ddeb2d-48cc-45f1-a32a-adc29539ee08	CastError: Cast to ObjectId failed for value "646892dbe84ab0749182447a1" (type string) at path "_id" for model "User"	PATCH	/users	undefined}
+20230520	13:05:52	1fb2d627-e14b-4a74-bd2e-9cb8c7470901	TypeError: Cannot read properties of undefined (reading 'toString')	PATCH	/users	undefined}
+20230520	13:06:02	136da656-4cf3-4743-95aa-726fd95d0b9e	SyntaxError: Unexpected token } in JSON at position 223	PATCH	/users	undefined}
+20230520	13:06:31	caa719db-2512-4c17-8339-c057db6f19e9	TypeError: Cannot read properties of undefined (reading 'toString')	PATCH	/users	undefined}
+20230520	14:21:55	e121e6a5-2e79-43f5-a6d1-d98bf8100975	CastError: Cast to ObjectId failed for value "kjhgf" (type string) at path "_id" for model "User"	GET	/users/kjhgf	undefined}
+20230520	14:22:13	6d4ce26b-acd0-4de8-bd1b-52f14421d5c0	CastError: Cast to ObjectId failed for value "646893b2e84ab07491824483s" (type string) at path "_id" for model "User"	GET	/users/646893b2e84ab07491824483s	undefined}
+20230520	14:24:58	a50801f8-8bde-47ab-9621-bfd485c42869	CastError: Cast to ObjectId failed for value "646893b2e84ab07491824483w" (type string) at path "_id" for model "User"	GET	/users/646893b2e84ab07491824483w	undefined}
+20230520	14:36:23	52130cb6-d34e-4d95-b8c3-555a54566297	SyntaxError: Unexpected token b in JSON at position 22	POST	/notes	undefined}
+20230520	14:44:13	24d3eb69-8918-4a9e-967d-9feeb32c2c73	SyntaxError: Unexpected token b in JSON at position 22	POST	/notes	undefined}
+20230520	16:10:49	2fe239ad-94c7-4dae-8262-94dfb7206dbe	MongoServerError: command find requires authentication	POST	/users	undefined}
+20230520	16:22:37	a25a311c-7bcb-43da-b51a-b77c3a146836	MongoServerError: command find requires authentication	POST	/users	undefined}

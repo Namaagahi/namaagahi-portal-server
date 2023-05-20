@@ -4,7 +4,7 @@ const app = express()
 const path = require('path')
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
-const { logger } = require('./middleware/logEvents')
+const { logger, logEvents } = require('./middleware/logEvents')
 const errorHandler  = require('./middleware/errorHandler')
 const verifyJWT = require('./middleware/virifyJWT')
 const credentials = require('./middleware/credentials')
@@ -35,16 +35,16 @@ app.use(express.json())
 app.use(cookieParser())
 
 // serve static files
-app.use('/', express.static(path.join(__dirname, '/public')))
+app.use('/', express.static(path.join(__dirname, 'public')))
 
 // routes
 app.use('/', require('./routes/root'))
-app.use('/register', require('./routes/api/register'))
 app.use('/auth', require('./routes/api/auth'))
 app.use('/refresh', require('./routes/api/refresh'))
 app.use('/logout', require('./routes/api/logout'))
-app.use(verifyJWT)
-app.use('/users', require('./routes/api/users'))
+// app.use(verifyJWT)
+app.use('/users', require('./routes/userRoutes'))
+app.use('/notes', require('./routes/noteRoutes'))
 app.use('/employees', require('./routes/api/employees'))
 app.use('/packages', require('./routes/api/packages'))
 app.use('/plans', require('./routes/api/plans'))
@@ -60,7 +60,12 @@ app.all('*', (req, res) => {
 // Custom Error handling
 app.use(errorHandler)
 
-mongoose.connection.once('connected', () => {
+mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB')
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+})
+
+mongoose.connection.on('error', err => {
+    console.log(err)
+    logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log')
 })
