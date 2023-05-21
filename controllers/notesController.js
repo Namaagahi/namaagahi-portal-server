@@ -1,5 +1,6 @@
 const Note = require('../model/Note')
 const asyncHandler = require('express-async-handler')
+const User = require('../model/User')
 
 // @desc Get all notes 
 // @route GET /notes
@@ -10,15 +11,15 @@ const getAllNotes = asyncHandler(async (req, res) => {
 
     // If no notes 
     if (!notes?.length) return res.status(400).json({ message: 'BAD REQUEST : No notes found' })
-    
+    // console.log(notes)
     // Add username to each note before sending the response 
     // See Promise.all with map() here: https://youtu.be/4lqJBBEpjRE 
     // You could also do this with a for...of loop
     const notesWithUser = await Promise.all(notes.map(async (note) => {
-        const user = await Note.findById(note.user).lean().exec()
+        const user = await User.findById(note.user).lean().exec()
+        console.log("user", user)
         return { ...note, username: user.username }
     }))
-
     res.json(notesWithUser)
 })
 
@@ -29,7 +30,7 @@ const createNewNote = asyncHandler(async (req, res) => {
     const { user, title, text } = req.body
 
     // Confirm data
-    if (!user || !title || !text) return res.status(400).json({ message: 'BAD REQUEST : All fields are requireddd' })
+    if (!user || !title || !text) return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
     // Check for duplicate title
     const duplicate = await Note.findOne({ title }).lean().exec()

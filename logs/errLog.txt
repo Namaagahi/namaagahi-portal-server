@@ -14,5 +14,17 @@
 20230520	14:24:58	a50801f8-8bde-47ab-9621-bfd485c42869	CastError: Cast to ObjectId failed for value "646893b2e84ab07491824483w" (type string) at path "_id" for model "User"	GET	/users/646893b2e84ab07491824483w	undefined}
 20230520	14:36:23	52130cb6-d34e-4d95-b8c3-555a54566297	SyntaxError: Unexpected token b in JSON at position 22	POST	/notes	undefined}
 20230520	14:44:13	24d3eb69-8918-4a9e-967d-9feeb32c2c73	SyntaxError: Unexpected token b in JSON at position 22	POST	/notes	undefined}
-20230520	16:10:49	2fe239ad-94c7-4dae-8262-94dfb7206dbe	MongoServerError: command find requires authentication	POST	/users	undefined}
+20230520	16:10:49	2fe239ad-94c7-4dae-8262-94dfb7206dbe		POMongoServerError: command find requires authenticationST	/users	undefined}
 20230520	16:22:37	a25a311c-7bcb-43da-b51a-b77c3a146836	MongoServerError: command find requires authentication	POST	/users	undefined}
+20230521	14:52:54	ecc568c2-e46e-41f4-a8b9-cd35825e0646	ValidationError: Note validation failed: user: Cast to ObjectId failed for value "111" (type number) at path "user" because of "BSONError"	POST	/notes	undefined}
+20230521	14:53:22	49982ff5-3731-44bf-aef9-95c5e598e522	SyntaxError: Unexpected token b in JSON at position 22	POST	/notes	undefined}
+20230521	14:54:13	83b01c24-cf84-4c6b-ba69-2b5ad8910ab4	ValidationError: Note validation failed: user: Cast to ObjectId failed for value "ObjectId('646893b2e84ab07491824483')" (type string) at path "user" because of "BSONError"	POST	/notes	undefined}
+20230521	14:54:33	2057e3ef-0eb6-494d-b665-9261bfd598e1	SyntaxError: Unexpected token O in JSON at position 16	POST	/notes	undefined}
+20230521	14:54:44	9cc73296-887b-4658-875b-c4860c23c501	SyntaxError: Unexpected number in JSON at position 27	POST	/notes	undefined}
+20230521	15:19:14	2f97ef19-4010-46cc-8c57-7846f5d1eea4	TypeError: Cannot read properties of null (reading 'username')	GET	/notes	http://localhost:3000}
+20230521	15:20:49	a3fa3948-a96d-4766-a545-ab1abb3c2bab	TypeError: Cannot read properties of null (reading 'username')	GET	/notes	http://localhost:3000}
+20230521	15:56:01	f68d80d7-f70d-49f6-a61e-9c8279e97709	TypeError: Cannot read properties of null (reading 'username')	GET	/notes	undefined}
+20230521	15:57:20	817390bc-8e1b-46ed-b134-2b5f010e3310	TypeError: Cannot read properties of null (reading 'username')	GET	/notes	undefined}
+20230521	15:57:46	450f2e79-01cd-4325-a6f6-3a869a096e27	TypeError: Cannot read properties of null (reading 'username')	GET	/notes	undefined}
+20230521	15:58:06	738c8cb8-d02b-4464-986e-a68d4678457a	TypeError: Cannot read properties of null (reading 'username')	GET	/notes	undefined}
+20230521	15:58:35	00502056-8caf-4a4b-a3d8-f1cbf750ede7	TypeError: Cannot read properties of null (reading 'username')	GET	/notes	undefined}
