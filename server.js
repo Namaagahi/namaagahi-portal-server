@@ -39,7 +39,7 @@ app.use('/', express.static(path.join(__dirname, 'public')))
 
 // routes
 app.use('/', require('./routes/root'))
-app.use('/auth', require('./routes/api/auth'))
+app.use('/auth', require('./routes/authRoutes'))
 app.use('/refresh', require('./routes/api/refresh'))
 app.use('/logout', require('./routes/api/logout'))
 // app.use(verifyJWT)
