@@ -9,7 +9,7 @@ const asyncHandler = require('express-async-handler')
 const login = asyncHandler(async (req, res) => {
     const { username, password } = req.body
 
-    if (!username || !password) return res.status(400).json({ 'message': 'Username and password are required.' })
+    if (!username || !password) return res.status(400).json({ message: 'Username and password are required.' })
 
     const foundUser = await User.findOne({ username }).exec()
 
@@ -23,6 +23,8 @@ const login = asyncHandler(async (req, res) => {
         {
             "UserInfo": {
                 "username": foundUser.username,
+                "name": foundUser.name,
+                "avatar": foundUser.avatar,
                 "roles": foundUser.roles
             }
         },
@@ -72,6 +74,8 @@ const refresh = (req, res) => {
                 {
                     "UserInfo": {
                         "username": foundUser.username,
+                        "name": foundUser.name,
+                        "avatar": foundUser.avatar,
                         "roles": foundUser.roles
                     }
                 },
@@ -89,9 +93,9 @@ const refresh = (req, res) => {
 // @access Public - just to clear cookie if exists
 const logout = (req, res) => {
     const cookies = req.cookies
-    if (!cookies?.jwt) return res.sendStatus(204) //No content
+    if (!cookies?.jwt) return res.sendStatus(204).json({ message: 'No Content' })
     res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true })
-    res.json({ message: 'Cookie cleared' })
+    res.sendStatus(200).json({ message: 'Cookie cleared' })
 }
 
 module.exports = { login, refresh, logout }

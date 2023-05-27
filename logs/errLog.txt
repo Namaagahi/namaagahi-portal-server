@@ -79,3 +79,13 @@
 20230524	15:44:57	45884c58-a536-42dc-8b27-3a937be1fef9	TypeError: Cannot read properties of null (reading 'username')	GET	/notes	http://localhost:3000}
 20230524	15:45:11	a087cfea-9f4c-4873-8232-2b5ae51e4138	TypeError: Cannot read properties of null (reading 'username')	GET	/notes	http://localhost:3000}
 20230524	15:45:19	73183001-02ad-4d43-93d2-179a26d30e29	TypeError: Cannot read properties of null (reading 'username')	GET	/notes	http://localhost:3000}
+20230527	09:04:49	12f21641-355f-452e-bf48-9f5d07bd3323	Error: data and hash must be strings	POST	/auth	undefined}
+20230527	09:09:41	b2589750-b35b-4281-961f-fdeb3f48b408	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	undefined}
+20230527	14:14:11	8b67fb13-1140-4d13-a118-8f92f1c20788	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230527	14:35:26	95a618f5-f371-4300-a11e-c47079ac88c4	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230527	15:28:51	cba9ad48-adac-4e2c-a650-9637dad8bae2	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230527	15:28:56	3e827ac9-b615-4efa-905b-beae4fd5833a	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230527	15:28:59	88aae3b7-72c0-4d57-97d8-4fbec4145e2e	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230527	16:31:55	81037e28-7d64-4c74-ae57-7e3e9933b865	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230527	16:33:03	c0c497b9-831a-41d5-b5a3-e7018dfb11f2	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230527	16:34:03	e7c1c67c-ec63-4337-a03c-f6347363979a	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
