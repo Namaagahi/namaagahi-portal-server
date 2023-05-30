@@ -73,6 +73,7 @@ const refresh = (req, res) => {
             const accessToken = jwt.sign(
                 {
                     "UserInfo": {
+                        "id": foundUser.id,
                         "username": foundUser.username,
                         "name": foundUser.name,
                         "avatar": foundUser.avatar,
@@ -95,7 +96,7 @@ const logout = (req, res) => {
     const cookies = req.cookies
     if (!cookies?.jwt) return res.sendStatus(204).json({ message: 'No Content' })
     res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true })
-    res.sendStatus(200).json({ message: 'Cookie cleared' })
+    res.json({ message: 'Cookie cleared' })
 }
 
 module.exports = { login, refresh, logout }
