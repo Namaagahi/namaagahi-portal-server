@@ -27,7 +27,7 @@ const boxSchema = new Schema({
             type: Date,
             required: true
         },
-        startDate: {
+        endDate: {
             type: Date,
             required: true
         }, 
@@ -35,9 +35,30 @@ const boxSchema = new Schema({
             type: Array,
             required: false
         },
-        billboards: {
-            type: Array,
-            required: false
+        structureWithExpenses: {
+            structure: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: 'Structure'
+            },
+            buyExpenses: {
+                squareFee: {
+                    type: Number,
+                    required: true
+                },
+                monthlyFee: {
+                    type: Number,
+                    required: true
+                },
+                yearlyFee: {
+                    type: Number,
+                    required: true
+                },
+            },
+            maintenanceExpenses: {
+                type: Array,
+                required: false
+            },
         }
     }
 ,
