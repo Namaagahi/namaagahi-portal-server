@@ -6,9 +6,9 @@ const verifyJWT = require('../middleware/virifyJWT')
 router.route('/')
     .get(verifyJWT, boxController.getAllBoxes)
     .post(boxController.createNewBox)
-    .put(boxController.editBox)
+    .put(boxController.updateBox)
     .delete(boxController.deleteBox)
 
-router.route('/:id').get(boxController.getSingleBox)
+router.route('/:id').get(boxController.getBox)
 
 module.exports = router 

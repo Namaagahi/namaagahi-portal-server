@@ -2,64 +2,46 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const boxSchema = new Schema({
-        user: {
+        userId: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'User'
         },
-        boxName: {
+        name: {
             type: String,
             required: true
         },
-        boxType: {
-            type: String, 
-            required: true
-        },
-        projectNumber: {
-            type: Number,
-            required: false
-        },
-        brand: {
-            type: String,
-            required: false
-        },
-        startDate: {
-            type: Date,
-            required: true
-        },
-        endDate: {
-            type: Date,
-            required: true
-        }, 
-        plans: {
-            type: Array,
-            required: false
-        },
-        structureWithExpenses: {
-            structure: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true,
-                ref: 'Structure'
+        type: {
+            name: {
+                type: String,
+                required: true  
             },
-            buyExpenses: {
-                squareFee: {
-                    type: Number,
-                    required: true
+            typeOptions: {
+                projectNumber: {
+                    type: String,
+                    required: false
                 },
-                monthlyFee: {
-                    type: Number,
-                    required: true
-                },
-                yearlyFee: {
-                    type: Number,
-                    required: true
-                },
+                brand: {
+                    type: String,
+                    required: false
+                }
+            }
+        },
+        duration:{
+            startDate: {
+                type: Date,
+                required: true
             },
-            maintenanceExpenses: {
-                type: Array,
-                required: false
-            },
-        }
+            endDate: {
+                type: Date,
+                required: true
+            }
+        },
+        structureIds: [{
+            type: mongoose.Schema.Types.ObjectId,
+            required: false,
+            ref: 'Structure'
+        }]
     }
 ,
     {

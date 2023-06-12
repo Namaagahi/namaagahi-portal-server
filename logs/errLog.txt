@@ -139,3 +139,7 @@
 20230607	11:27:49	e7917fd1-4cf8-45eb-8187-6900ff5d6716	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
 20230607	11:52:19	e06a740e-8c2c-4308-88af-31a68b4253e8	ValidationError: Structure validation failed: user: Path `user` is required.	POST	/structures	http://localhost:3000}
 20230607	11:52:22	f58bf232-9103-4e8c-a834-5f9aca90ed90	ValidationError: Structure validation failed: user: Path `user` is required.	POST	/structures	http://localhost:3000}
+20230612	09:11:25	82f779e3-e7b9-40c8-aa45-bdde86f8c074	ReferenceError: title is not defined	POST	/boxes	undefined}
+20230612	09:11:56	1d2a353e-f107-4d04-ac07-7b984a94f0df	ValidationError: Box validation failed: type.typeOptions.projectNumber: Cast to Number failed for value "PR001" (type string) at path "type.typeOptions.projectNumber", duration.endDate: Path `duration.endDate` is required., duration.startDate: Path `duration.startDate` is required.	POST	/boxes	undefined}
+20230612	09:12:19	a8172a90-6e57-42cb-a395-5325983dab95	ValidationError: Box validation failed: duration.endDate: Path `duration.endDate` is required., duration.startDate: Path `duration.startDate` is required.	POST	/boxes	undefined}
+20230612	09:13:27	c39e1e81-38cf-4937-b6d8-13310cfa5b54	TypeError: Cannot read properties of null (reading 'username')	GET	/boxes	undefined}

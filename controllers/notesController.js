@@ -1,7 +1,7 @@
 const Note = require('../model/Note')
 const asyncHandler = require('express-async-handler')
 const User = require('../model/User')
-
+ 
 // @desc Get all notes 
 // @route GET /notes
 // @access Private
