@@ -48,7 +48,6 @@ app.use('/notes', require('./routes/noteRoutes'))
 app.use('/employees', require('./routes/api/employees'))
 app.use('/structures', require('./routes/structureRouter'))
 app.use('/boxes', require('./routes/boxRoutes'))
-app.use('/plans', require('./routes/api/plans'))
 
 // Custom 404 page
 app.all('*', (req, res) => {

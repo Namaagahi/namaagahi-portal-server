@@ -2,14 +2,24 @@ const mongoose = require('mongoose')
 
 const structureSchema = new mongoose.Schema(
     {
-        user: {
+        userId: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'User'
         },
-        sysCode: {
+        name: {
             type: String,
             required: true
+        },
+        duration:{
+            startDate: {
+                type: Date,
+                required: true
+            },
+            endDate: {
+                type: Date,
+                required: true
+            }
         },
         kind: {
             type: String,

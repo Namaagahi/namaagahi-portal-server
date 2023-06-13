@@ -9,6 +9,4 @@ router.route('/')
     .put(boxController.updateBox)
     .delete(boxController.deleteBox)
 
-router.route('/:id').get(boxController.getBox)
-
 module.exports = router 
