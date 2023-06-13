@@ -6,21 +6,16 @@ const User = require('../model/User')
 // @route GET /structures
 // @access Private
 const getAllStructures = asyncHandler(async (req, res) => {
-    // Get all structures from MongoDB
-    const structures = await Structure.find().lean()
 
-    // If no structures 
+    const structures = await Structure.find().lean()
     if (!structures?.length) return res.status(400).json({ message: 'BAD REQUEST : No structures found' })
-    console.log(structures)
-    // Add username to each structure before sending the response 
-    // See Promise.all with map() here: https://youtu.be/4lqJBBEpjRE 
-    // You could also do this with a for...of loop
+
     const structuresWithUser = await Promise.all(structures.map(async (structure) => {
         console.log('structure', structure)
         const user = await User.findById(structure.user).lean().exec()
-        // console.log("user", structure.user)
         return { ...structure, username: user.username }
     }))
+
     res.json(structuresWithUser)
 })
 
@@ -28,55 +23,71 @@ const getAllStructures = asyncHandler(async (req, res) => {
 // @route POST /structures
 // @access Private
 const createNewStructure = asyncHandler(async (req, res) => {
-    const { 
-        user, 
-        sysCode,
-        kind,
-        district,
-        path,
-        address,
-        style,
-        face,
-        dimensions,
-        printSize,
-        docSize,
-        isAvailable 
-    } = req.body
 
-    // Confirm data
-    if (!user  
-        || !sysCode
-        || !kind
-        || !district
-        || !path
-        || !address
-        || !style
-        || !face
-        || !dimensions
-        || !printSize
-        || !docSize) return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
+    const { userId, name, type, duration, location, costs } = req.body
+    if (!userId || !name || !type || !duration || !location || !costs  ) 
+        return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
-    // Check for duplicate title
-    const duplicate = await Structure.findOne({ sysCode }).lean().exec()
-    if (duplicate) return res.status(409).json({ message: 'CONFLICT :Duplicate structure system code!' })
-    
-    // Create and store the new structure 
-    const structure = await Structure.create({ user, 
-        sysCode,
-        kind,
-        district,
-        path,
-        address,
-        style,
-        face,
-        dimensions,
-        printSize,
-        docSize,
-        isAvailable  })
+    const duplicate = await Structure.findOne({ name }).lean().exec()
+    if (duplicate) 
+        return res.status(409).json({ message: 'CONFLICT :Duplicate structure name' })
 
-    if (structure) return res.status(201).json({ message: 'CREATED : New structure created' })
-    else return res.status(400).json({ message: 'BAD REQUEST : Invalid structure data received' })
+    const structure = await Structure.create({ userId, name, type, duration, location, costs })
+    if (structure) 
+        return res.status(201).json({ message: `CREATED: Structure ${req.body.name} created successfully!` })
+    else 
+        return res.status(400).json({ message: 'BAD REQUEST : Invalid box data received' })
 })
+// const createNewStructure = asyncHandler(async (req, res) => {
+//     const { 
+//         user, 
+//         sysCode,
+//         kind,
+//         district,
+//         path,
+//         address,
+//         style,
+//         face,
+//         dimensions,
+//         printSize,
+//         docSize,
+//         isAvailable 
+//     } = req.body
+
+//     // Confirm data
+//     if (!user  
+//         || !sysCode
+//         || !kind
+//         || !district
+//         || !path
+//         || !address
+//         || !style
+//         || !face
+//         || !dimensions
+//         || !printSize
+//         || !docSize) return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
+    
+//     // Check for duplicate title
+//     const duplicate = await Structure.findOne({ sysCode }).lean().exec()
+//     if (duplicate) return res.status(409).json({ message: 'CONFLICT :Duplicate structure system code!' })
+    
+//     // Create and store the new structure 
+//     const structure = await Structure.create({ user, 
+//         sysCode,
+//         kind,
+//         district,
+//         path,
+//         address,
+//         style,
+//         face,
+//         dimensions,
+//         printSize,
+//         docSize,
+//         isAvailable  })
+
+//     if (structure) return res.status(201).json({ message: 'CREATED : New structure created' })
+//     else return res.status(400).json({ message: 'BAD REQUEST : Invalid structure data received' })
+// })
 
 // @desc Update a structure
 // @route PATCH /structures
