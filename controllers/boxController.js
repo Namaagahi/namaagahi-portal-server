@@ -8,7 +8,8 @@ const User = require('../model/User')
 const getAllBoxes = asyncHandler(async (req, res) => {
 
     const boxes = await Box.find().lean()
-    if (!boxes?.length) return res.status(400).json({ message: 'BAD REQUEST : No boxes found' })
+    if (!boxes?.length) 
+        return res.status(400).json({ message: 'BAD REQUEST : No boxes found' })
 
     const boxesWithUser = await Promise.all(boxes.map(async (box) => {
         const user = await User.findById(box.userId).lean().exec()
@@ -23,13 +24,15 @@ const getAllBoxes = asyncHandler(async (req, res) => {
 // @access Private
 const createNewBox = asyncHandler(async (req, res) => {
 
-    const { userId, name, type, duration, structureIds } = req.body
-    if (!userId || !name || !type || !duration  ) return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
+    const { userId, name, type, duration, structures } = req.body
+    if (!userId || !name || !type || !duration || !structures) 
+        return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
     const duplicate = await Box.findOne({ name }).lean().exec()
-    if (duplicate) return res.status(409).json({ message: 'CONFLICT :Duplicate box name' })
+    if (duplicate) 
+        return res.status(409).json({ message: 'CONFLICT :Duplicate box name' })
 
-    const box = await Box.create({ userId, name, type, duration, structureIds })
+    const box = await Box.create({ userId, name, type, duration, structures })
     if (box) 
         return res.status(201).json({ message: `CREATED: Box ${req.body.name} created successfully!` })
     else 

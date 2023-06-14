@@ -11,7 +11,4 @@ router.route('/')
     .patch(structureController.updateStructure)
     .delete(structureController.deleteStructure)
 
-router.route('/:id')
-    .get(structureController.getStructure);
-
 module.exports = router
