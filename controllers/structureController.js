@@ -12,7 +12,7 @@ const getAllStructures = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'BAD REQUEST : No structures found' })
 
     const structuresWithUser = await Promise.all(structures.map(async (structure) => {
-        const user = await User.findById(structure.user).lean().exec()
+        const user = await User.findById(structure.userId).lean().exec()
         return { ...structure, username: user.username }
     }))
 
