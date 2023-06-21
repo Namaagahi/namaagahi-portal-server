@@ -24,15 +24,15 @@ const getAllBoxes = asyncHandler(async (req, res) => {
 // @access Private
 const createNewBox = asyncHandler(async (req, res) => {
 
-    const { userId, name, type, duration, structures } = req.body
-    if (!userId || !name || !type || !duration || !structures) 
+    const { userId, name, mark, duration, structures } = req.body
+    if (!userId || !name || !mark || !duration || !structures) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
     const duplicate = await Box.findOne({ name }).lean().exec()
     if (duplicate) 
         return res.status(409).json({ message: 'CONFLICT :Duplicate box name' })
 
-    const box = await Box.create({ userId, name, type, duration, structures })
+    const box = await Box.create({ userId, name, mark, duration, structures })
     if (box) 
         return res.status(201).json({ message: `CREATED: Box ${req.body.name} created successfully!` })
     else 
@@ -44,8 +44,8 @@ const createNewBox = asyncHandler(async (req, res) => {
 // @access Private
 const updateBox = asyncHandler(async (req, res) => {
 
-    const { id, userId, name, type, duration, structureIds } = req.body
-    if (!id || !userId || !name || !type || !duration) 
+    const { id, userId, name, mark, duration, structures } = req.body
+    if (!id || !userId || !name || !mark || !duration) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
     const box = await Box.findById(id).exec()
@@ -58,9 +58,9 @@ const updateBox = asyncHandler(async (req, res) => {
     
     box.userId = userId
     box.name = name
-    box.type = type
+    box.mark = mark
     box.duration = duration
-    box.structureIds = structureIds
+    box.structures = structures
 
     const updatedBox = await box.save()
 

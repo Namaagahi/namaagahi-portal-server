@@ -12,12 +12,12 @@ const boxSchema = new Schema({
             type: String,
             required: true
         },
-        type: {
+        mark: {
             name: {
                 type: String,
                 required: true  
             },
-            typeOptions: {
+            markOptions: {
                 projectNumber: {
                     type: String,
                     required: false
@@ -39,10 +39,7 @@ const boxSchema = new Schema({
             },
             diff: {
                 type: Number,
-                required: true,
-                default: function() {
-                    return moment(this.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(this.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
-                }
+                required: false
             }
         },
         structures: [{
@@ -68,18 +65,15 @@ const boxSchema = new Schema({
                 },
                 diff: {
                     type: Number,
-                    required: true,
-                    default: function() {
-                        return moment(this.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(this.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
-                    }
+                    required: false,
                 }
             },
-            types: {
+            marks: {
                 name: {
                     type: String,
                     required: true  
                 },
-                typeOptions: {
+                markOptions: {
                     style: {
                         type: String,
                         required: true
@@ -114,46 +108,47 @@ const boxSchema = new Schema({
                     },
                     monthlyCost: {
                         type: Number,
-                        required: true,
+                        required: false,
                         default: function() {
-                            return Math.ceil(this.types.typeOptions.docSize * this.costs.fixedCosts.squareCost)
+                            return Math.ceil(this.marks.markOptions.docSize * this.costs.fixedCosts.squareCost)
                         }
                     },
                     dailyCost: {
                         type: Number,
-                        required: true,
+                        required: false,
                         default: function() {
                             return Math.ceil(this.costs.fixedCosts.monthlyCost / 30)
                         }
                     },
                     periodCost: {
                         type: Number,
-                        required: true,
+                        required: false,
                         default: function() {
-                            return Math.ceil((this.costs.fixedCosts.monthlyCost / 30) * (this.duration.diff))
+                            const diff = this.duration?.diff ?? 0
+                            return Math.ceil((this.costs.fixedCosts.monthlyCost / 30)) * diff
                         }
-                    }
+                    },
                 },
                 variableCosts: [{
                     name: {
                         type: String,
-                        required: true
+                        required: false
                     },
                     figures: {
                         periodCost: {
                             type: Number,
-                            required: true
+                            required: false
                         },
                         monthlyCost: {
                             type: Number,
-                            required: true,
+                            required: false,
                             default: function() {
                                 return Math.ceil(this.figures.periodCost / 12)
                             }
                         },
                         dailyCost: {
                             type: Number,
-                            required: true,
+                            required: false,
                             default: function() {
                                 return Math.ceil(this.figures.periodCost / 365)
                             }
@@ -187,7 +182,8 @@ const boxSchema = new Schema({
                     type: Number,
                     required: true,
                     default: function() {
-                        return (this.costs.totalMonthlyCost) * (this.duration.diff)
+                        const diff = this.parent().duration.diff ?? 0
+                        return this.costs.totalMonthlyCost * diff
                     }
                 }
             },
@@ -195,8 +191,38 @@ const boxSchema = new Schema({
     }
 ,
     {
-        timestamps: true
+        timestamps: true,
+        toObject: { virtuals: true },
+        toJSON: { virtuals: true }
     }
 ) 
+
+
+
+
+boxSchema.virtual('duration_diff').get(function() {
+    return moment(this.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(this.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
+})
+
+boxSchema.virtual('structures.structureDurationDiff').get(function() {
+    return this.structures.map(structure => {
+        return moment(structure.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(structure.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
+    })
+})
+
+boxSchema.pre('save', function(next) {
+    const doc = this
+    if (doc.isNew || doc.isNullOrUndefined(doc.duration.diff)) {
+        const diff = moment(doc.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(doc.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
+        doc.set('duration.diff', diff)
+    }
+    doc.structures.forEach((structure, index) => {
+        if (doc.isNew || doc.isNullOrUndefined(structure.duration.diff)) {
+            const diff = moment(structure.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(structure.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
+            doc.structures[index].duration.diff = diff
+        }
+    })
+    next()
+})
 
 module.exports = mongoose.model('Box', boxSchema)
