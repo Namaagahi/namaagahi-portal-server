@@ -99,20 +99,4 @@ const deleteNote = asyncHandler(async (req, res) => {
     res.json(reply)
 })
 
-// @desc Get a note
-// @route GET /notes
-// @access Private
-const getNote = asyncHandler(async (req, res) => {
-    const thisNote = await Note.findOne({ _id: req.params.id }).exec()
-    if(!thisNote) return res.status(204).json({ message: `NO CONTENT: Note ID ${req.params.id} not found` })
-    res.status(200).json(thisNote)
-})
-
-
-module.exports = {
-    getAllNotes,
-    createNewNote,
-    updateNote,
-    deleteNote,
-    getNote
-}
+module.exports = { getAllNotes, createNewNote, updateNote, deleteNote }

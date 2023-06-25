@@ -45,7 +45,6 @@ app.use('/auth', require('./routes/authRoutes'))
 // app.use(verifyJWT)
 app.use('/users', require('./routes/userRoutes'))
 app.use('/notes', require('./routes/noteRoutes'))
-app.use('/employees', require('./routes/api/employees'))
 app.use('/structures', require('./routes/structureRouter'))
 app.use('/boxes', require('./routes/boxRoutes'))
 

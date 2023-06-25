@@ -87,19 +87,4 @@ const deleteUser = asyncHandler(async (req, res) => {
     res.status(200).json(reply)
 })
 
-// @desc Get a user
-// @route GET /users
-// @access Private
-const getUser = asyncHandler(async (req, res) => {
-    const thisUser = await User.findOne({ _id: req.params.id }).exec()
-    if(!thisUser) return res.status(204).json({ message: `NO CONTENT: User ID ${req.params.id} not found` })
-    res.status(200).json(thisUser)
-})
-
-module.exports = {
-    getAllUsers,
-    createNewUser,
-    updateUser,
-    deleteUser,
-    getUser
-}
+module.exports = { getAllUsers, createNewUser, updateUser, deleteUser }
