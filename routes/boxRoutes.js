@@ -3,8 +3,10 @@ const router = express.Router()
 const boxController =  require('../controllers/boxController')
 const verifyJWT = require('../middleware/virifyJWT')
 
+router.use(verifyJWT)
+
 router.route('/')
-    .get(verifyJWT, boxController.getAllBoxes)
+    .get(boxController.getAllBoxes)
     .post(boxController.createNewBox)
     .put(boxController.updateBox)
     .delete(boxController.deleteBox)
