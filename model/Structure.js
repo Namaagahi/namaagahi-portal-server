@@ -29,6 +29,10 @@ const structureSchema = new Schema({
             type: Boolean,
             default: true
         },
+        isChosen: {
+            type: Boolean,
+            default: false
+        },
     },
     {
         timestamps: true

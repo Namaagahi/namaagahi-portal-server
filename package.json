@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server",
-    "serve": "nodemon server.js" 
+    "serve": "nodemon server.js"
   },
   "author": "Hamidreza Hashemi",
   "license": "ISC",
@@ -23,6 +23,8 @@
     "moment-jalaali": "^0.10.0",
     "mongoose": "^7.1.0",
     "mongoose-sequence": "^5.3.1",
+    "multer": "1.4.5-lts.1",
+    "multer-gridfs-storage": "^5.0.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

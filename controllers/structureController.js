@@ -43,60 +43,25 @@ const createNewStructure = asyncHandler(async (req, res) => {
 // @route PATCH /structures
 // @access Private
 const updateStructure = asyncHandler(async (req, res) => {
-    const { 
-        id,
-        user, 
-        sysCode,
-        kind,
-        district,
-        path,
-        address,
-        style,
-        face,
-        dimensions,
-        printSize,
-        docSize,
-        isAvailable  } = req.body
-
-    // Confirm data
-    if ( !id
-        || !user  
-        || !sysCode
-        || !kind
-        || !district
-        || !path
-        || !address
-        || !style
-        || !face
-        || !dimensions
-        || !printSize
-        || !docSize
-        || typeof isAvailable !== 'boolean'
-        ) 
+    const { id, userId, name, location, isAvailable, isChosen } = req.body
+    if (!id || !userId || !name || !location ) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
-    
-    // Confirm structure exists to update
+
     const structure = await Structure.findById(id).exec()
-    if (!structure) return res.status(400).json({ message: 'BAD REQUEST : Structure not found' })
+    if(!structure) res.status(400).json({ message: 'BAD REQUEST : Structure not found' })
+
+    const duplicate = await Structure.findOne({ name }).lean().exec()
+    if(duplicate && duplicate?._id.toString() !== id) 
+        return res.status(409).json({ message: 'CONFLICT : Duplicate structure name!' })
+
+
     
-    // Check for duplicate system code
-    const duplicate = await Structure.findOne({ sysCode }).lean().exec()
-    // Allow renaming of the original structure 
-    if (duplicate && duplicate?._id.toString() !== id) 
-        return res.status(409).json({ message: 'CONFLICT : Duplicate structure system code!' })
-    
-        structure.user = user
-        structure.sysCode = sysCode
-        structure.kind = kind
-        structure.district = district
-        structure.path = path
-        structure.address = address
-        structure.style = style
-        structure.face = face
-        structure.dimensions = dimensions
-        structure.printSize = printSize
-        structure.docSize = docSize
-        structure.isAvailable = isAvailable
+    // Update and store user
+    structure.userId = userId
+    structure.name = name
+    structure.location = location
+    structure.isAvailable = isAvailable
+    structure.isChosen = isChosen
 
     const updatedStructure = await structure.save()
 

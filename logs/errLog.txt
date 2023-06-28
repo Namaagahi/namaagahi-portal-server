@@ -44,3 +44,7 @@
 20230627	12:04:44	8ba01970-9c60-4c0b-bcfd-30cd27687dc0	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
 20230627	12:04:46	bd258dac-b90c-47d8-8bda-52cd6c2ac153	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
 20230627	16:23:57	11eb1592-9aac-43e3-8d38-92a98c4e875e	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230628	15:08:22	b215ed01-87e9-4df5-87b4-9268788e8f45	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	POST	/boxes	http://localhost:3000}
+20230628	15:08:22	0bfc70f5-aac4-4d51-81f0-ed34c6993d14	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	GET	/structures	http://localhost:3000}
+20230628	15:08:31	b2c5c2b3-cfcb-4c1c-b5c7-76f2fb544daa	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	POST	/boxes	http://localhost:3000}
+20230628	15:08:52	b9b9ffb7-935f-42c4-9c10-f085ddd5db60	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	GET	/boxes	http://localhost:3000}
