@@ -39,9 +39,12 @@ const boxSchema = new Schema({
             },
             diff: {
                 type: Number,
-                required: false
+                required: false,
+                default: function() {
+                    return moment(this.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(this.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
+                }
             }
-        },
+        }, 
         structures: [{
             structureId: {
                 type: mongoose.Schema.Types.ObjectId,
@@ -53,6 +56,7 @@ const boxSchema = new Schema({
                     type: String,
                     required: true,
                     default: function() {
+                        console.log("THIS STRUCTURE", this)
                         return this.parent().duration.startDate
                     }
                 },
@@ -123,10 +127,6 @@ const boxSchema = new Schema({
                     periodCost: {
                         type: Number,
                         required: false,
-                        default: function() {
-                            const diff = this.duration?.diff ?? 0
-                            return Math.ceil((this.costs.fixedCosts.monthlyCost / 30)) * diff
-                        }
                     },
                 },
                 variableCosts: [{
@@ -183,7 +183,7 @@ const boxSchema = new Schema({
                     required: true,
                     default: function() {
                         const diff = this.parent().duration.diff ?? 0
-                        return this.costs.totalMonthlyCost * diff
+                        return this.costs.totalDailyCost * diff
                     }
                 }
             },
@@ -198,30 +198,40 @@ const boxSchema = new Schema({
 ) 
 
 
-
-
-boxSchema.virtual('duration_diff').get(function() {
-    return moment(this.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(this.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
-})
-
 boxSchema.virtual('structures.structureDurationDiff').get(function() {
     return this.structures.map(structure => {
         return moment(structure.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(structure.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
     })
 })
 
+boxSchema.virtual('structures.structureFixedPeriodCost').get(function() {
+    return this.structures.map(structure => {
+        return Math.ceil((structure.costs.fixedCosts.monthlyCost / 30)) * structure.duration.diff
+    })
+})
+
 boxSchema.pre('save', function(next) {
     const doc = this
-    if (doc.isNew || doc.isNullOrUndefined(doc.duration.diff)) {
+
+    if (doc.isNew || doc.isModified('duration')) {
         const diff = moment(doc.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(doc.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
-        doc.set('duration.diff', diff)
+        doc.duration.diff = diff
     }
+
     doc.structures.forEach((structure, index) => {
         if (doc.isNew || doc.isNullOrUndefined(structure.duration.diff)) {
             const diff = moment(structure.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(structure.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
             doc.structures[index].duration.diff = diff
         }
     })
+
+    doc.structures.forEach((structure, index) => {
+        if (doc.isNew || doc.isNullOrUndefined(structure.costs.fixedCosts.periodCost)) {
+            const periodCost = Math.ceil((structure.costs.fixedCosts.monthlyCost / 30)) * structure.duration.diff
+            doc.structures[index].costs.fixedCosts.periodCost = periodCost
+        }
+    })
+
     next()
 })
 

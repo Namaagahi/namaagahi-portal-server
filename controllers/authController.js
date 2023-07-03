@@ -44,7 +44,7 @@ const login = asyncHandler(async (req, res) => {
         sameSite: 'None', 
         maxAge: 7 * 24 * 60 * 60 * 1000 
     })
-    console.log("RESPONSE HEADERS", res.getHeaders())
+    // console.log("RESPONSE HEADERS", res.getHeaders())
 
     res.json({ accessToken })
 })

@@ -48,3 +48,11 @@
 20230628	15:08:22	0bfc70f5-aac4-4d51-81f0-ed34c6993d14	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	GET	/structures	http://localhost:3000}
 20230628	15:08:31	b2c5c2b3-cfcb-4c1c-b5c7-76f2fb544daa	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	POST	/boxes	http://localhost:3000}
 20230628	15:08:52	b9b9ffb7-935f-42c4-9c10-f085ddd5db60	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	GET	/boxes	http://localhost:3000}
+20230701	12:30:17	3cd12ab2-c686-43bd-88e0-8e1e755dff4a	TypeError: Cannot set properties of null (setting 'userId')	PATCH	/structures	http://localhost:3000}
+20230701	12:31:19	22bc4660-cd64-4779-9fff-7092907b1481	TypeError: Cannot set properties of null (setting 'userId')	PATCH	/structures	http://localhost:3000}
+20230702	14:27:13	56bce05b-7805-4900-b726-a31a9097c0ed	Error: Not allowed by CORS	OPTIONS	/auth	http://localhost:3001}
+20230703	09:18:40	bc2f9800-2b9b-49b4-acc1-cd882777667e	ReferenceError: doc is not defined	POST	/boxes	undefined}
+20230703	10:36:20	288ab44b-bb0e-4a24-bc3f-2f4842f6d0fb	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230703	13:48:23	f7ebb6f8-f525-41b7-801a-d8e9e042961c	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230703	13:48:45	4fbbf4cf-48e4-4ab9-b4a4-cc6a52f12524	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230703	15:45:06	8d26161f-1fee-468e-83a2-715e4dd5a84b	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
