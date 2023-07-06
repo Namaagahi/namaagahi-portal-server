@@ -114,6 +114,7 @@ const boxSchema = new Schema({
                         type: Number,
                         required: false,
                         default: function() {
+                            console.log(this)
                             return Math.ceil(this.marks.markOptions.docSize * this.costs.fixedCosts.squareCost)
                         }
                     },
@@ -231,7 +232,7 @@ boxSchema.pre('save', function(next) {
             doc.structures[index].costs.fixedCosts.periodCost = periodCost
         }
     })
-
+    
     next()
 })
 

@@ -14,7 +14,7 @@ const structureSchema = new Schema({
         location: {
             district: {
                 type: Number,
-                required: true
+                required: false
             },
             path: {
                 type: String,
