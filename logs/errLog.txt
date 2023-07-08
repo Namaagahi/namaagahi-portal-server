@@ -74,3 +74,15 @@
 20230705	12:49:03	4430a46d-22c6-4b6c-9757-5c58914e3b5d	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
 20230705	15:13:39	68b000ae-9be3-4076-b70b-70db6b131277	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
 20230705	15:13:43	0c3eb193-2b32-4b80-89e3-73ad0c005eb3	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230707	16:51:48	c7ef9c3f-5d20-4e41-93ed-d4d5cf446d6f	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/structures	http://localhost:3000}
+20230707	16:51:48	5190dc5a-bacf-4ba3-863c-5d51eae557e3	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/boxes	http://localhost:3000}
+20230707	16:53:19	24dfecaa-0b28-481f-afbb-838c4a4cb408	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/structures	http://localhost:3000}
+20230707	16:53:19	a04ad22e-6b77-4933-b3d8-aac46b462a08	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/boxes	http://localhost:3000}
+20230707	16:54:50	19ca2a38-f610-470e-b075-445c74e3c41a	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/structures	http://localhost:3000}
+20230707	16:54:50	111d350c-0e8d-41e7-a089-e131710c5d18	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/boxes	http://localhost:3000}
+20230707	16:56:21	dc8e4544-bf29-4d69-8a64-1bc4527ed09d	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	GET	/structures	http://localhost:3000}
+20230707	16:56:21	2e7ce043-ea1c-49ad-bd03-f696eb071eb4	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	GET	/boxes	http://localhost:3000}
+20230707	16:57:52	86ae6baa-b91e-4bfd-9385-ca9f7c0ca86e	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/structures	http://localhost:3000}
+20230707	16:57:52	5b7423a5-cf54-452c-9561-8605852baf93	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/boxes	http://localhost:3000}
+20230707	16:59:23	f1638a8a-8db1-4c06-9c53-fa126a739685	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	GET	/structures	http://localhost:3000}
+20230707	16:59:23	c69ecd1e-6212-4f7c-b592-06106eb92a38	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	GET	/boxes	http://localhost:3000}

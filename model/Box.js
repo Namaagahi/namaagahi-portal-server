@@ -3,6 +3,10 @@ const moment = require('moment-jalaali');
 const Schema = mongoose.Schema
 
 const boxSchema = new Schema({
+        boxId: {
+            type: String,
+            required: true
+        },
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,

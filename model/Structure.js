@@ -7,6 +7,10 @@ const structureSchema = new Schema({
             required: true,
             ref: 'User'
         },
+        parent: {
+            type: String,
+            required: true,  
+        },
         name: {
             type: String,
             required: true,

@@ -1,6 +1,7 @@
 const Structure = require('../model/Structure')
 const asyncHandler = require('express-async-handler')
 const User = require('../model/User')
+const Box = require('../model/Box')
 
 // @desc Get all structures 
 // @route GET /structures
@@ -15,7 +16,7 @@ const getAllStructures = asyncHandler(async (req, res) => {
         const user = await User.findById(structure.userId).lean().exec()
         return { ...structure, username: user.username }
     }))
-
+    
     res.json(structuresWithUser)
 })
 
@@ -43,8 +44,8 @@ const createNewStructure = asyncHandler(async (req, res) => {
 // @route PATCH /structures
 // @access Private
 const updateStructure = asyncHandler(async (req, res) => {
-    const { id, userId, name, location, isAvailable, isChosen } = req.body
-    if (!id || !userId || !name || !location ) 
+    const { id, userId, name, location, isAvailable, isChosen, parent } = req.body
+    if (!id || !userId || !name || !location || !parent ) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
 
     const structure = await Structure.findById(id).exec()
@@ -55,13 +56,14 @@ const updateStructure = asyncHandler(async (req, res) => {
         return res.status(409).json({ message: 'CONFLICT : Duplicate structure name!' })
 
 
-    
+     
     // Update and store user
     structure.userId = userId
     structure.name = name
     structure.location = location
     structure.isAvailable = isAvailable
     structure.isChosen = isChosen
+    structure.parent = box.id
 
     const updatedStructure = await structure.save()
 

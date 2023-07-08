@@ -24,15 +24,15 @@ const getAllBoxes = asyncHandler(async (req, res) => {
 // @access Private
 const createNewBox = asyncHandler(async (req, res) => {
 
-    const { userId, name, mark, duration, structures } = req.body
-    if (!userId || !name || !mark || !duration || !structures) 
+    const { boxId, userId, name, mark, duration, structures } = req.body
+    if (!boxId || !userId || !name || !mark || !duration || !structures) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
     const duplicate = await Box.findOne({ name }).lean().exec()
     if (duplicate) 
         return res.status(409).json({ message: 'CONFLICT :Duplicate box name' })
 
-    const box = await Box.create({ userId, name, mark, duration, structures })
+    const box = await Box.create({ boxId, userId, name, mark, duration, structures })
     if (box) 
         return res.status(201).json({ message: `CREATED: Box ${req.body.name} created successfully!` })
     else 
