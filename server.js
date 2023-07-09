@@ -64,6 +64,10 @@ mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB')
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 })
+// mongoose.connection.once('open', () => {
+//     console.log('Connected to MongoDB')
+//     app.listen(PORT, '192.168.68.35', () => console.log(`Server running on port ${PORT}`));
+// })
 
 mongoose.connection.on('error', err => {
     console.log(err)

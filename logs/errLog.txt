@@ -94,3 +94,9 @@
 20230708	15:28:11	8220997f-9ae5-470e-a840-a32faf6d0fe5	ValidationError: Structure validation failed: parent: Path `parent` is required.	PATCH	/structures	http://localhost:3000}
 20230708	15:29:16	90ced310-db5c-4c8d-88ff-a947c577656f	ValidationError: Structure validation failed: parent: Path `parent` is required.	PATCH	/structures	http://localhost:3000}
 20230708	15:29:16	7d289cb0-eaf3-4e55-b27c-2ab6f241d1ce	ValidationError: Structure validation failed: parent: Path `parent` is required.	PATCH	/structures	http://localhost:3000}
+20230709	11:14:34	7a4d7b4a-9478-48c1-911e-0b03e69f2d4a	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230709	11:18:54	fd163d5f-96c9-4059-9fdb-2524dd3c394b	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://192.168.68.35:3000}
+20230709	11:22:48	75930a84-b67e-40df-b53d-4694f01fb639	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230709	11:25:50	5a2f9300-f62d-4f6d-8edd-ea648688449a	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230709	11:26:36	8b3273f8-5b0e-46bd-ae79-c658b87b6f1c	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230709	11:32:02	88b882ef-9fcc-46a1-b375-bfb301f1e27a	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://192.168.68.35:3000}
