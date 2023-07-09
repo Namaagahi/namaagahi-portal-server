@@ -22,7 +22,7 @@ const verifyJWT = (req, res, next) => {
       const cookieOptions = {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000, // 1 day
-        domain:'192.168.68.21' ,
+        domain:'portal.namaagahi.com' ,
         sameSite: 'Lax'
       }
       res.cookie('jwt', token, cookieOptions)
