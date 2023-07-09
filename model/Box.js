@@ -119,14 +119,14 @@ const boxSchema = new Schema({
                         required: false,
                         default: function() {
                             console.log(this)
-                            return Math.ceil(this.marks.markOptions.docSize * this.costs.fixedCosts.squareCost)
+                            return this.marks.markOptions.docSize * this.costs.fixedCosts.squareCost
                         }
                     },
                     dailyCost: {
                         type: Number,
                         required: false,
                         default: function() {
-                            return Math.ceil(this.costs.fixedCosts.monthlyCost / 30)
+                            return this.costs.fixedCosts.monthlyCost / 30
                         }
                     },
                     periodCost: {
@@ -148,14 +148,14 @@ const boxSchema = new Schema({
                             type: Number,
                             required: false,
                             default: function() {
-                                return Math.ceil(this.figures.periodCost / 12)
+                                return this.figures.periodCost / 12
                             }
                         },
                         dailyCost: {
                             type: Number,
                             required: false,
                             default: function() {
-                                return Math.ceil(this.figures.periodCost / 365)
+                                return this.figures.periodCost / 365
                             }
                         }
                     }
@@ -211,7 +211,7 @@ boxSchema.virtual('structures.structureDurationDiff').get(function() {
 
 boxSchema.virtual('structures.structureFixedPeriodCost').get(function() {
     return this.structures.map(structure => {
-        return Math.ceil((structure.costs.fixedCosts.monthlyCost / 30)) * structure.duration.diff
+        return (structure.costs.fixedCosts.monthlyCost / 30) * structure.duration.diff
     })
 })
 
@@ -232,7 +232,7 @@ boxSchema.pre('save', function(next) {
 
     doc.structures.forEach((structure, index) => {
         if (doc.isNew || doc.isNullOrUndefined(structure.costs.fixedCosts.periodCost)) {
-            const periodCost = Math.ceil((structure.costs.fixedCosts.monthlyCost / 30)) * structure.duration.diff
+            const periodCost = (structure.costs.fixedCosts.monthlyCost / 30) * structure.duration.diff
             doc.structures[index].costs.fixedCosts.periodCost = periodCost
         }
     })

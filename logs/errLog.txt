@@ -86,3 +86,11 @@
 20230707	16:57:52	5b7423a5-cf54-452c-9561-8605852baf93	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/boxes	http://localhost:3000}
 20230707	16:59:23	f1638a8a-8db1-4c06-9c53-fa126a739685	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	GET	/structures	http://localhost:3000}
 20230707	16:59:23	c69ecd1e-6212-4f7c-b592-06106eb92a38	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	GET	/boxes	http://localhost:3000}
+20230708	12:10:15	e2c1bf0e-d857-4321-bedf-b91edb3b600e	ReferenceError: box is not defined	PATCH	/structures	http://localhost:3000}
+20230708	15:20:59	8128d0cf-37e7-4623-bee2-d408a85c713a	ReferenceError: box is not defined	PATCH	/structures	http://localhost:3000}
+20230708	15:21:56	6debf57a-dbf8-4756-a284-9e1979c458e7	ReferenceError: box is not defined	PATCH	/structures	http://localhost:3000}
+20230708	15:24:31	b18b2e03-ea8a-4e04-97b4-bf9e8687f34d	ReferenceError: box is not defined	PATCH	/structures	http://localhost:3000}
+20230708	15:28:11	561b6c07-655d-465e-a38c-1bcc531f3b21	ValidationError: Structure validation failed: parent: Path `parent` is required.	PATCH	/structures	http://localhost:3000}
+20230708	15:28:11	8220997f-9ae5-470e-a840-a32faf6d0fe5	ValidationError: Structure validation failed: parent: Path `parent` is required.	PATCH	/structures	http://localhost:3000}
+20230708	15:29:16	90ced310-db5c-4c8d-88ff-a947c577656f	ValidationError: Structure validation failed: parent: Path `parent` is required.	PATCH	/structures	http://localhost:3000}
+20230708	15:29:16	7d289cb0-eaf3-4e55-b27c-2ab6f241d1ce	ValidationError: Structure validation failed: parent: Path `parent` is required.	PATCH	/structures	http://localhost:3000}

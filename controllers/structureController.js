@@ -45,7 +45,7 @@ const createNewStructure = asyncHandler(async (req, res) => {
 // @access Private
 const updateStructure = asyncHandler(async (req, res) => {
     const { id, userId, name, location, isAvailable, isChosen, parent } = req.body
-    if (!id || !userId || !name || !location || !parent ) 
+    if (!id || !userId || !name || !location ) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
 
     const structure = await Structure.findById(id).exec()
@@ -63,7 +63,7 @@ const updateStructure = asyncHandler(async (req, res) => {
     structure.location = location
     structure.isAvailable = isAvailable
     structure.isChosen = isChosen
-    structure.parent = box.id
+    structure.parent = parent
 
     const updatedStructure = await structure.save()
 
