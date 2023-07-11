@@ -137,25 +137,25 @@ const boxSchema = new Schema({
                 variableCosts: [{
                     name: {
                         type: String,
-                        required: false
+                        required: true
                     },
                     figures: {
-                        periodCost: {
-                            type: Number,
-                            required: false
-                        },
                         monthlyCost: {
+                            type: Number,
+                            required: true
+                        },
+                        periodCost: {
                             type: Number,
                             required: false,
                             default: function() {
-                                return this.figures.periodCost / 12
+                                return (this.figures.monthlyCost / 30) * 365  
                             }
                         },
                         dailyCost: {
                             type: Number,
                             required: false,
                             default: function() {
-                                return this.figures.periodCost / 365
+                                return this.figures.monthlyCost / 30
                             }
                         }
                     }
