@@ -224,14 +224,14 @@ boxSchema.pre('save', function(next) {
     }
 
     doc.structures.forEach((structure, index) => {
-        if (doc.isNew || doc.isNullOrUndefined(structure.duration.diff)) {
+        if (doc.isNew || typeof structure.duration.diff === 'undefined' || structure.duration.diff === null) {
             const diff = moment(structure.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(structure.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
             doc.structures[index].duration.diff = diff
         }
     })
 
     doc.structures.forEach((structure, index) => {
-        if (doc.isNew || doc.isNullOrUndefined(structure.costs.fixedCosts.periodCost)) {
+        if (doc.isNew || typeof structure.costs.fixedCosts.periodCost === 'undefined' || structure.costs.fixedCosts.periodCost === null) {
             const periodCost = (structure.costs.fixedCosts.monthlyCost / 30) * structure.duration.diff
             doc.structures[index].costs.fixedCosts.periodCost = periodCost
         }

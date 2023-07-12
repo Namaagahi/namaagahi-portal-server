@@ -44,8 +44,8 @@ const createNewBox = asyncHandler(async (req, res) => {
 // @access Private
 const updateBox = asyncHandler(async (req, res) => {
 
-    const { id, userId, name, mark, duration, structures } = req.body
-    if (!id || !userId || !name || !mark || !duration) 
+    const { id, boxId, userId, username, name, mark, duration, structures } = req.body
+    if (!id || !boxId || !userId || !name || !mark || !duration || !username) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
     const box = await Box.findById(id).exec()
@@ -57,6 +57,8 @@ const updateBox = asyncHandler(async (req, res) => {
         return res.status(409).json({ message: 'CONFLICT : Duplicate box name' })
     
     box.userId = userId
+    box.username = username
+    box.boxId = boxId
     box.name = name
     box.mark = mark
     box.duration = duration

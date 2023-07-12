@@ -8,7 +8,7 @@ router.use(verifyJWT)
 router.route('/')
     .get(boxController.getAllBoxes)
     .post(boxController.createNewBox)
-    .put(boxController.updateBox)
+    .patch(boxController.updateBox)
     .delete(boxController.deleteBox)
 
 module.exports = router 
