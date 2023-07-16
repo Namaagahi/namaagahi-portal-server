@@ -11,4 +11,4 @@ router.route('/')
     .patch(boxController.updateBox)
     .delete(boxController.deleteBox)
 
-module.exports = router 
+module.exports = router  
