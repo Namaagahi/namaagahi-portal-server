@@ -192,6 +192,10 @@ const boxSchema = new Schema({
                     }
                 }
             },
+            monthlyBaseFee: {
+                type: Number,
+                required: true
+            }
         }]
     }
 ,

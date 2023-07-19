@@ -21,6 +21,11 @@ const planSchema = new Schema({
             required: true,
             ref: 'InitialCustomer'
         },
+        brand: {
+            type: String,
+            required: true
+        },
+
         structures: [{
             structureId: {
                 type: mongoose.Schema.Types.ObjectId,
