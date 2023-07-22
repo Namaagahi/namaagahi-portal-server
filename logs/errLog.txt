@@ -204,3 +204,6 @@
 20230716	08:17:55	0945abf4-f154-41e3-8c2c-f2446283cb15	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
 20230716	08:19:26	0000c71c-546e-4bc4-8b9f-95532f38ed4a	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
 20230716	08:21:53	1f1132ee-7813-416b-8af9-2c27a9038eab	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230719	10:52:58	c9be8fcb-e032-4922-a7e0-198179c7ec6b	ValidationError: Box validation failed: structures.0.monthlyBaseFee: Path `monthlyBaseFee` is required., structures.1.monthlyBaseFee: Path `monthlyBaseFee` is required., structures.2.monthlyBaseFee: Path `monthlyBaseFee` is required.	PATCH	/boxes	http://localhost:3000}
+20230722	12:12:42	a35487f2-07c7-4379-8b8f-fd21af90f1b5	ReferenceError: mark is not defined	POST	/plans	undefined}
+20230722	12:13:10	faa73935-153a-4c2b-aaae-2bab7f4dec20	ValidationError: Plan validation failed: customerName: Cast to ObjectId failed for value "دیپوینت" (type string) at path "customerName" because of "BSONError"	POST	/plans	undefined}

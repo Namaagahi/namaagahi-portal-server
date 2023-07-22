@@ -1,6 +1,5 @@
 const Plan = require('../model/Plan')
 const asyncHandler = require('express-async-handler')
-const Box = require('../model/Box')
 const User = require('../model/User')
 
 // @desc Get all plans 
@@ -25,15 +24,15 @@ const getAllPlans = asyncHandler(async (req, res) => {
 // @access Private
 const createNewPlan = asyncHandler(async (req, res) => {
 
-    const { planId, userId, name, mark } = req.body
-    if (!userId || !name || !mark) 
+    const { planId, userId, name, customerName, brand, structures } = req.body
+    if (!userId || !name || !customerName || !brand || !structures) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
     const duplicate = await Plan.findOne({ name }).lean().exec()
     if (duplicate) 
         return res.status(409).json({ message: 'CONFLICT :Duplicate plan name' })
 
-    const plan = await Plan.create({ planId, userId, name, mark })
+    const plan = await Plan.create({ planId, userId, name, customerName, brand, structures  })
     if (plan) 
         return res.status(201).json({ message: `CREATED: Plan ${req.body.name} created successfully!` })
     else 
