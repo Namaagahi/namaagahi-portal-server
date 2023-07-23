@@ -39,4 +39,22 @@ const createNewPlan = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'BAD REQUEST : Invalid plan data received' })
 })
 
-module.exports = { getAllPlans, createNewPlan }
+// @desc Delete a plan
+// @route DELETE /plans
+// @access Private
+const deletePlan = asyncHandler(async (req, res) => {
+
+    const { id } = req.body
+    if (!id) 
+        return res.status(400).json({ message: 'Plan ID required' })
+    
+    const plan = await Plan.findById(id).exec()
+    if (!plan) 
+        return res.status(400).json({ message: 'Plan not found' })
+
+    const result = await plan.deleteOne()
+    const reply = `Plan '${result.name}' with ID ${result._id} deleted`
+
+    res.json(reply)
+})
+module.exports = { getAllPlans, createNewPlan, deletePlan }

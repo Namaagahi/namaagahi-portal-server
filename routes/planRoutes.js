@@ -8,5 +8,6 @@ router.use(verifyJWT)
 router.route('/')
     .get(planController.getAllPlans)
     .post(planController.createNewPlan)
+    .delete(planController.deletePlan)
 
 module.exports = router  
