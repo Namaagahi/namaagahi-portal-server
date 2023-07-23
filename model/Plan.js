@@ -37,6 +37,10 @@ const planSchema = new Schema({
                 required: true,
                 ref: 'Structure'
             },
+            structureRecord: {
+                type: {},
+                required: true
+            },
             discountFee: {
                 type: String,
                 required: true
