@@ -39,6 +39,36 @@ const createNewPlan = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'BAD REQUEST : Invalid plan data received' })
 })
 
+// @desc Update a plan
+// @route PATCH /planes
+// @access Private
+const updatePlan = asyncHandler(async (req, res) => {
+
+    const { id, planId, userId, username, name, customerName, brand, structures } = req.body
+    if (!id || !planId || !userId || !username || !name || !customerName || !brand || !username) 
+        return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
+    
+    const plan = await Plan.findById(id).exec()
+    if (!plan) 
+        return res.status(400).json({ message: 'BAD REQUEST : Plan not found' })
+    
+    const duplicate = await Plan.findOne({ name }).lean().exec()
+    if (duplicate && duplicate?._id.toString() !== id) 
+        return res.status(409).json({ message: 'CONFLICT : Duplicate plan name' })
+    
+    plan.userId = userId
+    plan.username = username
+    plan.planId = planId
+    plan.name = name
+    plan.customerName = customerName
+    plan.brand = brand
+    plan.structures = structures
+
+    const updatedPlan = await plan.save()
+
+    res.json(`'${updatedPlan.name}' updated`)
+})
+
 // @desc Delete a plan
 // @route DELETE /plans
 // @access Private
@@ -57,4 +87,4 @@ const deletePlan = asyncHandler(async (req, res) => {
 
     res.json(reply)
 })
-module.exports = { getAllPlans, createNewPlan, deletePlan }
+module.exports = { getAllPlans, createNewPlan, updatePlan, deletePlan }

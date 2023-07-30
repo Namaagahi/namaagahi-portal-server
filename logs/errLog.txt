@@ -211,3 +211,25 @@
 20230723	11:50:53	372e4968-ed59-4586-a27d-19eef229c8b1	ValidationError: Plan validation failed: structures.1.monthlyFeeWithDiscount: Cast to Number failed for value "12,825,000" (type string) at path "monthlyFeeWithDiscount", structures.0.monthlyFeeWithDiscount: Path `monthlyFeeWithDiscount` is required.	POST	/plans	http://localhost:3000}
 20230723	11:53:43	0a284158-d85d-471e-9682-3966891fbe05	ValidationError: Plan validation failed: structures.0.monthlyFeeWithDiscount: Cast to Number failed for value "12,150,000" (type string) at path "monthlyFeeWithDiscount", structures.1.monthlyFeeWithDiscount: Cast to Number failed for value "12,825,000" (type string) at path "monthlyFeeWithDiscount"	POST	/plans	http://localhost:3000}
 20230723	11:54:48	79969ca8-92b3-4067-8c5e-9f0d1b95da6b	ValidationError: Plan validation failed: structures.0.monthlyFeeWithDiscount: Cast to Number failed for value "12,150,000" (type string) at path "monthlyFeeWithDiscount", structures.1.monthlyFeeWithDiscount: Cast to Number failed for value "12,825,000" (type string) at path "monthlyFeeWithDiscount"	POST	/plans	http://localhost:3000}
+20230723	16:11:33	45adf094-20c3-44c1-afd0-402fd87f66a1	Error: Not allowed by CORS	OPTIONS	/auth	http://localhost:3001}
+20230723	16:11:43	64e64d11-261e-4b77-b85a-9fa9c6ebdb8f	Error: Not allowed by CORS	OPTIONS	/auth	http://localhost:3001}
+20230723	16:11:45	c4cac2ec-71a7-41c5-9a0f-2e6111b4bc81	Error: Not allowed by CORS	OPTIONS	/auth	http://localhost:3001}
+20230723	16:12:37	aa693009-0dba-4303-817b-6b3e04a6e974	Error: Not allowed by CORS	OPTIONS	/auth	http://localhost:3001}
+20230723	16:12:39	4745823a-67b8-4e12-8549-19c9d1811532	Error: Not allowed by CORS	OPTIONS	/auth	http://localhost:3001}
+20230723	16:12:51	8baf591d-26dc-4c7b-919a-5264c0bec405	Error: Not allowed by CORS	OPTIONS	/auth	http://localhost:3001}
+20230725	15:45:14	15984fd1-f3ea-4b8d-bb79-32a2c1ab6725	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20230725	16:12:00	5a5e8e9f-31fb-48f9-b4d5-0ec182009cd1	ValidationError: Plan validation failed: structures.0.monthlyFeeWithDiscount: Path `monthlyFeeWithDiscount` is required.	POST	/plans	http://localhost:3000}
+20230726	10:14:28	fdfed019-ebea-41fd-95df-a0ad47cebc11	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/plans	http://localhost:3000}
+20230726	10:17:27	64fc134f-badd-4a7e-aa03-abd7832056b6	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/plans	http://localhost:3000}
+20230726	10:17:57	1ac85bbe-6405-4fc9-a9fc-d71a15f0c9f5	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/plans	http://localhost:3000}
+20230726	10:18:28	65fac2cb-6017-47ea-b456-ca80987ee1f6	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/plans	http://localhost:3000}
+20230726	10:18:58	ab055d53-d043-4c50-b4c6-d44c4f71f029	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/plans	http://localhost:3000}
+20230726	10:19:27	6d9298bb-bedf-4c88-94e7-4fcec70700da	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/plans	http://localhost:3000}
+20230726	10:20:19	a281851e-dcfc-4f48-99a1-bb7cd7246e70	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/plans	http://localhost:3000}
+20230726	10:20:49	01ea9693-e6b3-4d18-914b-bc6c3bb61abe	MongoServerSelectionError: connect ETIMEDOUT 192.168.68.21:27017	GET	/plans	http://localhost:3000}
+20230726	10:21:19	cffc7b85-3935-4789-a950-ff6856fb974b	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/plans	http://localhost:3000}
+20230726	10:21:39	b0ce89bb-b577-4f89-8973-3f2c020508a6	MongoServerSelectionError: connect EHOSTUNREACH 192.168.68.21:27017	GET	/plans	http://localhost:3000}
+20230729	14:29:42	88e807b5-8d10-4a96-a151-3775961833b5	ValidationError: Box validation failed: structures.1.structureId: Path `structureId` is required.	POST	/boxes	http://localhost:3000}
+20230729	14:34:55	4ffe8896-c0a8-4a51-a7a5-1a4c97fba668	ValidationError: Box validation failed: structures.0.structureId: Path `structureId` is required.	POST	/boxes	http://localhost:3000}
+20230729	14:35:43	82f8502a-5a82-4592-ba1f-835cc6ddcacf	ValidationError: Box validation failed: structures.0.structureId: Path `structureId` is required.	POST	/boxes	http://localhost:3000}
+20230730	08:29:45	76e82fae-34b9-4a8c-96de-df6133a619e1	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
