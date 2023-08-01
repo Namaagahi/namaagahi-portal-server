@@ -44,8 +44,8 @@ const createNewPlan = asyncHandler(async (req, res) => {
 // @access Private
 const updatePlan = asyncHandler(async (req, res) => {
 
-    const { id, planId, userId, username, name, customerName, brand, structures } = req.body
-    if (!id || !planId || !userId || !username || !name || !customerName || !brand || !username) 
+    const { id, planId, userId, username, name, customerName, brand, status, structures } = req.body
+    if (!id || !planId || !userId || !username || !name || !customerName || !brand || !status || !structures) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
     const plan = await Plan.findById(id).exec()
@@ -62,6 +62,7 @@ const updatePlan = asyncHandler(async (req, res) => {
     plan.name = name
     plan.customerName = customerName
     plan.brand = brand
+    plan.status = status
     plan.structures = structures
 
     const updatedPlan = await plan.save()
