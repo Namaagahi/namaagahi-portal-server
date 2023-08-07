@@ -261,3 +261,15 @@
 20230807	10:32:48	3b4b7aa6-168f-47b2-b6cb-e4361f7e193f	ValidationError: Plan validation failed: planId: Cast to Number failed for value "Promise { <pending> }" (type Promise) at path "planId"	POST	/plans	http://localhost:3000}
 20230807	10:33:29	f0a11fe3-3758-47e5-9eb7-7490129930e9	ValidationError: Plan validation failed: planId: Cast to Number failed for value "Promise { <pending> }" (type Promise) at path "planId"	POST	/plans	http://localhost:3000}
 20230807	12:55:09	de099b10-aec8-4139-beb0-df39e9c7e9f9	ReferenceError: moment is not defined	PATCH	/plans	http://localhost:3000}
+20230807	16:56:54	1ca39dee-b8cd-4422-ae06-cf2a8c9d6cb7	ValidationError: Plan validation failed: structures.0.totalPeriodCost: Cannot read properties of undefined (reading 'diff')	POST	/plans	http://localhost:3000}
+20230807	17:00:45	63effb32-99ff-4ee6-bdee-24c7e735c5f7	ValidationError: Plan validation failed: structures.0.totalPeriodCost: Cannot read properties of undefined (reading 'diff')	POST	/plans	http://localhost:3000}
+20230807	17:02:11	d119ec78-1483-4d9f-ab3a-9098216de245	ValidationError: Plan validation failed: structures.0.totalPeriodCost: Cannot read properties of undefined (reading 'diff')	POST	/plans	http://localhost:3000}
+20230807	17:02:40	80bd42e5-c819-471c-b962-8bbd6ae97e4c	ValidationError: Plan validation failed: structures.0.totalPeriodCost: Cannot read properties of undefined (reading 'diff')	POST	/plans	http://localhost:3000}
+20230807	17:04:11	8236137c-bbc6-4930-8195-506e88d0d5ac	ValidationError: Plan validation failed: structures.0.totalPeriodCost: Cannot read properties of undefined (reading 'diff')	POST	/plans	http://localhost:3000}
+20230807	17:04:51	2106daee-c4a1-4b8e-a21c-b4bdfa3cf4e1	ValidationError: Plan validation failed: structures.0.totalPeriodCost: Cannot read properties of undefined (reading 'diff')	POST	/plans	http://localhost:3000}
+20230807	17:07:47	56e22a35-1143-4a60-b19e-5bfaacbb3a87	ValidationError: Plan validation failed: structures.0.totalPeriodCost: Cannot read properties of undefined (reading 'diff')	POST	/plans	http://localhost:3000}
+20230807	17:08:14	bfa60725-f5a6-4270-a0d2-55f0feb6ab5a	ValidationError: Plan validation failed: structures.0.totalPeriodCost: Cannot read properties of undefined (reading 'diff')	POST	/plans	http://localhost:3000}
+20230807	17:13:30	218192d1-8fe6-4b76-aa30-22cc484874a0	ValidationError: Plan validation failed: structures.0.totalPeriodCost: Cannot read properties of undefined (reading 'diff')	POST	/plans	http://localhost:3000}
+20230807	17:13:56	04ca0b24-22d3-4c83-91e0-a9bea02e1071	ValidationError: Plan validation failed: structures.0.totalPeriodCost: Path `totalPeriodCost` is required.	POST	/plans	http://localhost:3000}
+20230807	17:19:38	28a5fb9d-3932-426c-b504-45e0802daf95	TypeError: Cannot read properties of undefined (reading 'fixedCosts')	POST	/plans	http://localhost:3000}
+20230807	17:49:24	6e16b30f-d4b5-490e-bedd-284c90c58041	ReferenceError: moment is not defined	PATCH	/boxes	http://localhost:3000}
