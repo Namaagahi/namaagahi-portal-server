@@ -2,20 +2,22 @@ const mongoose = require('mongoose')
 const moment = require('moment-jalaali')
 const Schema = mongoose.Schema
 
+const counterSchema = new mongoose.Schema({
+    _id: { type: String, required: true },
+    sequence_value: { type: Number },
+  });
+  
+const Counter = mongoose.model('Counter', counterSchema);
+
 const planSchema = new Schema({
         planId: {
-            type: String,
-            required: true,
-            default: `plan_${new Date().getTime() + String(Math.random()).replace('.', '').slice(0, 6)}`
+            type: Number,
+            unique: true,
         },
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'User'
-        },
-        name: {
-            type: String,
-            required: true
         },
         customerName: {
             type: mongoose.Schema.Types.ObjectId,
@@ -83,6 +85,22 @@ const planSchema = new Schema({
     }
 )
 
+planSchema.pre('save', async function (next) {
+    if (this.isNew) {
+      const counter = await Counter.findById('planId').exec();
+      if (!counter) {
+        await Counter.create({ _id: 'planId', sequence_value: 1000 });
+      }
+      const updatedCounter = await Counter.findByIdAndUpdate(
+        'planId',
+        { $inc: { sequence_value: 1 } },
+        { new: true }
+      );
+      this.planId = updatedCounter.sequence_value;
+    }
+    next();
+  });
 
-
-module.exports = mongoose.model('Plan', planSchema)
+  const Plan = mongoose.model('Plan', planSchema);
+  
+  module.exports = Plan;
