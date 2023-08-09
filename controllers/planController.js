@@ -67,8 +67,9 @@ const updatePlan = asyncHandler(async (req, res) => {
     plan.status = status;
     plan.structures = structures;
     plan.structures.forEach((structure) => {
-      structure.duration.diff = moment(structure.duration.sellEnd, 'jYYYY-jMM-jDD')
-        .diff(moment(structure.duration.sellStart, 'jYYYY-jMM-jDD'), 'days') + 1
+      structure.duration.diff = moment((new Date(structure.duration.sellEnd).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
+      (moment((new Date(structure.duration.sellStart).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
+      structure.totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
     })
   
     const updatedPlan = await plan.save()

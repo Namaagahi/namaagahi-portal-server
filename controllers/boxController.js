@@ -1,6 +1,8 @@
 const Box = require('../model/Box')
 const asyncHandler = require('express-async-handler')
 const User = require('../model/User')
+const moment = require('moment-jalaali');
+
 
 // @desc Get all boxes 
 // @route GET /boxes
@@ -43,48 +45,46 @@ const createNewBox = asyncHandler(async (req, res) => {
 // @route PATCH /boxes
 // @access Private
 const updateBox = asyncHandler(async (req, res) => {
-    const { id, boxId, userId, username, name, mark, duration, structures } = req.body;
+    const { id, boxId, userId, username, name, mark, duration, structures } = req.body
   
     if (!id || !boxId || !userId || !name || !mark || !duration || !username) {
-      return res.status(400).json({ message: 'BAD REQUEST : All fields are required' });
+      return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     }
   
     const box = await Box.findById(id).exec();
   
     if (!box) {
-      return res.status(400).json({ message: 'BAD REQUEST : Box not found' });
+      return res.status(400).json({ message: 'BAD REQUEST : Box not found' })
     }
   
     const duplicate = await Box.findOne({ name }).lean().exec();
   
     if (duplicate && duplicate._id.toString() !== id) {
-      return res.status(409).json({ message: 'CONFLICT : Duplicate box name' });
+      return res.status(409).json({ message: 'CONFLICT : Duplicate box name' })
     }
   
-    box.userId = userId;
-    box.username = username;
-    box.boxId = boxId;
-    box.name = name;
-    box.mark = mark;
-    box.duration = duration;
-    box.structures = structures;
+    box.userId = userId
+    box.username = username
+    box.boxId = boxId
+    box.name = name
+    box.mark = mark
+    box.duration = duration
+    box.structures = structures
   
-    await box.save();
+    const diff = (moment((new Date(box.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
+        (moment((new Date(box.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days')) + 1
+        
+    box.duration.diff = diff + 1
   
-    // Recalculate duration.diff for the box
-    const diff = moment(box.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(box.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1;
-    box.duration.diff = diff;
-  
-    // Recalculate duration.diff for each structure
     box.structures.forEach((structure) => {
-      const structureDiff = moment(structure.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(structure.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1;
-      structure.duration.diff = structureDiff;
-    });
+    moment((new Date(structure.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
+      (moment((new Date(structure.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
+    })
   
-    await box.save();
+    await box.save()
   
-    res.json(`'${box.name}' updated`);
-  });
+    res.json(`'${box.name}' updated`)
+  })
 
 // @desc Delete a box
 // @route DELETE /boxes

@@ -5,9 +5,9 @@ const Schema = mongoose.Schema
 const counterSchema = new mongoose.Schema({
     _id: { type: String, required: true },
     sequence_value: { type: Number },
-  });
+  })
   
-const Counter = mongoose.model('Counter', counterSchema);
+const Counter = mongoose.model('Counter', counterSchema)
 
 const planSchema = new Schema({
         planId: {
@@ -61,11 +61,11 @@ const planSchema = new Schema({
             },
             duration: {
                 sellStart: {
-                    type: String,
+                    type: Number,
                     required: true,
                 },
                 sellEnd: {
-                    type: String,
+                    type: Number,
                     required: true,
                 },
                 diff: {
@@ -88,7 +88,8 @@ const planSchema = new Schema({
 
 planSchema.virtual('structures.structureDurationDiff').get(function() {
     return this.structures.map(structure => {
-        return moment(structure.duration.sellEnd, 'jYYYY-jMM-jDD').diff(moment(structure.duration.sellStart, 'jYYYY-jMM-jDD'), 'days') + 1
+        return moment((new Date(structure.duration.sellEnd).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
+        (moment((new Date(structure.duration.sellStart).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
     })
 })
 
@@ -98,8 +99,9 @@ planSchema.pre('validate', function(next) {
   
     doc.structures.forEach((structure, index) => {
       if (doc.isNew || typeof structure.duration.diff === 'undefined' || structure.duration.diff === null) {
-        const diff = moment(structure.duration.sellEnd, 'jYYYY-jMM-jDD').diff(moment(structure.duration.sellStart, 'jYYYY-jMM-jDD'),'days') + 1
-        doc.structures[index].duration.diff = diff;
+        const diff = moment((new Date(structure.duration.sellEnd).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
+        (moment((new Date(structure.duration.sellStart).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
+        doc.structures[index].duration.diff = diff
       }
     })
 

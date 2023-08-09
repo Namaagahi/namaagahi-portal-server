@@ -34,18 +34,19 @@ const boxSchema = new Schema({
         },
         duration:{
             startDate: {
-                type: String,
+                type: Number,
                 required: true
             },
             endDate: {
-                type: String,
+                type: Number,
                 required: true
             },
             diff: {
                 type: Number,
                 required: false,
                 default: function() {
-                    return moment(this.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(this.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
+                    return  (moment((new Date(this.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
+                    (moment((new Date(this.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days')) + 1
                 }
             }
         }, 
@@ -57,15 +58,14 @@ const boxSchema = new Schema({
             },
             duration: {
                 startDate: {
-                    type: String,
+                    type: Number,
                     required: true,
                     default: function() {
-                        console.log("THIS STRUCTURE", this)
                         return this.parent().duration.startDate
                     }
                 },
                 endDate: {
-                    type: String,
+                    type: Number,
                     required: true,
                     default: function() {
                         return this.parent().duration.endDate
@@ -206,10 +206,10 @@ const boxSchema = new Schema({
     }
 ) 
 
-
 boxSchema.virtual('structures.structureDurationDiff').get(function() {
     return this.structures.map(structure => {
-        return moment(structure.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(structure.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
+        return moment((new Date(structure.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
+        (moment((new Date(structure.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
     })
 })
 
@@ -223,13 +223,15 @@ boxSchema.pre('save', function(next) {
     const doc = this
 
     if (doc.isNew || doc.isModified('duration')) {
-        const diff = moment(doc.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(doc.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
+        const diff = moment((new Date(doc.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
+        (moment((new Date(doc.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days')+ 1
         doc.duration.diff = diff
     }
 
     doc.structures.forEach((structure, index) => {
         if (doc.isNew || typeof structure.duration.diff === 'undefined' || structure.duration.diff === null) {
-            const diff = moment(structure.duration.endDate, 'jYYYY-jMM-jDD').diff(moment(structure.duration.startDate, 'jYYYY-jMM-jDD'), 'days') + 1
+            const diff = moment((new Date(structure.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
+            (moment((new Date(structure.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
             doc.structures[index].duration.diff = diff
         }
     })

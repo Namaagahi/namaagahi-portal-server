@@ -273,3 +273,53 @@
 20230807	17:13:56	04ca0b24-22d3-4c83-91e0-a9bea02e1071	ValidationError: Plan validation failed: structures.0.totalPeriodCost: Path `totalPeriodCost` is required.	POST	/plans	http://localhost:3000}
 20230807	17:19:38	28a5fb9d-3932-426c-b504-45e0802daf95	TypeError: Cannot read properties of undefined (reading 'fixedCosts')	POST	/plans	http://localhost:3000}
 20230807	17:49:24	6e16b30f-d4b5-490e-bedd-284c90c58041	ReferenceError: moment is not defined	PATCH	/boxes	http://localhost:3000}
+20230809	09:29:51	6e346d4e-054d-4708-8e61-dc7f9e84e2fe	ValidationError: Box validation failed: duration.: this.duration.endDate.toISOString is not a function, duration.diff: this.duration.endDate.toISOString is not a function	POST	/boxes	http://localhost:3000}
+20230809	09:31:03	814ac981-fdc8-495a-9842-5825834e0cec	ValidationError: Box validation failed: duration.: this.duration.endDate.toISOString is not a function, duration.diff: this.duration.endDate.toISOString is not a function	POST	/boxes	http://localhost:3000}
+20230809	09:31:54	b175bae9-7ca8-4f8c-926f-87e7206a00bc	ValidationError: Box validation failed: duration.: this.duration.endDate.toISOString is not a function, duration.diff: this.duration.endDate.toISOString is not a function	POST	/boxes	http://localhost:3000}
+20230809	09:33:50	7dbcac90-c938-4f3a-8656-d0c88b0b0a63	ValidationError: Box validation failed: duration.: Cast to Number failed for value "NaN" (type number) at path "duration.diff", duration.diff: Cast to Number failed for value "NaN" (type number) at path "duration.diff"	POST	/boxes	http://localhost:3000}
+20230809	09:36:33	a1c0ece1-0088-4604-a40b-9b94ea0af2ce	ValidationError: Box validation failed: duration.: this.duration.endDate.toISOString is not a function, duration.diff: this.duration.endDate.toISOString is not a function	POST	/boxes	http://localhost:3000}
+20230809	09:41:09	e8578a70-3558-4c4c-817c-d9eb5777bd1d	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:43:45	d02c1c7d-391a-4db6-8b1d-4bb090ed9c86	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:44:37	b023a966-4c5d-4419-9140-3b9a1b5dd2e1	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:45:12	00baee55-618b-47aa-af55-8b297d095386	ValidationError: Box validation failed: duration.: Cannot read properties of undefined (reading 'format'), duration.diff: Cannot read properties of undefined (reading 'format')	POST	/boxes	http://localhost:3000}
+20230809	09:48:20	0009617b-ac2a-4555-a66e-7f86e1658914	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:48:52	05ab779e-43ad-4a61-9e5f-a74b57256b8f	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:48:52	5b90107f-150b-451a-9b88-556958108807	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:49:35	2244e1f7-4e15-400f-85e2-53bd219a1cab	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:49:35	5c515496-0407-4470-85d1-6f6c4a048f76	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:49:44	f71b002d-ec0f-4e3c-ae9d-5cbcdbddd0e8	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:50:37	c558fd55-fd9a-4c71-be48-f2c6b2aa050f	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:51:23	1e980fdb-6c74-493a-9369-bbd4c8c5de83	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:53:48	701ca83a-c667-40f9-af01-c7e332a919a1	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:57:24	87db2ab7-d0f5-4237-9230-82225a011d95	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:57:24	4706c516-7dbe-43ca-b6fb-de715d41c44e	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	09:57:24	71db1205-e87a-47df-8922-bb5e8c701a8e	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	10:02:21	f2e7bb07-2925-4b51-ba5d-08aad3f497e9	ValidationError: Box validation failed: duration.: (intermediate value).substring is not a function, duration.diff: (intermediate value).substring is not a function	POST	/boxes	http://localhost:3000}
+20230809	10:09:52	bac549d4-16a4-4be2-be0e-66319de6b073	ValidationError: Box validation failed: duration.: Cast to Number failed for value "YYYY-MM-DD" (type string) at path "duration.diff", duration.diff: Cast to Number failed for value "YYYY-MM-DD" (type string) at path "duration.diff"	POST	/boxes	http://localhost:3000}
+20230809	10:10:15	4eef3a68-2d9c-4404-ba9f-5eac432a14cc	ValidationError: Box validation failed: duration.: Cast to Number failed for value "2023-08-25" (type string) at path "duration.diff", duration.diff: Cast to Number failed for value "2023-08-25" (type string) at path "duration.diff"	POST	/boxes	http://localhost:3000}
+20230809	10:11:01	8df1f5f9-260e-495f-a33c-39ddf73c41c0	ValidationError: Box validation failed: duration.: Cast to Number failed for value "2023-08-25" (type string) at path "duration.diff", duration.diff: Cast to Number failed for value "2023-08-25" (type string) at path "duration.diff"	POST	/boxes	http://localhost:3000}
+20230809	10:11:50	c49f72f5-6f6c-4644-b9db-36b92462f568	ValidationError: Box validation failed: duration.: Cast to Number failed for value "NaN" (type number) at path "duration.diff", duration.diff: Cast to Number failed for value "NaN" (type number) at path "duration.diff"	POST	/boxes	http://localhost:3000}
+20230809	10:12:08	4c5aca8c-83fc-478b-8935-98cfe22199ca	ValidationError: Box validation failed: duration.: Cast to Number failed for value "NaN" (type number) at path "duration.diff", duration.diff: Cast to Number failed for value "NaN" (type number) at path "duration.diff"	POST	/boxes	http://localhost:3000}
+20230809	10:15:46	7ba9ca7c-c885-4e10-84f8-d8bdbccabe56	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	10:19:36	ae72389b-e3d0-416d-a326-e74664798315	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	10:22:26	e1e3d275-7a8a-40c0-bf97-65f0dd362b7e	RangeError: Invalid time value	POST	/boxes	http://localhost:3000}
+20230809	11:36:04	7c38c1c3-6908-468a-a48b-aee99c6b9ba9	ReferenceError: moment is not defined	PATCH	/boxes	http://localhost:3000}
+20230809	11:50:26	3fa3ef02-3dfb-431b-b5c5-0083cfb6f60b	ReferenceError: moment is not defined	PATCH	/boxes	http://localhost:3000}
+20230809	11:51:22	04021bbc-9329-437d-842d-cb94c21dfe22	ValidationError: Box validation failed: duration.startDate: Path `duration.startDate` is required., duration.endDate: Path `duration.endDate` is required.	PATCH	/boxes	http://localhost:3000}
+20230809	11:51:47	b817828e-07f8-42c2-8990-24c425540ac0	ReferenceError: moment is not defined	PATCH	/boxes	http://localhost:3000}
+20230809	11:54:18	a31ec11e-60b8-48b7-b092-9f5e3b738ff7	ReferenceError: moment is not defined	PATCH	/boxes	http://localhost:3000}
+20230809	12:04:37	4205041e-f17d-43a2-a2d8-f4ff45343ded	ValidationError: Box validation failed: duration.diff: Cast to Number failed for value "days11" (type string) at path "duration.diff"	PATCH	/boxes	http://localhost:3000}
+20230809	13:00:08	72a9356c-549e-470a-93e8-8329932fbcc1	RangeError: Invalid time value	POST	/plans	http://localhost:3000}
+20230809	13:02:04	c5cb5371-2044-42e5-b5ba-0a707d14f26a	RangeError: Invalid time value	POST	/plans	http://localhost:3000}
+20230809	13:02:22	5a561e2a-a7c1-452d-9c68-4b02b9eb8523	RangeError: Invalid time value	POST	/plans	http://localhost:3000}
+20230809	13:04:01	7cd01896-c7aa-48b9-80fd-783074859010	RangeError: Invalid time value	POST	/plans	http://localhost:3000}
+20230809	13:49:50	25a7ec3b-dfd8-44b9-b01d-a03708ede706	RangeError: Invalid time value	POST	/plans	http://localhost:3000}
+20230809	14:03:24	a36213d8-0893-44f2-8a88-ff1137acd156	RangeError: Invalid time value	POST	/plans	http://localhost:3000}
+20230809	14:03:24	cdc36a51-57f5-4cf0-856d-4afb758365b0	RangeError: Invalid time value	POST	/plans	http://localhost:3000}
+20230809	14:03:24	cd44c04d-2624-40f8-aae4-292161c35685	RangeError: Invalid time value	POST	/plans	http://localhost:3000}
+20230809	14:03:24	ce2bfb61-bfd5-498e-b495-1f5ddacd5d6b	RangeError: Invalid time value	POST	/plans	http://localhost:3000}
+20230809	14:03:24	a70aba1e-aa7a-4328-9452-527bd01c70a2	RangeError: Invalid time value	POST	/plans	http://localhost:3000}
+20230809	14:03:24	bbf33d79-317a-4c02-8d44-d984151f1585	RangeError: Invalid time value	POST	/plans	http://localhost:3000}
+20230809	14:03:27	c4008261-dcec-44be-8ff3-02d1e2207920	RangeError: Invalid time value	POST	/plans	http://localhost:3000}
+20230809	14:03:46	12026332-86e5-44e1-925b-abb61ce6edcb	RangeError: Invalid time value	POST	/plans	http://localhost:3000}
+20230809	14:45:47	62aa58d0-d59a-4fed-89a0-6ae1fa6cccab	ValidationError: Plan validation failed: structures.0.duration.sellEnd: Path `duration.sellEnd` is required., structures.0.duration.sellStart: Path `duration.sellStart` is required.	POST	/plans	http://localhost:3000}

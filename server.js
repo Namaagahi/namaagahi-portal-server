@@ -49,6 +49,7 @@ app.use('/structures', require('./routes/structureRouter'))
 app.use('/boxes', require('./routes/boxRoutes'))
 app.use('/plans', require('./routes/planRoutes'))
 app.use('/initialCustomers', require('./routes/initialCustomerRoute'))
+app.use('/finalCustomers', require('./routes/finalCustomersRoutes'))
 app.use('/locations', require('./routes/locationRoutes'))
 
 // Custom 404 page
