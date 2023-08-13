@@ -43,6 +43,9 @@ dependencies:
   multer-gridfs-storage:
     specifier: ^5.0.2
     version: 5.0.2(multer@1.4.5-lts.1)
+  universal-cookie:
+    specifier: ^4.0.4
+    version: 4.0.4
   uuid:
     specifier: ^8.3.2
     version: 8.3.2
@@ -102,6 +105,10 @@ packages:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
       '@types/node': 20.4.9
+    dev: false
+
+  /@types/cookie@0.3.3:
+    resolution: {integrity: sha512-LKVP3cgXBT9RYj+t+9FDKwS5tdI+rPBXaNSkma7hvqy35lc7mAokC2zsqWJH0LaqIt3B962nuYI77hsJoT1gow==}
     dev: false
 
   /@types/express-serve-static-core@4.17.35:
@@ -1896,6 +1903,13 @@ packages:
     dependencies:
       crypto-random-string: 2.0.0
     dev: true
+
+  /universal-cookie@4.0.4:
+    resolution: {integrity: sha512-lbRVHoOMtItjWbM7TwDLdl8wug7izB0tq3/YVKhT/ahB4VDvWMyvnADfnJI8y6fSvsjh51Ix7lTGC6Tn4rMPhw==}
+    dependencies:
+      '@types/cookie': 0.3.3
+      cookie: 0.4.1
+    dev: false
 
   /unpipe@1.0.0:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}

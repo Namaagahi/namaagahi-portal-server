@@ -2,6 +2,7 @@ const User = require('../model/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
+const Cookies = require('universal-cookie')
 
 // @desc Login
 // @route POST /auth
@@ -10,13 +11,13 @@ const login = asyncHandler(async (req, res) => {
 
     const { username, password } = req.body
     if (!username || !password) return res.status(400).json({ message: 'Username and password are required.' })
-
+    
     const foundUser = await User.findOne({ username }).exec()
     if (!foundUser || !foundUser.active) return res.status(401).json({ message: 'Unauthorized: banned.' })
     
     const match = await bcrypt.compare(password, foundUser.password)
     if (!match) return res.status(401).json({ message: 'Unauthorized: wrong password.' })
-
+    
     const accessToken = jwt.sign(
         {
             "UserInfo": {
@@ -30,21 +31,21 @@ const login = asyncHandler(async (req, res) => {
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: '15m' }
     )
-
+    
     
     const refreshToken = jwt.sign(
         { "username": foundUser.username },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: '7d' }
     )
-
+    
     res.cookie('jwt', refreshToken, {
-        httpOnly: true, 
+        httpOnly: false, 
         maxAge: 7 * 24 * 60 * 60 * 1000,
     })
-
+    
     res.json({ accessToken })
-})
+    })
 
 // @desc Refresh
 // @route GET /auth/refresh

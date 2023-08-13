@@ -5,7 +5,7 @@ const verifyJWT = (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization
 
   if (!authHeader?.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Unauthorized!' })
+    return res.status(401).json({ message: '!' })
   }
 
   const token = authHeader.split(' ')[1]
@@ -20,7 +20,7 @@ const verifyJWT = (req, res, next) => {
 
       // Set the JWT token as an HttpOnly cookie using cookie-parser
       const cookieOptions = {
-        httpOnly: true,
+        httpOnly: false,
         maxAge: 24 * 60 * 60 * 1000, // 1 day
         domain:'portal.namaagahi.com' ,
         sameSite: 'Lax'
