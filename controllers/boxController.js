@@ -62,7 +62,8 @@ const updateBox = asyncHandler(async (req, res) => {
     if (duplicate && duplicate._id.toString() !== id) {
       return res.status(409).json({ message: 'CONFLICT : Duplicate box name' })
     }
-  
+
+    
     box.userId = userId
     box.username = username
     box.boxId = boxId
@@ -70,17 +71,12 @@ const updateBox = asyncHandler(async (req, res) => {
     box.mark = mark
     box.duration = duration
     box.structures = structures
-  
+    
     const diff = (moment((new Date(box.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
-        (moment((new Date(box.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days')) + 1
-        
+    (moment((new Date(box.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days')) + 1
+    
     box.duration.diff = diff + 1
-  
-    box.structures.forEach((structure) => {
-    moment((new Date(structure.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
-      (moment((new Date(structure.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
-    })
-  
+
     await box.save()
   
     res.json(`'${box.name}' updated`)
