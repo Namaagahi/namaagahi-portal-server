@@ -25,15 +25,15 @@ const getAllPlans = asyncHandler(async (req, res) => {
 // @access Private
 const createNewPlan = asyncHandler(async (req, res) => {
 
-    const { planId, userId, customerName, brand, structures } = req.body
-    if (!userId || !customerName || !brand || !structures) 
+    const { planId, userId, initialCustomerId, finalCustomerId, brand, structures } = req.body
+    if (!userId || !initialCustomerId || !brand || !structures) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
     const duplicate = await Plan.findOne({ planId }).lean().exec()
     if (duplicate) 
         return res.status(409).json({ message: 'CONFLICT :Duplicate plan id' })
 
-    const plan = await Plan.create({ planId, userId, customerName, brand, structures  })
+    const plan = await Plan.create({ planId, userId, initialCustomerId, finalCustomerId, brand, structures  })
     if (plan) 
         return res.status(201).json({ message: `CREATED: Plan ${req.body.planId} created successfully!` })
     else 
@@ -44,8 +44,8 @@ const createNewPlan = asyncHandler(async (req, res) => {
 // @route PATCH /planes
 // @access Private
 const updatePlan = asyncHandler(async (req, res) => {
-    const { id, planId, userId, username, customerName, brand, status, structures } = req.body;
-    if (!id || !planId || !userId || !username || !customerName || !brand || !status || !structures) {
+    const { id, planId, userId, username, initialCustomerId, finalCustomerId, brand, status, structures } = req.body;
+    if (!id || !planId || !userId || !username || !initialCustomerId || !brand || !status || !structures) {
       return res.status(400).json({ message: 'BAD REQUEST : All fields are required' });
     }
   
@@ -62,7 +62,8 @@ const updatePlan = asyncHandler(async (req, res) => {
     plan.userId = userId;
     plan.username = username;
     plan.planId = planId;
-    plan.customerName = customerName;
+    plan.initialCustomerId = initialCustomerId;
+    plan.finalCustomerId = finalCustomerId;
     plan.brand = brand;
     plan.status = status;
     plan.structures = structures;

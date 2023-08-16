@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const finalCustomerSchema = new Schema({
+        finalCustomerId: {
+            type: String,
+            required: true,
+        },
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,

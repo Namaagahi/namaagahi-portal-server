@@ -19,10 +19,15 @@ const planSchema = new Schema({
             required: true,
             ref: 'User'
         },
-        customerName: {
+        initialCustomerId: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'InitialCustomer'
+        },
+        finalCustomerId: {
+            type: String,
+            required: false,
+            default: ''
         },
         brand: {
             type: String,
@@ -92,7 +97,6 @@ planSchema.virtual('structures.structureDurationDiff').get(function() {
         (moment((new Date(structure.duration.sellStart).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
     })
 })
-
 
 planSchema.pre('validate', function(next) {
     const doc = this;
