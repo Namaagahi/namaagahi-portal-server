@@ -240,27 +240,11 @@ boxSchema.pre('save', function(next) {
     const doc = this
 
     if (doc.isNew || doc.isModified('duration')) {
+        console.log("BOX DURATIONNNNNN")
         const diff = moment((new Date(doc.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
-        (moment((new Date(doc.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days')+ 1
+        (moment((new Date(doc.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
         doc.duration.diff = diff
     }
-
-    // CALC BOX DIFF FIRST TIME
-    doc.structures.forEach((structure, index) => {
-        if (doc.isNew || typeof structure.duration.diff === 'undefined' || structure.duration.diff === null) {
-            const diff = moment((new Date(structure.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
-            (moment((new Date(structure.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
-            doc.structures[index].duration.diff = diff
-        }
-    })
-
-    // CALC STRUCTURE DIFFS FIRST TIME
-    doc.structures.forEach((structure, index) => {
-        if (doc.isNew || typeof structure.costs.fixedCosts.periodCost === 'undefined' || structure.costs.fixedCosts.periodCost === null) {
-            const periodCost = (structure.costs.fixedCosts.monthlyCost / 30) * structure.duration.diff
-            doc.structures[index].costs.fixedCosts.periodCost = periodCost
-        }
-    })
 
     doc.structures.forEach((structure) => {
         if (
@@ -269,8 +253,10 @@ boxSchema.pre('save', function(next) {
             structure.isModified('duration.startDate') || 
             structure.isModified('duration.endDate')
             ) {
-            const structureDiff = moment(new Date(structure.duration.endDate).toISOString().substring(0, 10), 'jYYYY-jMM-jDD').diff
-            (moment(new Date(structure.duration.startDate).toISOString().substring(0, 10), 'jYYYY-jMM-jDD'),'days') + 1
+            console.log("BOX STRRRRRRRRRR DURATIONNNNNN")
+            const structureDiff = moment((new Date(structure.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
+            (moment((new Date(structure.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
+            console.log("structureDiffFFFFFFFFFFFFF", structureDiff)
             structure.duration.diff = structureDiff
             structure.costs.fixedCosts.monthlyCost = structure.marks.markOptions.docSize * structure.costs.fixedCosts.squareCost;
             structure.costs.fixedCosts.dailyCost = structure.costs.fixedCosts.monthlyCost / 30
@@ -291,11 +277,8 @@ boxSchema.pre('save', function(next) {
 
     doc.structures.forEach((structure) => {
         if (structure.costs.variableCosts && structure.costs.variableCosts.length > 0) {
-            console.log("IFFF 1")
             structure.costs.variableCosts.forEach((variableCost) => {
                 if (variableCost.figures.monthlyCost) {
-            console.log("IFFF 2")
-
                     const monthlyCost = variableCost.figures.monthlyCost;
                     const durationDiff = structure.duration.diff;
 

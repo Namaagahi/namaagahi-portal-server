@@ -63,7 +63,6 @@ const updateBox = asyncHandler(async (req, res) => {
       return res.status(409).json({ message: 'CONFLICT : Duplicate box name' })
     }
 
-    
     box.userId = userId
     box.username = username
     box.boxId = boxId

@@ -94,7 +94,7 @@ const logout = (req, res) => {
     const cookies = req.cookies
     if (!cookies?.jwt) return res.sendStatus(204).json({ message: 'No Content' })
     
-    res.clearCookie('jwt')
+    res.clearCookie('jwt', { expiresIn: new Date(0)})
     res.json({ message: 'Cookie cleared' })
 }
 
