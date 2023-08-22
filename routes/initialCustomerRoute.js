@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router()
 const initialCustomerController =  require('../controllers/initialCustomerController')
-const verifyJWT = require('../middleware/virifyJWT')
+// const verifyJWT = require('../middleware/virifyJWT')
 
-router.use(verifyJWT)
+// router.use(verifyJWT)
 
 router.route('/')
     .get(initialCustomerController.getAllInitialCustomers)
