@@ -26,7 +26,7 @@ const finalCustomerSchema = new Schema({
         },
         ecoCode: {
             type: Number,
-            required: false
+            required: true
         },
         regNum: {
             type: Number,

@@ -25,7 +25,7 @@ const getAllFinalCustomers = asyncHandler(async (req, res) => {
 const createNewFinalCustomer = asyncHandler(async (req, res) => {
 
     const { userId, finalCustomerId, agentName, companyName, post, ecoCode, regNum, nationalId, address, phone, postalCode } = req.body
-    if (!userId || !companyName ||!finalCustomerId) 
+    if (!userId || !companyName ||!ecoCode ||!finalCustomerId) 
         return res.status(400).json({ message: 'BAD REQUEST : company name is required' })
     
     const duplicate = await FinalCustomer.findOne({ ecoCode }).lean().exec()
