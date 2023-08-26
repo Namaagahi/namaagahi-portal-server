@@ -93,9 +93,10 @@ const updateBox = asyncHandler(async (req, res) => {
 // @route DELETE /boxes
 // @access Private
 const deleteBox = asyncHandler(async (req, res) => {
+    const { id, boxId } = req.body
+    await updateStructuresOnBoxDeletion(boxId)
 
-    const { id } = req.body
-    if (!id) 
+    if (!id || !boxId) 
         return res.status(400).json({ message: 'Box ID required' })
     
     const box = await Box.findById(id).exec()
@@ -138,6 +139,15 @@ async function updateStructures(structures, boxId, isCreation) {
     }
   
     return updatedStructures
+  }
+
+  async function updateStructuresOnBoxDeletion(boxId) {
+    const updatedStructures = await Structure.updateMany(
+      { parent: boxId },
+      { $set: { isChosen: false, parent: '' } }
+    ).exec()
+  
+    return updatedStructures;
   }
 
 module.exports = { getAllBoxes, createNewBox, updateBox, deleteBox }
