@@ -2,11 +2,14 @@ const Structure = require('../model/Structure')
 const asyncHandler = require('express-async-handler')
 const User = require('../model/User')
 const Box = require('../model/Box')
+const { updateExpiredStructures } = require('../middleware/updateExpiredStructures')
 
 // @desc Get all structures 
 // @route GET /structures
 // @access Private
 const getAllStructures = asyncHandler(async (req, res) => {
+
+    await updateExpiredStructures()
 
     const structures = await Structure.find().lean()
     if (!structures?.length) 

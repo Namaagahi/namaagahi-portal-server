@@ -364,3 +364,11 @@
 20230816	13:22:11	3b82eab6-d2d2-487f-bf73-c92a207b27cc	ValidationError: finalCustomer validation failed: finalCustomerId: Path `finalCustomerId` is required.	POST	/finalCustomers	http://localhost:3000}
 20230816	13:23:05	01099638-aa9b-46e9-a1ca-90323e4fe690	ValidationError: finalCustomer validation failed: finalCustomerId: Path `finalCustomerId` is required.	POST	/finalCustomers	http://localhost:3000}
 20230816	13:45:28	a728401c-9a4e-4dd1-8b62-14af9b67707b	ValidationError: Plan validation failed: finalCustomerId: Path `finalCustomerId` is required.	POST	/plans	http://localhost:3000}
+20230826	08:25:20	c0840e68-3678-45a8-aa54-64e928f15799	ValidationError: Box validation failed: structures.0.structureId: Cast to ObjectId failed for value "" (type string) at path "structureId" because of "BSONError"	POST	/boxes	http://localhost:3000}
+20230826	08:51:18	1835e9c2-9a8f-4f28-98a5-96b86a52e182	TypeError: updateExpiredStructures is not a function	GET	/structures	http://localhost:3000}
+20230826	08:52:57	57ac0ea3-1d48-4982-ba7a-9d37cf3463df	TypeError: updateExpiredStructures is not a function	GET	/structures	http://localhost:3000}
+20230826	08:54:22	2d281f7d-eb2c-435b-afb3-a0711abc0576	TypeError: updateExpiredStructures is not a function	GET	/structures	http://localhost:3000}
+20230826	10:39:37	c02970ae-0d67-4d78-ba20-ce5865857be3	ReferenceError: id is not defined	PATCH	/boxes	http://localhost:3000}
+20230826	10:40:05	245238aa-716e-458c-8270-7735f8606802	ReferenceError: id is not defined	PATCH	/boxes	http://localhost:3000}
+20230826	11:38:29	12bd379a-b18d-42ff-aa1d-40c86411a975	TypeError: Class constructor ObjectId cannot be invoked without 'new'	PATCH	/boxes	http://localhost:3000}
+20230826	11:39:16	4d13c4fd-0d92-4305-b932-90623b325d8f	TypeError: Class constructor ObjectId cannot be invoked without 'new'	PATCH	/boxes	http://localhost:3000}

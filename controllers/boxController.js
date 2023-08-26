@@ -2,7 +2,7 @@ const Box = require('../model/Box')
 const asyncHandler = require('express-async-handler')
 const User = require('../model/User')
 const moment = require('moment-jalaali');
-
+const Structure = require('../model/Structure')
 
 // @desc Get all boxes 
 // @route GET /boxes
@@ -35,10 +35,15 @@ const createNewBox = asyncHandler(async (req, res) => {
         return res.status(409).json({ message: 'CONFLICT :Duplicate box name' })
 
     const box = await Box.create({ boxId, userId, name, mark, duration, structures })
-    if (box) 
+    if (box) {
+        // Update structures
+        await updateStructures(structures, box.boxId, true)
+        console.log('Updated structures:', structures)
+    
         return res.status(201).json({ message: `CREATED: Box ${req.body.name} created successfully!` })
-    else 
-        return res.status(400).json({ message: 'BAD REQUEST : Invalid box data received' })
+      } else {
+        return res.status(400).json({ message: 'BAD REQUEST: Invalid box data received' })
+      }
 })
 
 // @desc Update a box
@@ -75,8 +80,11 @@ const updateBox = asyncHandler(async (req, res) => {
     (moment((new Date(box.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days')) + 1
     
     box.duration.diff = diff + 1
+    // Update structures
+    await updateStructures(structures, box.boxId, false)
 
     await box.save()
+//   console.log('Updated structures:', structures)
   
     res.json(`'${box.name}' updated`)
   })
@@ -99,5 +107,37 @@ const deleteBox = asyncHandler(async (req, res) => {
 
     res.json(reply)
 })
+
+// Function to update structures
+async function updateStructures(structures, boxId, isCreation) {
+    const updatedStructures = []
+  
+    for (const structure of structures) {
+      const structureId = structure.structureId; 
+      const foundStructure = await Structure.findOne({ _id: structureId }).exec()
+      console.log("STRUCTUREEEE", foundStructure)
+      if (foundStructure) {
+        foundStructure.isChosen = true
+        foundStructure.parent = boxId
+        await foundStructure.save()
+        updatedStructures.push(foundStructure)
+      }
+    }
+  
+    if (!isCreation) {
+      const removedStructures = await Structure.find({
+        _id: { $nin: structures.map(s => s.structureId) },
+        parent: boxId
+      }).exec()
+      console.log("REMOVED STRUCTURESSS", removedStructures)
+      for (const structure of removedStructures) {
+        structure.isChosen = false
+        structure.parent = ''
+        await structure.save()
+      }
+    }
+  
+    return updatedStructures
+  }
 
 module.exports = { getAllBoxes, createNewBox, updateBox, deleteBox }

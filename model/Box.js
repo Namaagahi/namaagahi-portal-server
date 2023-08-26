@@ -240,7 +240,6 @@ boxSchema.pre('save', function(next) {
     const doc = this
 
     if (doc.isNew || doc.isModified('duration')) {
-        console.log("BOX DURATIONNNNNN")
         const diff = moment((new Date(doc.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
         (moment((new Date(doc.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
         doc.duration.diff = diff
@@ -253,10 +252,8 @@ boxSchema.pre('save', function(next) {
             structure.isModified('duration.startDate') || 
             structure.isModified('duration.endDate')
             ) {
-            console.log("BOX STRRRRRRRRRR DURATIONNNNNN")
             const structureDiff = moment((new Date(structure.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
             (moment((new Date(structure.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
-            console.log("structureDiffFFFFFFFFFFFFF", structureDiff)
             structure.duration.diff = structureDiff
             structure.costs.fixedCosts.monthlyCost = structure.marks.markOptions.docSize * structure.costs.fixedCosts.squareCost;
             structure.costs.fixedCosts.dailyCost = structure.costs.fixedCosts.monthlyCost / 30
@@ -282,11 +279,9 @@ boxSchema.pre('save', function(next) {
                     const monthlyCost = variableCost.figures.monthlyCost;
                     const durationDiff = structure.duration.diff;
 
-                    // Recalculate periodCost
                     const periodCost = (monthlyCost / 30) * durationDiff;
                     variableCost.figures.periodCost = periodCost;
 
-                    // Recalculate dailyCost
                     const dailyCost = monthlyCost / 30;
                     variableCost.figures.dailyCost = dailyCost;
                 }
@@ -296,6 +291,5 @@ boxSchema.pre('save', function(next) {
 
     next()
 })
-
 
 module.exports = mongoose.model('Box', boxSchema)
