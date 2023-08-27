@@ -1,7 +1,7 @@
 const Plan = require('../model/Plan')
 const asyncHandler = require('express-async-handler')
 const User = require('../model/User')
-const moment = require('moment-jalaali')
+const moment = require('jalali-moment')
 
 // @desc Get all plans 
 // @route GET /plans
@@ -68,8 +68,9 @@ const updatePlan = asyncHandler(async (req, res) => {
     plan.status = status;
     plan.structures = structures;
     plan.structures.forEach((structure) => {
-      structure.duration.diff = moment((new Date(structure.duration.sellEnd).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
-      (moment((new Date(structure.duration.sellStart).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
+        structure.duration.diff = (moment.unix(structure.duration.sellEnd).diff((moment.unix(structure.duration.sellStart)), 'days')) + 1
+    //   structure.duration.diff = moment((new Date(structure.duration.sellEnd).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
+    //   (moment((new Date(structure.duration.sellStart).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
       structure.totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
     })
   

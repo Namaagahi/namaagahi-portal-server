@@ -3,7 +3,7 @@ const Box = require('../model/Box')
 
 async function updateExpiredStructures() {
   try {
-    const nowTimestamp = Date.now()
+    const nowTimestamp = Date.now() / 1000
     const expiredBoxes = await Box.find({ 'duration.endDate': { $lt: nowTimestamp } }).lean()
     
     const structureUpdates = expiredBoxes.map(async (box) => {

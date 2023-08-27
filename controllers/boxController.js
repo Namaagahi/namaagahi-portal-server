@@ -1,7 +1,6 @@
 const Box = require('../model/Box')
 const asyncHandler = require('express-async-handler')
 const User = require('../model/User')
-const moment = require('moment-jalaali');
 const Structure = require('../model/Structure')
 
 // @desc Get all boxes 
@@ -38,7 +37,7 @@ const createNewBox = asyncHandler(async (req, res) => {
     if (box) {
         // Update structures
         await updateStructures(structures, box.boxId, true)
-        console.log('Updated structures:', structures)
+        // console.log('Updated structures:', structures)
     
         return res.status(201).json({ message: `CREATED: Box ${req.body.name} created successfully!` })
       } else {
@@ -76,10 +75,6 @@ const updateBox = asyncHandler(async (req, res) => {
     box.duration = duration
     box.structures = structures
     
-    const diff = (moment((new Date(box.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
-    (moment((new Date(box.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days')) + 1
-    
-    box.duration.diff = diff + 1
     // Update structures
     await updateStructures(structures, box.boxId, false)
 
@@ -116,7 +111,7 @@ async function updateStructures(structures, boxId, isCreation) {
     for (const structure of structures) {
       const structureId = structure.structureId; 
       const foundStructure = await Structure.findOne({ _id: structureId }).exec()
-      console.log("STRUCTUREEEE", foundStructure)
+      console.log("foundStructure", foundStructure)
       if (foundStructure) {
         foundStructure.isChosen = true
         foundStructure.parent = boxId
@@ -130,7 +125,6 @@ async function updateStructures(structures, boxId, isCreation) {
         _id: { $nin: structures.map(s => s.structureId) },
         parent: boxId
       }).exec()
-      console.log("REMOVED STRUCTURESSS", removedStructures)
       for (const structure of removedStructures) {
         structure.isChosen = false
         structure.parent = ''

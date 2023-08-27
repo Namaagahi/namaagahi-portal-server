@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const moment = require('moment-jalaali')
+const moment = require('jalali-moment')
 const Schema = mongoose.Schema
 
 const counterSchema = new mongoose.Schema({
@@ -93,8 +93,9 @@ const planSchema = new Schema({
 
 planSchema.virtual('structures.structureDurationDiff').get(function() {
     return this.structures.map(structure => {
-        return moment((new Date(structure.duration.sellEnd).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
-        (moment((new Date(structure.duration.sellStart).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
+        return ((moment.unix(structure.duration.sellEnd).diff((moment.unix(structure.duration.sellStart)), 'days')) + 1)
+        // return moment((new Date(structure.duration.sellEnd).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
+        // (moment((new Date(structure.duration.sellStart).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
     })
 })
 
@@ -103,8 +104,9 @@ planSchema.pre('validate', function(next) {
   
     doc.structures.forEach((structure, index) => {
       if (doc.isNew || typeof structure.duration.diff === 'undefined' || structure.duration.diff === null) {
-        const diff = moment((new Date(structure.duration.sellEnd).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
-        (moment((new Date(structure.duration.sellStart).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
+        const diff = (moment.unix(doc.duration.sellEnd).diff((moment.unix(doc.duration.sellStart)), 'days')) + 1
+        // const diff = moment((new Date(structure.duration.sellEnd).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
+        // (moment((new Date(structure.duration.sellStart).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
         doc.structures[index].duration.diff = diff
       }
     })
