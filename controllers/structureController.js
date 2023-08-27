@@ -1,7 +1,6 @@
 const Structure = require('../model/Structure')
 const asyncHandler = require('express-async-handler')
 const User = require('../model/User')
-const Box = require('../model/Box')
 const { updateExpiredStructures } = require('../middleware/updateExpiredStructures')
 
 // @desc Get all structures 
@@ -47,6 +46,7 @@ const createNewStructure = asyncHandler(async (req, res) => {
 // @route PATCH /structures
 // @access Private
 const updateStructure = asyncHandler(async (req, res) => {
+
     const { id, userId, name, location, isAvailable, isChosen, parent } = req.body
     if (!id || !userId || !name || !location ) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
@@ -58,8 +58,6 @@ const updateStructure = asyncHandler(async (req, res) => {
     if(duplicate && duplicate?._id.toString() !== id) 
         return res.status(409).json({ message: 'CONFLICT : Duplicate structure name!' })
 
-
-     
     // Update and store user
     structure.userId = userId
     structure.name = name

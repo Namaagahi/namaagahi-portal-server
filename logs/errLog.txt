@@ -372,3 +372,5 @@
 20230826	10:40:05	245238aa-716e-458c-8270-7735f8606802	ReferenceError: id is not defined	PATCH	/boxes	http://localhost:3000}
 20230826	11:38:29	12bd379a-b18d-42ff-aa1d-40c86411a975	TypeError: Class constructor ObjectId cannot be invoked without 'new'	PATCH	/boxes	http://localhost:3000}
 20230826	11:39:16	4d13c4fd-0d92-4305-b932-90623b325d8f	TypeError: Class constructor ObjectId cannot be invoked without 'new'	PATCH	/boxes	http://localhost:3000}
+20230827	16:07:47	e37a321a-6d0f-4408-8ea7-abf1b4634110	TypeError: doc.isModified is not a function	POST	/boxes	http://localhost:3000}
+20230827	16:09:24	757ae91b-c762-4a49-9975-887d182676cb	TypeError: doc.isModified is not a function	POST	/boxes	http://localhost:3000}

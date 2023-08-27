@@ -44,10 +44,6 @@ const boxSchema = new Schema({
             diff: {
                 type: Number,
                 required: false,
-                // default: function() {
-                //     return (moment((new Date(this.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
-                //     (moment((new Date(this.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days')) + 1
-                // }
                 default: function() {
                     return ((moment.unix(this.duration.endDate).diff((moment.unix(this.duration.startDate)), 'days')) + 1)
                 }
@@ -197,7 +193,7 @@ const boxSchema = new Schema({
                 type: Number,
                 required: true
             }
-        }]
+        }],
     } 
 ,
     {
@@ -210,8 +206,6 @@ const boxSchema = new Schema({
 boxSchema.virtual('structures.structureDurationDiff').get(function() {
     return this.structures.map(structure => {
         return ((moment.unix(structure.duration.endDate).diff((moment.unix(structure.duration.startDate)), 'days')) + 1)
-        // return moment((new Date(structure.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
-        // (moment((new Date(structure.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
     })
 })
 
@@ -245,8 +239,6 @@ boxSchema.pre('save', function(next) {
 
     if (doc.isNew || doc.isModified('duration')) {
         const diff = (moment.unix(doc.duration.endDate).diff((moment.unix(doc.duration.startDate)), 'days')) + 1
-        // const diff = moment((new Date(doc.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
-        // (moment((new Date(doc.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
         doc.duration.diff = diff
     }
 
@@ -258,14 +250,12 @@ boxSchema.pre('save', function(next) {
             structure.isModified('duration.endDate')
             ) {
             const structureDiff = (moment.unix(structure.duration.endDate).diff((moment.unix(structure.duration.startDate)), 'days')) + 1
-            // const structureDiff = moment((new Date(structure.duration.endDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
-            // (moment((new Date(structure.duration.startDate).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
             structure.duration.diff = structureDiff
             structure.costs.fixedCosts.monthlyCost = structure.marks.markOptions.docSize * structure.costs.fixedCosts.squareCost;
             structure.costs.fixedCosts.dailyCost = structure.costs.fixedCosts.monthlyCost / 30
             structure.costs.fixedCosts.periodCost = (structure.costs.fixedCosts.monthlyCost / 30) * structure.duration.diff
         }
-      })
+    })
 
     let dailyVariableCost = 0
     doc.structures.forEach((structure) => {

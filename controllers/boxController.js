@@ -37,7 +37,6 @@ const createNewBox = asyncHandler(async (req, res) => {
     if (box) {
         // Update structures
         await updateStructures(structures, box.boxId, true)
-        // console.log('Updated structures:', structures)
     
         return res.status(201).json({ message: `CREATED: Box ${req.body.name} created successfully!` })
       } else {
@@ -49,8 +48,8 @@ const createNewBox = asyncHandler(async (req, res) => {
 // @route PATCH /boxes
 // @access Private
 const updateBox = asyncHandler(async (req, res) => {
+
     const { id, boxId, userId, username, name, mark, duration, structures } = req.body
-  
     if (!id || !boxId || !userId || !name || !mark || !duration || !username) {
       return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     }
@@ -77,9 +76,7 @@ const updateBox = asyncHandler(async (req, res) => {
     
     // Update structures
     await updateStructures(structures, box.boxId, false)
-
     await box.save()
-//   console.log('Updated structures:', structures)
   
     res.json(`'${box.name}' updated`)
   })
@@ -88,6 +85,7 @@ const updateBox = asyncHandler(async (req, res) => {
 // @route DELETE /boxes
 // @access Private
 const deleteBox = asyncHandler(async (req, res) => {
+
     const { id, boxId } = req.body
     await updateStructuresOnBoxDeletion(boxId)
 
@@ -104,8 +102,11 @@ const deleteBox = asyncHandler(async (req, res) => {
     res.json(reply)
 })
 
-// Function to update structures
+// @desc update box structures when create or update
+// @middleware
+// @access Private
 async function updateStructures(structures, boxId, isCreation) {
+
     const updatedStructures = []
   
     for (const structure of structures) {
@@ -133,15 +134,19 @@ async function updateStructures(structures, boxId, isCreation) {
     }
   
     return updatedStructures
-  }
+}
 
-  async function updateStructuresOnBoxDeletion(boxId) {
-    const updatedStructures = await Structure.updateMany(
-      { parent: boxId },
-      { $set: { isChosen: false, parent: '' } }
-    ).exec()
-  
-    return updatedStructures;
-  }
+// @desc update box structures when delete
+// @middleware
+// @access Private
+async function updateStructuresOnBoxDeletion(boxId) {
+
+  const updatedStructures = await Structure.updateMany(
+    { parent: boxId },
+    { $set: { isChosen: false, parent: '' } }
+  ).exec()
+
+  return updatedStructures;
+}
 
 module.exports = { getAllBoxes, createNewBox, updateBox, deleteBox }

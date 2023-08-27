@@ -97,4 +97,5 @@ const deletePlan = asyncHandler(async (req, res) => {
 
     res.json(reply)
 })
+
 module.exports = { getAllPlans, createNewPlan, updatePlan, deletePlan }
