@@ -25,8 +25,8 @@ const getAllFinalCustomers = asyncHandler(async (req, res) => {
 const createNewFinalCustomer = asyncHandler(async (req, res) => {
 
     const { userId, finalCustomerId, agentName, companyName, post, ecoCode, regNum, nationalId, address, phone, postalCode } = req.body
-    if (!userId || !companyName ||!ecoCode ||!finalCustomerId) 
-        return res.status(400).json({ message: 'BAD REQUEST : company name is required' })
+    if (!userId || !companyName || !ecoCode || !finalCustomerId) 
+        return res.status(400).json({ message: 'BAD REQUEST : company name and ecoCode is required' })
     
     const duplicate = await FinalCustomer.findOne({ ecoCode }).lean().exec()
     if (duplicate) 
@@ -42,37 +42,39 @@ const createNewFinalCustomer = asyncHandler(async (req, res) => {
 // @desc Update a finalCustomer
 // @route PATCH /finalCustomers
 // @access Private
-// const updateFinalCustomer = asyncHandler(async (req, res) => {
+const updateFinalCustomer = asyncHandler(async (req, res) => {
 
-//     const { id, planId, userId, username, customerName, brand, status, structures } = req.body;
-//     if (!userId || !companyName) 
-//         return res.status(400).json({ message: 'BAD REQUEST : company name is required' })
+    const { id, userId, username, finalCustomerId, agentName, companyName, post, ecoCode, regNum, nationalId, address, phone, postalCode } = req.body
+
+    if (!userId || !companyName || !ecoCode || !finalCustomerId) 
+        return res.status(400).json({ message: 'BAD REQUEST : company name and ecoCode is required' })
   
-//     const finalCustomer = await FinalCustomer.findById(id).exec();
-//     if (!finalCustomer) {
-//       return res.status(400).json({ message: 'BAD REQUEST : FinalCustomer not found' });
-//     }
+    const finalCustomer = await FinalCustomer.findById(id).exec();
+    if (!finalCustomer) {
+      return res.status(400).json({ message: 'BAD REQUEST : FinalCustomer not found' });
+    }
   
-//     const duplicate = await FinalCustomer.findOne({ ecoCode }).lean().exec()
-//     if (duplicate) 
-//         return res.status(409).json({ message: 'CONFLICT :Duplicate finalCustomer eco code' })
+    const duplicate = await FinalCustomer.findOne({ ecoCode }).lean().exec()
+    if (duplicate  && duplicate._id.toString() !== id) 
+        return res.status(409).json({ message: 'CONFLICT :Duplicate finalCustomer eco code' })
   
-//     plan.userId = userId;
-//     plan.username = username;
-//     plan.planId = planId;
-//     plan.customerName = customerName;
-//     plan.brand = brand;
-//     plan.status = status;b
-//     plan.structures = structures;
-//     plan.structures.forEach((structure) => {
-//       structure.duration.diff = moment(structure.duration.sellEnd, 'jYYYY-jMM-jDD')
-//         .diff(moment(structure.duration.sellStart, 'jYYYY-jMM-jDD'), 'days') + 1
-//     })
+    finalCustomer.userId = userId
+    finalCustomer.username = username
+    finalCustomer.finalCustomerId = finalCustomerId
+    finalCustomer.agentName = agentName
+    finalCustomer.companyName = companyName
+    finalCustomer.post = post
+    finalCustomer.ecoCode = ecoCode
+    finalCustomer.regNum = regNum
+    finalCustomer.nationalId = nationalId
+    finalCustomer.address = address
+    finalCustomer.phone = phone
+    finalCustomer.postalCode = postalCode
   
-//     const updatedPlan = await plan.save()
+    const updatedFinalCustomer = await finalCustomer.save()
   
-//     res.json(`'${updatedPlan.planId}' updated`)
-//   })
+    res.json(`'${updatedFinalCustomer.companyName}' updated`)
+  })
 
 // @desc Delete a finalCustomer
 // @route DELETE /finalCustomers
@@ -94,5 +96,5 @@ const deleteFinalCustomer = asyncHandler(async (req, res) => {
     res.json(reply)
 })
 
-module.exports = { getAllFinalCustomers, createNewFinalCustomer, deleteFinalCustomer }
+module.exports = { getAllFinalCustomers, updateFinalCustomer, createNewFinalCustomer, deleteFinalCustomer }
 

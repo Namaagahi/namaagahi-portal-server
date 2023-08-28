@@ -166,6 +166,15 @@ const boxSchema = new Schema({
                           }, 0)
                     }
                 },
+                monthlyVariableCost: {
+                    type: Number,
+                    required: true,
+                    default: function() {
+                        return this.costs.variableCosts.reduce((acc, curr) => {
+                            return acc + curr.figures.monthlyCost
+                          }, 0)
+                    }
+                },
                 totalDailyCost: {
                     type: Number,
                     required: true,
@@ -177,7 +186,7 @@ const boxSchema = new Schema({
                     type: Number,
                     required: true,
                     default: function() {
-                        return (this.costs.totalDailyCost) * 30
+                        return this.costs.monthlyVariableCost + this.costs.fixedCosts.monthlyCost
                     }
                 },
                 totalPeriodCost: {
@@ -226,7 +235,7 @@ return this.costs.fixedCosts.dailyCost + this.dailyVariableCost
 })
 
 boxSchema.virtual('totalMonthlyCost').get(function() {
-return this.totalDailyCost * 30
+return this.costs.monthlyVariableCost + this.costs.fixedCosts.monthlyCost
 })
 
 boxSchema.virtual('totalPeriodCost').get(function() {
@@ -264,7 +273,7 @@ boxSchema.pre('save', function(next) {
         })
         structure.costs.dailyVariableCost = dailyVariableCost;
         structure.costs.totalDailyCost = (structure.costs.fixedCosts.dailyCost || 0) + dailyVariableCost
-        structure.costs.totalMonthlyCost = structure.costs.totalDailyCost * 30
+        structure.costs.totalMonthlyCost = structure.costs.monthlyVariableCost + structure.costs.fixedCosts.monthlyCost
         structure.costs.totalPeriodCost = structure.costs.totalDailyCost * structure.duration.diff
     })
 
