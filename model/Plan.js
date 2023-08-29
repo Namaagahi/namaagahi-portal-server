@@ -102,7 +102,7 @@ planSchema.pre('validate', function(next) {
   
     doc.structures.forEach((structure, index) => {
       if (doc.isNew || typeof structure.duration.diff === 'undefined' || structure.duration.diff === null) {
-        const diff = (moment.unix(doc.duration.sellEnd).diff((moment.unix(doc.duration.sellStart)), 'days')) + 1
+        const diff = (moment.unix(structure.duration.sellEnd).diff((moment.unix(structure.duration.sellStart)), 'days')) + 1
         doc.structures[index].duration.diff = diff
       }
     })

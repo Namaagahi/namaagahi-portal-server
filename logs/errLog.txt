@@ -374,3 +374,6 @@
 20230826	11:39:16	4d13c4fd-0d92-4305-b932-90623b325d8f	TypeError: Class constructor ObjectId cannot be invoked without 'new'	PATCH	/boxes	http://localhost:3000}
 20230827	16:07:47	e37a321a-6d0f-4408-8ea7-abf1b4634110	TypeError: doc.isModified is not a function	POST	/boxes	http://localhost:3000}
 20230827	16:09:24	757ae91b-c762-4a49-9975-887d182676cb	TypeError: doc.isModified is not a function	POST	/boxes	http://localhost:3000}
+20230829	12:16:43	dc5d24a2-6434-49a7-9c66-fe79733a5b3f	TypeError: Cannot read properties of undefined (reading 'sellEnd')	POST	/plans	http://localhost:3000}
+20230829	12:16:43	0dd86415-2fcf-4555-b8c2-ab21d1cae1d3	TypeError: Cannot read properties of undefined (reading 'sellEnd')	POST	/plans	http://localhost:3000}
+20230829	12:16:44	fca1110e-3d51-47a8-a90e-3f40e032cea7	TypeError: Cannot read properties of undefined (reading 'sellEnd')	POST	/plans	http://localhost:3000}

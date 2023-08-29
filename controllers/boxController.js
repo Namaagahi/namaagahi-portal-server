@@ -35,7 +35,6 @@ const createNewBox = asyncHandler(async (req, res) => {
 
     const box = await Box.create({ boxId, userId, name, mark, duration, structures })
     if (box) {
-        // Update structures
         await updateStructures(structures, box.boxId, true)
     
         return res.status(201).json({ message: `CREATED: Box ${req.body.name} created successfully!` })
@@ -50,22 +49,19 @@ const createNewBox = asyncHandler(async (req, res) => {
 const updateBox = asyncHandler(async (req, res) => {
 
     const { id, boxId, userId, username, name, mark, duration, structures } = req.body
-    if (!id || !boxId || !userId || !name || !mark || !duration || !username) {
+    if (!id || !boxId || !userId || !name || !mark || !duration || !username) 
       return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
-    }
   
     const box = await Box.findById(id).exec();
   
-    if (!box) {
+    if (!box) 
       return res.status(400).json({ message: 'BAD REQUEST : Box not found' })
-    }
-  
+    
     const duplicate = await Box.findOne({ name }).lean().exec();
   
-    if (duplicate && duplicate._id.toString() !== id) {
+    if (duplicate && duplicate._id.toString() !== id) 
       return res.status(409).json({ message: 'CONFLICT : Duplicate box name' })
-    }
-
+    
     box.userId = userId
     box.username = username
     box.boxId = boxId

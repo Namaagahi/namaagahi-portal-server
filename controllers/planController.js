@@ -2,6 +2,7 @@ const Plan = require('../model/Plan')
 const asyncHandler = require('express-async-handler')
 const User = require('../model/User')
 const moment = require('jalali-moment')
+const Structure = require('../model/Structure')
 
 // @desc Get all plans 
 // @route GET /plans
@@ -69,11 +70,16 @@ const updatePlan = asyncHandler(async (req, res) => {
     plan.structures = structures;
     plan.structures.forEach((structure) => {
         structure.duration.diff = (moment.unix(structure.duration.sellEnd).diff((moment.unix(structure.duration.sellStart)), 'days')) + 1
-    //   structure.duration.diff = moment((new Date(structure.duration.sellEnd).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD').diff
-    //   (moment((new Date(structure.duration.sellStart).toISOString().substring(0, 10)), 'jYYYY-jMM-jDD'), 'days') + 1
-      structure.totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
+        structure.totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
     })
-  
+    
+    if(status === 'done') {
+        console.log("TO DONNNNEEE")
+        await updateStructures(structures, true)
+    } else {
+        console.log("TO NOT DOOOONE")
+        await updateStructures(structures, false)
+    }
     const updatedPlan = await plan.save()
   
     res.json(`'${updatedPlan.planId}' updated`)
@@ -97,5 +103,26 @@ const deletePlan = asyncHandler(async (req, res) => {
 
     res.json(reply)
 })
+
+// @desc update plan structures when status done
+// @middleware
+// @access Private
+async function updateStructures(structures, isAvailable) {
+
+    const updatedStructures = []
+  
+    for (const structure of structures) {
+      const structureId = structure.structureId
+      const foundStructure = await Structure.findOne({ _id: structureId }).exec()
+      console.log("foundStructure", foundStructure)
+      if (foundStructure) {
+        foundStructure.isAvailable = isAvailable
+        await foundStructure.save()
+        updatedStructures.push(foundStructure)
+      }
+    }
+  
+    return updatedStructures
+}
 
 module.exports = { getAllPlans, createNewPlan, updatePlan, deletePlan }
