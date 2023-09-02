@@ -8,4 +8,8 @@ router.route('/')
     .patch(boxController.updateBox)
     .delete(boxController.deleteBox)
 
+router.route("/:id")
+  .get(boxController.getBoxById);
+
+
 module.exports = router  

@@ -98,6 +98,26 @@ const deleteBox = asyncHandler(async (req, res) => {
     res.json(reply)
 })
 
+// @desc Get a single box by ID
+// @route GET /boxes/:id
+// @access Private
+const getBoxById = asyncHandler(async (req, res) => {
+  const { id } = req.params
+
+  if (!id) 
+    return res.status(400).json({ message: 'Box ID required' })
+
+  const box = await Box.findById(id).lean().exec()
+
+  if (!box) 
+    return res.status(404).json({ message: 'Box not found' })
+
+  const user = await User.findById(box.userId).lean().exec()
+  const boxWithUser = { ...box, username: user.username }
+
+  res.json(boxWithUser)
+});
+
 // @desc update box structures when create or update
 // @middleware
 // @access Private
@@ -145,4 +165,4 @@ async function updateStructuresOnBoxDeletion(boxId) {
   return updatedStructures;
 }
 
-module.exports = { getAllBoxes, createNewBox, updateBox, deleteBox }
+module.exports = { getAllBoxes, createNewBox, updateBox, deleteBox, getBoxById }

@@ -377,3 +377,6 @@
 20230829	12:16:43	dc5d24a2-6434-49a7-9c66-fe79733a5b3f	TypeError: Cannot read properties of undefined (reading 'sellEnd')	POST	/plans	http://localhost:3000}
 20230829	12:16:43	0dd86415-2fcf-4555-b8c2-ab21d1cae1d3	TypeError: Cannot read properties of undefined (reading 'sellEnd')	POST	/plans	http://localhost:3000}
 20230829	12:16:44	fca1110e-3d51-47a8-a90e-3f40e032cea7	TypeError: Cannot read properties of undefined (reading 'sellEnd')	POST	/plans	http://localhost:3000}
+20230902	09:15:23	cb767bfb-3804-4578-b782-53e73e032137	ReferenceError: mongoose is not defined	PATCH	/boxes	http://localhost:3000}
+20230902	09:16:12	397c1695-7036-4c8e-9343-1fac584d7714	ReferenceError: mongoose is not defined	PATCH	/boxes	http://localhost:3000}
+20230902	09:16:57	2c4095df-691c-4644-8729-5136d7868f57	ReferenceError: mongoose is not defined	PATCH	/boxes	http://localhost:3000}

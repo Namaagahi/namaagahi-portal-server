@@ -117,7 +117,7 @@ const boxSchema = new Schema({
                         type: Number,
                         required: false,
                         default: function() {
-                            console.log(this)
+                            // console.log(this)
                             return this.marks.markOptions.docSize * this.costs.fixedCosts.squareCost
                         }
                     },
@@ -208,7 +208,9 @@ const boxSchema = new Schema({
     {
         timestamps: true,
         toObject: { virtuals: true },
-        toJSON: { virtuals: true }
+        toJSON: { virtuals: true },
+        optimisticConcurrency: true,
+        versionKey: 'version'
     }
 ) 
 
@@ -228,19 +230,19 @@ boxSchema.virtual('dailyVariableCost').get(function() {
     return this.costs.variableCosts.reduce((acc, curr) => {
       return acc + curr.figures.dailyCost;
     }, 0)
-  })
+})
   
 boxSchema.virtual('totalDailyCost').get(function() {
-return this.costs.fixedCosts.dailyCost + this.dailyVariableCost
+    return this.costs.fixedCosts.dailyCost + this.dailyVariableCost
 })
 
 boxSchema.virtual('totalMonthlyCost').get(function() {
-return this.costs.monthlyVariableCost + this.costs.fixedCosts.monthlyCost
+    return this.costs.monthlyVariableCost + this.costs.fixedCosts.monthlyCost
 })
 
 boxSchema.virtual('totalPeriodCost').get(function() {
-const diff = this.parent().duration.diff ?? 0
-return this.totalDailyCost * diff
+    const diff = this.parent().duration.diff ?? 0
+    return this.totalDailyCost * diff
 })
 
 boxSchema.pre('save', function(next) {
