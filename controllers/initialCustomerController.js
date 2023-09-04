@@ -25,7 +25,11 @@ const getAllInitialCustomers = asyncHandler(async (req, res) => {
 // @access Private
 const createNewInitialCustomer = asyncHandler(async (req, res) => {
 
-    const { userId, name } = req.body
+    const {
+        userId,
+        name
+    } = req.body
+    
     if (!userId || !name) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
@@ -59,4 +63,8 @@ const deleteInitialCustomer = asyncHandler(async (req, res) => {
     res.json(reply)
 })
 
-module.exports = { getAllInitialCustomers, createNewInitialCustomer, deleteInitialCustomer }
+module.exports = {
+    getAllInitialCustomers,
+    createNewInitialCustomer,
+    deleteInitialCustomer
+}

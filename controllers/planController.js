@@ -26,7 +26,15 @@ const getAllPlans = asyncHandler(async (req, res) => {
 // @access Private
 const createNewPlan = asyncHandler(async (req, res) => {
 
-    const { planId, userId, initialCustomerId, finalCustomerId, brand, structures } = req.body
+    const {
+        planId,
+        userId,
+        initialCustomerId,
+        finalCustomerId,
+        brand,
+        structures
+    } = req.body
+    
     if (!userId || !initialCustomerId || !brand || !structures) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
@@ -45,29 +53,38 @@ const createNewPlan = asyncHandler(async (req, res) => {
 // @route PATCH /planes
 // @access Private
 const updatePlan = asyncHandler(async (req, res) => {
-    const { id, planId, userId, username, initialCustomerId, finalCustomerId, brand, status, structures } = req.body;
-    if (!id || !planId || !userId || !username || !initialCustomerId || !brand || !status || !structures) {
-      return res.status(400).json({ message: 'BAD REQUEST : All fields are required' });
-    }
+    const {
+        id,
+        planId,
+        userId,
+        username,
+        initialCustomerId,
+        finalCustomerId,
+        brand,
+        status,
+        structures
+    } = req.body
+
+    if (!id || !planId || !userId || !username || !initialCustomerId || !brand || !status || !structures) 
+        return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
+    
   
     const plan = await Plan.findById(id).exec();
-    if (!plan) {
-      return res.status(400).json({ message: 'BAD REQUEST : Plan not found' });
-    }
+    if (!plan) 
+        return res.status(400).json({ message: 'BAD REQUEST : Plan not found' })
   
-    const duplicate = await Plan.findOne({ planId }).lean().exec();
-    if (duplicate && duplicate?._id.toString() !== id) {
-      return res.status(409).json({ message: 'CONFLICT : Duplicate plan name' });
-    }
+    const duplicate = await Plan.findOne({ planId }).lean().exec()
+    if (duplicate && duplicate?._id.toString() !== id) 
+        return res.status(409).json({ message: 'CONFLICT : Duplicate plan name' })
   
-    plan.userId = userId;
-    plan.username = username;
-    plan.planId = planId;
-    plan.initialCustomerId = initialCustomerId;
-    plan.finalCustomerId = finalCustomerId;
-    plan.brand = brand;
-    plan.status = status;
-    plan.structures = structures;
+    plan.userId = userId
+    plan.username = username
+    plan.planId = planId
+    plan.initialCustomerId = initialCustomerId
+    plan.finalCustomerId = finalCustomerId
+    plan.brand = brand
+    plan.status = status
+    plan.structures = structures
     plan.structures.forEach((structure) => {
         structure.duration.diff = (moment.unix(structure.duration.sellEnd).diff((moment.unix(structure.duration.sellStart)), 'days')) + 1
         structure.totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
@@ -83,7 +100,7 @@ const updatePlan = asyncHandler(async (req, res) => {
     const updatedPlan = await plan.save()
   
     res.json(`'${updatedPlan.planId}' updated`)
-  })
+})
 
 // @desc Delete a plan
 // @route DELETE /plans
@@ -112,17 +129,22 @@ async function updateStructures(structures, isAvailable) {
     const updatedStructures = []
   
     for (const structure of structures) {
-      const structureId = structure.structureId
-      const foundStructure = await Structure.findOne({ _id: structureId }).exec()
-      console.log("foundStructure", foundStructure)
-      if (foundStructure) {
-        foundStructure.isAvailable = isAvailable
-        await foundStructure.save()
-        updatedStructures.push(foundStructure)
-      }
+        const structureId = structure.structureId
+        const foundStructure = await Structure.findOne({ _id: structureId }).exec()
+        console.log("foundStructure", foundStructure)
+        if (foundStructure) {
+            foundStructure.isAvailable = isAvailable
+            await foundStructure.save()
+            updatedStructures.push(foundStructure)
+        }
     }
   
     return updatedStructures
 }
 
-module.exports = { getAllPlans, createNewPlan, updatePlan, deletePlan }
+module.exports = {
+    getAllPlans,
+    createNewPlan,
+    updatePlan,
+    deletePlan
+}

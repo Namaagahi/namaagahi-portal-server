@@ -9,7 +9,11 @@ const Cookies = require('universal-cookie')
 // @access Public
 const login = asyncHandler(async (req, res) => {
 
-    const { username, password } = req.body
+    const {
+        username,
+        password
+    } = req.body
+
     if (!username || !password) return res.status(400).json({ message: 'Username and password are required.' })
     
     const foundUser = await User.findOne({ username }).exec()
@@ -45,7 +49,7 @@ const login = asyncHandler(async (req, res) => {
     })
     
     res.json({ accessToken })
-    })
+})
 
 // @desc Refresh
 // @route GET /auth/refresh
@@ -98,4 +102,8 @@ const logout = (req, res) => {
     res.json({ message: 'Cookie cleared' })
 }
 
-module.exports = { login, refresh, logout }
+module.exports = {
+    login,
+    refresh,
+    logout
+}

@@ -19,7 +19,13 @@ const getAllUsers = asyncHandler(async (req, res) => {
 // @access Private
 const createNewUser = asyncHandler(async (req, res) => {
 
-    const { name, username, password, roles } = req.body
+    const {
+        name,
+        username,
+        password,
+        roles
+    } = req.body
+
     if(!name || !username || !password || !Array.isArray(roles) || !roles.length ) 
         return res.status(400).json({ message : 'BAD REQUEST : All fields are required' })
     
@@ -39,7 +45,16 @@ const createNewUser = asyncHandler(async (req, res) => {
 // @access Private
 const updateUser = asyncHandler(async (req, res) => {
 
-    const { id, name, username, roles, password, active, avatar } = req.body
+    const {
+        id,
+        name,
+        username,
+        roles,
+        password,
+        active,
+        avatar
+    } = req.body
+    
     if(!id || !name || !username || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') 
         return res.status(400).json({ message : 'BAD REQUEST : All fields are required' })
     

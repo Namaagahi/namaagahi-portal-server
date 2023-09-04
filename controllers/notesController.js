@@ -23,7 +23,12 @@ const getAllNotes = asyncHandler(async (req, res) => {
 // @access Private
 const createNewNote = asyncHandler(async (req, res) => {
 
-    const { user, title, text } = req.body
+    const {
+        user,
+        title,
+        text
+    } = req.body
+
     if (!user || !title || !text) return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
     const duplicate = await Note.findOne({ title }).lean().exec()
@@ -40,7 +45,14 @@ const createNewNote = asyncHandler(async (req, res) => {
 // @access Private
 const updateNote = asyncHandler(async (req, res) => {
 
-    const { id, user, title, text, completed } = req.body
+    const {
+        id,
+        user,
+        title,
+        text,
+        completed
+    } = req.body
+    
     if (!id || !user || !title || !text || typeof completed !== 'boolean') 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
 
@@ -79,4 +91,9 @@ const deleteNote = asyncHandler(async (req, res) => {
     res.json(reply)
 })
 
-module.exports = { getAllNotes, createNewNote, updateNote, deleteNote }
+module.exports = {
+    getAllNotes,
+    createNewNote,
+    updateNote,
+    deleteNote
+}

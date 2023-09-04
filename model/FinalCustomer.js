@@ -11,43 +11,47 @@ const finalCustomerSchema = new Schema({
             required: true,
             ref: 'User'
         },
-        agentName: {
-            type: String,
-            required: false
-        },
-        companyName: {
+        name: {
             type: String,
             required: true
         },
-        post: {
+        contractType: {
             type: String,
-            required: false,
-            default: 'نماینده'
-        },
-        ecoCode: {
-            type: Number,
+            enum: ['official', 'unofficial'],
             required: true
         },
-        regNum: {
-            type: Number,
-            required: false
+        customerType: {
+            type: String,
+            enum: ['legal', 'personal'],
+            required: true
         },
+        agent: [{
+            agentName: {
+                type: String
+            },
+            post: {
+                type: String
+            }
+        }],
         nationalId: {
             type: Number,
-            required: false
+            required: true
+        },
+        ecoCode: {
+            type: Number
+        },
+        regNum: {
+            type: Number
         },
         address: {
-            type: String,
-            required: false
-        },
-        phone: {
-            type: Number,
-            required: false
+            type: String
         },
         postalCode: {
-            type: Number,
-            required: false
+            type: Number
         },
+        phone: {
+            type: Number
+        }
     },
     { timestamps: true }
 )

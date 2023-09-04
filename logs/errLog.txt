@@ -380,3 +380,13 @@
 20230902	09:15:23	cb767bfb-3804-4578-b782-53e73e032137	ReferenceError: mongoose is not defined	PATCH	/boxes	http://localhost:3000}
 20230902	09:16:12	397c1695-7036-4c8e-9343-1fac584d7714	ReferenceError: mongoose is not defined	PATCH	/boxes	http://localhost:3000}
 20230902	09:16:57	2c4095df-691c-4644-8729-5136d7868f57	ReferenceError: mongoose is not defined	PATCH	/boxes	http://localhost:3000}
+20230903	13:04:30	ddc6dafa-98aa-4398-9e39-08a69dc8d1b0	ValidationError: finalCustomer validation failed: contractType: Path `contractType` is required.	POST	/finalCustomers	undefined}
+20230903	13:04:42	7211f673-8f3c-4e20-a874-3e664e9868c7	ValidationError: finalCustomer validation failed: contractType: Path `contractType` is required., customerType: Path `customerType` is required.	POST	/finalCustomers	undefined}
+20230903	13:05:15	53d2bdaf-2e0f-4838-a1d5-e459653cecac	ValidationError: finalCustomer validation failed: contractType: `tertre` is not a valid enum value for path `contractType`., customerType: `ertetr` is not a valid enum value for path `customerType`.	POST	/finalCustomers	undefined}
+20230903	13:08:01	492e32b0-d8e7-44b1-b156-a913368c27c6	ValidationError: finalCustomer validation failed: contractType: `tertre` is not a valid enum value for path `contractType`., customerType: `ertetr` is not a valid enum value for path `customerType`.	POST	/finalCustomers	undefined}
+20230903	13:09:42	b88eff61-103e-4e1c-b976-b9bca1a0335c	MongoServerError: E11000 duplicate key error collection: namaagahi.finalcustomers index: finalCustomerId_1 dup key: { finalCustomerId: "fc_980234987423987" }	POST	/finalCustomers	undefined}
+20230903	13:14:58	4e04e2ce-0f8d-4c68-abdb-0ef8bc3fd080	SyntaxError: Unexpected token } in JSON at position 374	PATCH	/finalCustomers	undefined}
+20230903	13:15:05	28eeada4-5742-4746-8370-b075d6be5268	SyntaxError: Unexpected token } in JSON at position 577	PATCH	/finalCustomers	undefined}
+20230903	22:22:18	e17ae98f-0b35-4b70-905b-efa53537f8ea	CastError: Cast to ObjectId failed for value "6" (type string) at path "_id" for model "Box"	GET	/boxes/6	http://localhost:3000}
+20230903	22:56:23	96a982a8-dc0d-406e-b9e7-51a8c98b4642	CastError: Cast to ObjectId failed for value "6" (type string) at path "_id" for model "Box"	GET	/boxes/6	http://localhost:3000}
+20230903	22:58:38	cdf52492-004a-4f2d-a3aa-b45c13378088	CastError: Cast to ObjectId failed for value "6" (type string) at path "_id" for model "Box"	GET	/boxes/6	http://localhost:3000}

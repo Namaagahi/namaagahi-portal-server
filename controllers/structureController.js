@@ -27,7 +27,12 @@ const getAllStructures = asyncHandler(async (req, res) => {
 // @access Private
 const createNewStructure = asyncHandler(async (req, res) => {
 
-    const { userId, name, location } = req.body
+    const {
+        userId,
+        name,
+        location
+    } = req.body
+
     if (!userId || !name || !location ) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
@@ -47,7 +52,16 @@ const createNewStructure = asyncHandler(async (req, res) => {
 // @access Private
 const updateStructure = asyncHandler(async (req, res) => {
 
-    const { id, userId, name, location, isAvailable, isChosen, parent } = req.body
+    const {
+        id,
+        userId,
+        name,
+        location,
+        isAvailable,
+        isChosen,
+        parent
+    } = req.body
+    
     if (!id || !userId || !name || !location ) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
 
@@ -90,4 +104,9 @@ const deleteStructure = asyncHandler(async (req, res) => {
     res.json(reply)
 })
 
-module.exports = { getAllStructures, createNewStructure, updateStructure, deleteStructure }
+module.exports = {
+    getAllStructures,
+    createNewStructure,
+    updateStructure,
+    deleteStructure
+}
