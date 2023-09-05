@@ -15,6 +15,10 @@ const PORT = process.env.PORT || 3500
 // connect to MongoDB
 connectDB()
 
+// set limit
+app.use(express.json({limit: '50mb'}))
+app.use(express.urlencoded({limit: '50mb'}))
+
 // custom logger middleware
 app.use(logger)
 

@@ -390,3 +390,11 @@
 20230903	22:22:18	e17ae98f-0b35-4b70-905b-efa53537f8ea	CastError: Cast to ObjectId failed for value "6" (type string) at path "_id" for model "Box"	GET	/boxes/6	http://localhost:3000}
 20230903	22:56:23	96a982a8-dc0d-406e-b9e7-51a8c98b4642	CastError: Cast to ObjectId failed for value "6" (type string) at path "_id" for model "Box"	GET	/boxes/6	http://localhost:3000}
 20230903	22:58:38	cdf52492-004a-4f2d-a3aa-b45c13378088	CastError: Cast to ObjectId failed for value "6" (type string) at path "_id" for model "Box"	GET	/boxes/6	http://localhost:3000}
+20230905	10:14:09	0fc178f0-afaf-46a7-9f68-3be20a64d40e	ValidationError: finalCustomer validation failed: planIds.0: Cast to [ObjectId] failed for value "[ 1053 ]" (type string) at path "planIds.0" because of "CastError"	POST	/finalCustomers	http://localhost:3000}
+20230905	10:59:39	8ff17964-1533-45e1-8d50-b49284353ce6	TypeError: Cannot read properties of undefined (reading 'findById')	PATCH	/finalCustomers	http://localhost:3000}
+20230905	11:05:54	5be1d13e-01fb-4ffb-ab32-2f1bc14b3486	TypeError: Cannot read properties of undefined (reading 'findById')	PATCH	/finalCustomers	http://localhost:3000}
+20230905	11:07:52	21360b16-6b06-4977-bc9a-b001e49be443	TypeError: Cannot read properties of undefined (reading 'findById')	PATCH	/finalCustomers	http://localhost:3000}
+20230905	11:10:38	55ca4156-b3fb-41fa-a5fd-e0f132f26286	ReferenceError: _id is not defined	PATCH	/finalCustomers	http://localhost:3000}
+20230905	11:11:36	23f93577-793b-4dd9-88eb-3825b2d20cd4	TypeError: Cannot read properties of undefined (reading 'includes')	PATCH	/finalCustomers	http://localhost:3000}
+20230905	11:17:03	aa688ed4-d64d-4903-8cb9-5783a7c23109	MongoServerError: E11000 duplicate key error collection: namaagahi.finalcustomers index: finalCustomerId_1 dup key: { finalCustomerId: "fc_1693899781479029527" }	POST	/finalCustomers	http://localhost:3000}
+20230905	11:49:53	b835e19f-ea4e-4803-9cd5-1c6c0b0a2db6	PayloadTooLargeError: request entity too large	PATCH	/boxes	http://localhost:3000}

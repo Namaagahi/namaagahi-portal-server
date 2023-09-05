@@ -9,7 +9,10 @@ const getAllFinalCustomers = asyncHandler(async (req, res) => {
 
     const finalCustomers = await FinalCustomer.find().lean()
     if (!finalCustomers?.length) 
-        return res.status(400).json({ message: 'BAD REQUEST : No finalCustomers found' })
+        return res.status(400).json({ 
+            success: false, 
+            message: 'BAD REQUEST : No finalCustomers found' 
+        })
 
     const finalCustomersWithUser = await Promise.all(finalCustomers.map(async (finalCustomer) => {
         const user = await User.findById(finalCustomer.userId).lean().exec()
@@ -36,15 +39,22 @@ const createNewFinalCustomer = asyncHandler(async (req, res) => {
         regNum,
         address,
         postalCode,
-        phone
+        phone,
+        planId
     } = req.body
 
     if (!userId || !finalCustomerId || !name || !nationalId ) 
-        return res.status(400).json({ message: 'BAD REQUEST : company name and nationalId are required' })
+        return res.status(400).json({ 
+            success: false, 
+            message: 'BAD REQUEST : company name and nationalId are required' 
+        })
     
     const duplicate = await FinalCustomer.findOne({ nationalId }).lean().exec()
     if (duplicate) 
-        return res.status(409).json({ message: 'CONFLICT :Duplicate finalCustomer nationalId' })
+        return res.status(409).json({ 
+            success: false, 
+            message: 'CONFLICT :Duplicate finalCustomer nationalId' 
+        })
 
     const finalCustomer = await FinalCustomer.create({
         userId,
@@ -58,13 +68,20 @@ const createNewFinalCustomer = asyncHandler(async (req, res) => {
         regNum,
         address,
         postalCode,
-        phone
+        phone,
+        planIds: planId ? [planId] : []
     })
 
     if (finalCustomer) 
-        return res.status(201).json({ message: `CREATED: FinalCustomer ${req.body.name} created successfully!` })
+        return res.status(201).json({ 
+            success: true, 
+            message: `CREATED: FinalCustomer ${req.body.name} created successfully!` 
+        })
     else 
-        return res.status(400).json({ message: 'BAD REQUEST : Invalid finalCustomer data received' })
+        return res.status(400).json({ 
+            success: false, 
+            message: 'BAD REQUEST : Invalid finalCustomer data received' 
+        })
 })
 
 // @desc Update a finalCustomer
@@ -85,38 +102,55 @@ const updateFinalCustomer = asyncHandler(async (req, res) => {
         regNum,
         address,
         postalCode,
-        phone
+        phone,
+        planId,
+        planIds
     } = req.body
 
     if (!userId || !finalCustomerId || !name || !nationalId ) 
-        return res.status(400).json({ message: 'BAD REQUEST : company name and nationalId are required' })
+        return res.status(400).json({ 
+            success: false, 
+            message: 'BAD REQUEST : company name and nationalId are required' 
+        })
   
-    const finalCustomer = await FinalCustomer.findByIdAndUpdate(
-        id,
-        {
-            name,
-            contractType,
-            customerType,
-            agent,
-            nationalId,
-            ecoCode,
-            regNum,
-            address,
-            postalCode,
-            phone
-        },
-        { new: true }
-    )
+    const finalCustomer = await FinalCustomer.findById(id)
 
     if (!finalCustomer) 
-      return res.status(400).json({ message: 'BAD REQUEST : FinalCustomer not found' })
+      return res.status(400).json({ 
+        success: false, 
+        message: 'BAD REQUEST : FinalCustomer not found' 
+    })
+
+    if (planId && !finalCustomer.planIds.includes(planId)) finalCustomer.planIds.push(planId)
+      
+    finalCustomer.userId = userId
+    finalCustomer.finalCustomerId = finalCustomerId
+    finalCustomer.name = name
+    finalCustomer.contractType = contractType
+    finalCustomer.customerType = customerType
+    finalCustomer.agent = agent
+    finalCustomer.nationalId = nationalId
+    finalCustomer.ecoCode = ecoCode
+    finalCustomer.regNum = regNum
+    finalCustomer.address = address
+    finalCustomer.postalCode = postalCode
+    finalCustomer.phone = phone
+    finalCustomer.planIds = planIds
   
     const duplicate = await FinalCustomer.findOne({ nationalId }).lean().exec()
     if (duplicate  && duplicate._id.toString() !== id) 
-        return res.status(409).json({ message: 'CONFLICT :Duplicate finalCustomer nationalId' })
+        return res.status(409).json({ 
+            success: false, 
+            message: 'CONFLICT :Duplicate finalCustomer nationalId' 
+        })
+
+    await finalCustomer.save()
   
-    res.status(200).json({ message: `UPDATED: Final customer ${finalCustomer.name} updated successfully!` })
-  })
+    res.status(200).json({ 
+        success: true, 
+        message: `UPDATED: Final customer ${finalCustomer.name} updated successfully!` 
+    })
+})
 
 // @desc Delete a finalCustomer
 // @route DELETE /finalCustomers
@@ -126,14 +160,23 @@ const deleteFinalCustomer = asyncHandler(async (req, res) => {
     const { id } = req.body
     
     if (!id) 
-        return res.status(400).json({ message: 'FinalCustomer ID required' })
+        return res.status(400).json({ 
+            success: false, 
+            message: 'FinalCustomer ID required' 
+        })
     
     const finalCustomer = await FinalCustomer.findByIdAndDelete(id)
     
     if (!finalCustomer) 
-        return res.status(400).json({ message: 'FinalCustomer not found' })
+        return res.status(400).json({ 
+            success: false, 
+            message: 'FinalCustomer not found' 
+        })
 
-    res.status(200).json({ message: `DELETED: Final customer ${finalCustomer.name} deleted successfully!` })
+    res.status(200).json({ 
+        success: true, 
+        message: `DELETED: Final customer ${finalCustomer.name} deleted successfully!` 
+    })
 })
 
 module.exports = {

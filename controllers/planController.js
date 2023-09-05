@@ -92,10 +92,10 @@ const updatePlan = asyncHandler(async (req, res) => {
     
     if(status === 'done') {
         console.log("TO DONNNNEEE")
-        await updateStructures(structures, true)
+        await updateStructures(structures, false)
     } else {
         console.log("TO NOT DOOOONE")
-        await updateStructures(structures, false)
+        await updateStructures(structures, true)
     }
     const updatedPlan = await plan.save()
   

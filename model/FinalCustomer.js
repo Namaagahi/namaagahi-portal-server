@@ -51,7 +51,11 @@ const finalCustomerSchema = new Schema({
         },
         phone: {
             type: Number
-        }
+        },
+        planIds: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Plan'
+        }]
     },
     { timestamps: true }
 )
