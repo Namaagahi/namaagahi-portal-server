@@ -262,7 +262,7 @@ boxSchema.pre('save', function(next) {
             ) {
             const structureDiff = (moment.unix(structure.duration.endDate).diff((moment.unix(structure.duration.startDate)), 'days')) + 1
             structure.duration.diff = structureDiff
-            structure.costs.fixedCosts.monthlyCost = structure.marks.markOptions.docSize * structure.costs.fixedCosts.squareCost;
+            structure.costs.fixedCosts.monthlyCost = structure.marks.markOptions.docSize * structure.costs.fixedCosts.squareCost
             structure.costs.fixedCosts.dailyCost = structure.costs.fixedCosts.monthlyCost / 30
             structure.costs.fixedCosts.periodCost = (structure.costs.fixedCosts.monthlyCost / 30) * structure.duration.diff
         }

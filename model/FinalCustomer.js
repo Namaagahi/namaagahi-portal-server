@@ -55,7 +55,17 @@ const finalCustomerSchema = new Schema({
         planIds: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Plan'
-        }]
+        }],
+        // projectCodes: [{
+        //     year: {
+        //         type: Number,
+        //         required: false
+        //     },
+        //     code: {
+        //         type: String,
+        //         required: false
+        //     }
+        // }]
     },
     { timestamps: true }
 )

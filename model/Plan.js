@@ -83,7 +83,7 @@ const planSchema = new Schema({
                 required: false,
             }
         }]
-    },
+    }, 
     {
         timestamps: true,
         toObject: { virtuals: true },
@@ -97,8 +97,8 @@ planSchema.virtual('structures.structureDurationDiff').get(function() {
     })
 })
 
-planSchema.pre('validate', function(next) {
-    const doc = this;
+planSchema.pre('save', function(next) {
+    const doc = this
   
     doc.structures.forEach((structure, index) => {
       if (doc.isNew || typeof structure.duration.diff === 'undefined' || structure.duration.diff === null) {
