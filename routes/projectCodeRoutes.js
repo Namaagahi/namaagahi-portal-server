@@ -5,7 +5,7 @@ const projectCodeController =  require('../controllers/projectCodeController')
 router.route('/')
     .get(projectCodeController.getAllProjectCodes)
     .post(projectCodeController.createNewProjectCode)
-    // .patch(planController.updatePlan)
-    // .delete(planController.deletePlan)
+    .patch(projectCodeController.updateProjectCode)
+    .delete(projectCodeController.deleteProjectCode)
 
 module.exports = router  

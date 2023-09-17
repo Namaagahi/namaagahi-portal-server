@@ -408,3 +408,12 @@
 20230912	10:48:42	2753c669-76a8-4f00-9381-df0981831684	ValidationError: ProjectCode validation failed: finaclCustomerId: Path `finaclCustomerId` is required.	POST	/projectCodes	undefined}
 20230912	10:49:06	9616640b-8f83-4a8e-955d-7844e0db3a96	ValidationError: ProjectCode validation failed: finaclCustomerId: Path `finaclCustomerId` is required.	POST	/projectCodes	undefined}
 20230912	10:49:16	f2f35cd2-726f-4849-9bcb-da37ca44ad0f	ValidationError: ProjectCode validation failed: finaclCustomerId: Path `finaclCustomerId` is required.	POST	/projectCodes	undefined}
+20230913	12:32:14	1071395e-91b5-41d2-a987-d8ea2b69818e	ValidationError: ProjectCode validation failed: media: `billboard` is not a valid enum value for path `media`., code: Path `code` is required.	POST	/projectCodes	undefined}
+20230913	12:32:43	c1a8bc93-8d80-4fe5-af2f-16ce2e5ee1cc	ValidationError: ProjectCode validation failed: media: `billboard` is not a valid enum value for path `media`., code: Path `code` is required.	POST	/projectCodes	undefined}
+20230913	12:32:56	a212f033-5eec-49d3-8df2-1c25e36a80a1	ValidationError: ProjectCode validation failed: code: Path `code` is required.	POST	/projectCodes	undefined}
+20230913	12:42:26	c94e63a3-f00f-438a-a0a1-094cb799048d	ValidationError: ProjectCode validation failed: year: baseYear is not defined	POST	/projectCodes	undefined}
+20230913	12:43:04	8f603240-1a8a-4e1a-aad1-098980081d84	ValidationError: ProjectCode validation failed: year: valueIncrement is not defined	POST	/projectCodes	undefined}
+20230913	12:47:19	801c75a6-f228-4865-adee-d169c5dc6a4a	MongoServerError: E11000 duplicate key error collection: namaagahi.projectcodes index: code_1 dup key: { code: "MTRundefined00003" }	POST	/projectCodes	undefined}
+20230917	10:22:27	156f9817-8674-4283-aead-2d5d187532f3	ValidationError: ProjectCode validation failed: finalCustomerId: Cast to ObjectId failed for value "fc_1694496898435013276" (type string) at path "finalCustomerId" because of "BSONError"	POST	/projectCodes	http://localhost:3000}
+20230917	10:38:29	bee42714-ffc2-4d06-af53-f30dcf569b8d	ReferenceError: structure is not defined	DELETE	/projectCodes	undefined}
+20230917	12:42:59	7f32bd68-c94b-4b0f-aa4e-98e08ee56b67	ValidationError: ProjectCode validation failed: media: `NVM` is not a valid enum value for path `media`.	PATCH	/projectCodes	http://localhost:3000}

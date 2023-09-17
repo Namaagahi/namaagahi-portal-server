@@ -34,7 +34,7 @@ const createNewProjectCode = asyncHandler(async (req, res) => {
         code
     } = req.body
     
-    if (!userId || !media || !year || !finalCustomerId) 
+    if (!userId || !media || !finalCustomerId) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
     const duplicate = await ProjectCode.findOne({ code }).lean().exec()
@@ -48,7 +48,82 @@ const createNewProjectCode = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'BAD REQUEST : Invalid project code data received' })
 })
 
+
+// @desc Update a finalCustomer
+// @route PATCH /finalCustomers
+// @access Private
+const updateProjectCode = asyncHandler(async (req, res) => {
+
+    const {
+        id,
+        userId,
+        media,
+        year,
+        finalCustomerId,
+        brand,
+        desc,
+        code
+    } = req.body
+
+    if (!userId || !finalCustomerId || !brand || !year ) 
+        return res.status(400).json({ 
+            success: false, 
+            message: 'BAD REQUEST : fields are required' 
+        })
+  
+    const projectCode = await ProjectCode.findById(id)
+
+    if (!projectCode) 
+      return res.status(400).json({ 
+        success: false, 
+        message: 'BAD REQUEST : Project Code not found' 
+    })
+      
+    projectCode.userId = userId
+    projectCode.media = media
+    projectCode.year = year
+    projectCode.finalCustomerId = finalCustomerId
+    projectCode.brand = brand
+    projectCode.desc = desc
+  
+    const duplicate = await ProjectCode.findOne({ code }).lean().exec()
+    if (duplicate  && duplicate.code.toString() !== code) 
+        return res.status(409).json({ 
+            success: false, 
+            message: 'CONFLICT :Duplicate Project Code id' 
+        })
+
+    await projectCode.save()
+  
+    res.status(200).json({ 
+        success: true, 
+        message: `UPDATED: Project Code ${projectCode.code} updated successfully!` 
+    })
+})
+
+// @desc Delete a projectCode
+// @route DELETE /projectCode
+// @access Private
+const deleteProjectCode = asyncHandler(async (req, res) => {
+
+    const { id } = req.body
+    if (!id) 
+        return res.status(400).json({ message: 'Project Code ID required' })
+    
+    const projectCode = await ProjectCode.findById(id).exec()
+    if (!projectCode) 
+        return res.status(400).json({ message: 'Project Code not found' })
+
+    const result = await projectCode.deleteOne()
+    const reply = `Project Code '${result.code}' with ID ${result._id} deleted`
+
+    res.json(reply)
+})
+
+
 module.exports = {
     getAllProjectCodes,
-    createNewProjectCode
+    createNewProjectCode,
+    updateProjectCode,
+    deleteProjectCode
 }
