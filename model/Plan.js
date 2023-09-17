@@ -29,7 +29,19 @@ const planSchema = new Schema({
             required: false,
             default: ''
         },
-        brand: {
+        projectCodeId: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: false,
+            ref: 'ProjectCode',
+            default: null,
+            validate: {
+                validator: function(value) {
+                    return value === null || mongoose.Types.ObjectId.isValid(value)
+                },
+                message: 'Invalid projectCodeId'
+            }
+        },
+        brand: { 
             type: String,
             required: true
         },
