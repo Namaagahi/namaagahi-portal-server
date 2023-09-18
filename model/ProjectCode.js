@@ -57,11 +57,11 @@ projectCodeSchema.pre('save', async function (next) {
   };
 
   if (!this.code) {
-    const count = await this.constructor.countDocuments() + 100
+    const count = await this.constructor.countDocuments() + 200
     const counter = count + 1
     this.code = `${this.media}${mediaTypes[this.media]}${this.year}${counter.toString().padStart(3,'0')}`
   } else {
-    const count = await this.constructor.countDocuments() + 100
+    const count = await this.constructor.countDocuments() + 200
     const counter = count + 1
     this.code = `${this.media}${mediaTypes[this.media]}${this.year}${counter.toString().padStart(3,'0')}`
   }
