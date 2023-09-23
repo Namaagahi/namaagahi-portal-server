@@ -13,6 +13,14 @@ const planSchema = new Schema({
         planId: {
             type: Number,
             unique: true,
+        }, 
+        mark: {
+            name: {
+                type: String,
+                required: true,
+                default: 'regular',
+                enum: ['regular', 'package'] 
+            }
         },
         userId: {
             type: mongoose.Schema.Types.ObjectId,
@@ -90,11 +98,29 @@ const planSchema = new Schema({
                     required: false,
                 }
             },
+            percentage: {
+                type: Number,
+                required: false,
+            },
             totalPeriodCost: {
                 type: Number,
                 required: false,
-            }
-        }]
+            },
+            calculatedInPackageFee: {
+                type: Number,
+                required: false,
+            },
+        }],
+        totalMonthlyFee: {
+            type: Number,
+            required: false,
+        },
+        totalPackagePrice: {
+            type: Number,
+            required: function () {
+                return this.mark.name === 'package'
+              },
+        }
     }, 
     {
         timestamps: true,
@@ -109,9 +135,15 @@ planSchema.virtual('structures.structureDurationDiff').get(function() {
     })
 })
 
+
 planSchema.pre('save', function(next) {
     const doc = this
   
+    const totalMonthlyFee = doc.structures.reduce((total, structure) => {
+        return total + structure.monthlyFee
+    }, 0)
+    doc.totalMonthlyFee = totalMonthlyFee
+
     doc.structures.forEach((structure, index) => {
       if (doc.isNew || typeof structure.duration.diff === 'undefined' || structure.duration.diff === null) {
         const diff = (moment.unix(structure.duration.sellEnd).diff((moment.unix(structure.duration.sellStart)), 'days')) + 1
@@ -120,14 +152,36 @@ planSchema.pre('save', function(next) {
     })
 
     doc.structures.forEach((structure, index) => {
+      if (doc.isNew || typeof structure.percentage === 'undefined' || structure.percentage === null) {
+        const percentage = structure.monthlyFee / doc.totalMonthlyFee
+        doc.structures[index].percentage = percentage
+      }
+    })
+
+    doc.structures.forEach((structure, index) => {
+        if (structure.isModified('percentage')) {
+            const percentage = structure.monthlyFee / doc.totalMonthlyFee
+            console.log("percentage", percentage)
+            doc.structures[index].percentage = percentage
+        }
+    })
+
+    doc.structures.forEach((structure, index) => {
         if (doc.isNew || typeof structure.totalPeriodCost === 'undefined' || structure.totalPeriodCost === null) {
             const totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
             doc.structures[index].totalPeriodCost = totalPeriodCost
         }
     })
+
+    doc.structures.forEach((structure, index) => {
+        if (doc.totalPackagePrice !== null && doc.totalPackagePrice !== undefined) {
+            const calculatedInPackageFee = (doc.totalPackagePrice * structure.percentage) / structure.duration.diff * 30
+            console.log("calculatedInPackageFee", calculatedInPackageFee)
+            doc.structures[index].calculatedInPackageFee = calculatedInPackageFee
+        }
+    })
   
     next()
-
   })
 
 planSchema.pre('save', async function (next) {

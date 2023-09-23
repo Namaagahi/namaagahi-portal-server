@@ -444,3 +444,5 @@
 20230919	12:08:30	2068bf9e-b6ad-4d2b-b795-fd2690117175	ValidationError: Plan validation failed: structures.1.monthlyFee: Path `monthlyFee` is required.	PATCH	/plans	http://localhost:3000}
 20230919	12:35:12	e48463e1-f03e-4ffb-afce-e3ef705ffe85	ValidationError: Plan validation failed: structures.1.monthlyFee: Path `monthlyFee` is required.	PATCH	/plans	http://localhost:3000}
 20230919	12:36:59	8c9f97cc-5a49-4a64-89bf-243d0f6afcb9	ValidationError: Plan validation failed: structures.1.monthlyFee: Path `monthlyFee` is required.	PATCH	/plans	http://localhost:3000}
+20230923	12:47:45	518a2ea1-37b4-4eec-9d9c-9bfa11b793fe	ValidationError: Plan validation failed: structures.1.duration.sellEnd: Path `duration.sellEnd` is required., structures.1.duration.sellStart: Path `duration.sellStart` is required.	POST	/plans	http://localhost:3000}
+20230923	12:51:24	cd02d817-b4ac-4bad-90f3-4dc28b6bcaa1	ValidationError: Plan validation failed: structures.0.monthlyFeeWithDiscount: Path `monthlyFeeWithDiscount` is required.	POST	/plans	http://localhost:3000}

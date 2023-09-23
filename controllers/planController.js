@@ -33,7 +33,8 @@ const createNewPlan = asyncHandler(async (req, res) => {
         finalCustomerId,
         projectCodeId,
         brand,
-        structures
+        structures,
+        totalPackagePrice
     } = req.body
     
     if (!userId || !initialCustomerId || !brand || !structures) 
@@ -43,7 +44,7 @@ const createNewPlan = asyncHandler(async (req, res) => {
     if (duplicate) 
         return res.status(409).json({ message: 'CONFLICT :Duplicate plan id' })
 
-    const plan = await Plan.create({ planId, userId, initialCustomerId, finalCustomerId, projectCodeId, brand, structures  })
+    const plan = await Plan.create({ planId, userId, initialCustomerId, finalCustomerId, projectCodeId, brand, structures, totalPackagePrice  })
     if (plan) 
         return res.status(201).json({ message: `CREATED: Plan ${req.body.planId} created successfully!` })
     else 
@@ -64,7 +65,8 @@ const updatePlan = asyncHandler(async (req, res) => {
         projectCodeId,
         brand,
         status,
-        structures
+        structures,
+        totalPackagePrice
     } = req.body
 
     if (!id || !planId || !userId || !username || !initialCustomerId || !brand || !status || !structures) 
@@ -92,6 +94,7 @@ const updatePlan = asyncHandler(async (req, res) => {
         structure.duration.diff = (moment.unix(structure.duration.sellEnd).diff((moment.unix(structure.duration.sellStart)), 'days')) + 1
         structure.totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
     })
+    plan.totalPackagePrice = totalPackagePrice
     
     if(status === 'done') {
         console.log("TO DONNNNEEE")
