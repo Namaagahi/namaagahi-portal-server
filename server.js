@@ -52,6 +52,7 @@ app.use('/initialCustomers', require('./routes/initialCustomerRoute'))
 app.use('/finalCustomers', require('./routes/finalCustomersRoutes'))
 app.use('/locations', require('./routes/locationRoutes'))
 app.use('/projectCodes', require('./routes/projectCodeRoutes'))
+app.use('/upload-image', require('./routes/uploadRoute'))
 
 // Custom 404 page
 app.all('*', (req, res) => {
