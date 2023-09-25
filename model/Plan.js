@@ -18,7 +18,6 @@ const planSchema = new Schema({
             name: {
                 type: String,
                 required: true,
-                default: 'regular',
                 enum: ['regular', 'package'] 
             }
         },
@@ -70,11 +69,11 @@ const planSchema = new Schema({
             },
             discountFee: {
                 type: String,
-                required: true
+                required: false
             },
             discountType: {
                 type: String, 
-                required: true
+                required: false
             },
             monthlyFee: {
                 type: Number,
@@ -82,7 +81,7 @@ const planSchema = new Schema({
             },
             monthlyFeeWithDiscount: {
                 type: Number,
-                required: true
+                required: false
             },
             duration: {
                 sellStart: {
@@ -119,7 +118,7 @@ const planSchema = new Schema({
             type: Number,
             required: function () {
                 return this.mark.name === 'package'
-              },
+            },
         }
     }, 
     {
@@ -167,17 +166,22 @@ planSchema.pre('save', function(next) {
     })
 
     doc.structures.forEach((structure, index) => {
-        if (doc.isNew || typeof structure.totalPeriodCost === 'undefined' || structure.totalPeriodCost === null) {
-            const totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
-            doc.structures[index].totalPeriodCost = totalPeriodCost
-        }
-    })
-
-    doc.structures.forEach((structure, index) => {
         if (doc.totalPackagePrice !== null && doc.totalPackagePrice !== undefined) {
             const calculatedInPackageFee = (doc.totalPackagePrice * structure.percentage) / structure.duration.diff * 30
             console.log("calculatedInPackageFee", calculatedInPackageFee)
             doc.structures[index].calculatedInPackageFee = calculatedInPackageFee
+        }
+    })
+    
+    doc.structures.forEach((structure, index) => {
+        if (doc.isNew || typeof structure.totalPeriodCost === 'undefined' || structure.totalPeriodCost === null) {
+            if(doc.mark.name === 'regular') {
+                const totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
+                doc.structures[index].totalPeriodCost = totalPeriodCost
+            } else {
+                const totalPeriodCost = (structure.calculatedInPackageFee / 30) * structure.duration.diff
+                doc.structures[index].totalPeriodCost = totalPeriodCost
+            }
         }
     })
   
