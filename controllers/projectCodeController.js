@@ -62,6 +62,8 @@ const updateProjectCode = asyncHandler(async (req, res) => {
         finalCustomerId,
         brand,
         desc,
+        jalaliMonth,
+        child,
         code
     } = req.body
 
@@ -78,6 +80,15 @@ const updateProjectCode = asyncHandler(async (req, res) => {
         success: false, 
         message: 'BAD REQUEST : Project Code not found' 
     })
+
+    const duplicate = await ProjectCode.findOne({ code }).lean().exec()
+    if (duplicate  && duplicate._id.toString() !== id) {
+        console.log("duplicate", duplicate)
+            return res.status(409).json({ 
+                success: false, 
+                message: 'CONFLICT :Duplicate Project Code id' 
+            })
+    }
       
     projectCode.userId = userId
     projectCode.media = media
@@ -85,13 +96,11 @@ const updateProjectCode = asyncHandler(async (req, res) => {
     projectCode.finalCustomerId = finalCustomerId
     projectCode.brand = brand
     projectCode.desc = desc
+    projectCode.code = code
+    projectCode.jalaliMonth = jalaliMonth
+    projectCode.children = [...projectCode.children, child]
   
-    const duplicate = await ProjectCode.findOne({ code }).lean().exec()
-    if (duplicate  && duplicate.code.toString() !== code) 
-        return res.status(409).json({ 
-            success: false, 
-            message: 'CONFLICT :Duplicate Project Code id' 
-        })
+
 
     await projectCode.save()
   

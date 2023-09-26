@@ -78,12 +78,12 @@ const updateBox = asyncHandler(async (req, res) => {
   if (!id || !boxId || !userId || !name || !mark || !duration || !username) 
     return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
 
-  const box = await Box.findById(id).exec();
+  const box = await Box.findById(id).exec()
 
   if (!box) 
     return res.status(400).json({ message: 'BAD REQUEST : Box not found' })
   
-  const duplicate = await Box.findOne({ name }).lean().exec();
+  const duplicate = await Box.findOne({ name }).lean().exec()
 
   if (duplicate && duplicate._id.toString() !== id) 
     return res.status(409).json({ message: 'CONFLICT : Duplicate box name' })

@@ -35,6 +35,15 @@ const projectCodeSchema = new Schema(
       type: String,
       required: false,
     },
+    jalaliMonth: {
+      type: String,
+      required: false,
+      enum: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', ]
+    },
+    children: {
+      type: [String],
+      default: [],
+    },
   },
   {
     timestamps: true, 
@@ -64,6 +73,15 @@ projectCodeSchema.pre('save', async function (next) {
     const count = await this.constructor.countDocuments() + 200
     const counter = count + 1
     this.code = `${this.media}${mediaTypes[this.media]}${this.year}${counter.toString().padStart(3,'0')}`
+  }
+
+  if (this.isModified) {
+    const parentCode = await this.constructor.findOne({ code: this.parentCode }).exec()
+    if (parentCode) {
+      const childCode = `${parentCode.code}-${this.jalaliMonth}`
+      parentCode.children.push(childCode)
+      await parentCode.save()
+    }
   }
 
   next()

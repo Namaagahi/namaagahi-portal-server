@@ -59,6 +59,7 @@ const updatePlan = asyncHandler(async (req, res) => {
     const {
         id,
         planId,
+        mark,
         userId,
         username,
         initialCustomerId,
@@ -83,6 +84,7 @@ const updatePlan = asyncHandler(async (req, res) => {
         return res.status(409).json({ message: 'CONFLICT : Duplicate plan name' })
   
     plan.userId = userId
+    plan.mark = mark
     plan.username = username
     plan.planId = planId
     plan.initialCustomerId = initialCustomerId
@@ -91,10 +93,6 @@ const updatePlan = asyncHandler(async (req, res) => {
     plan.brand = brand
     plan.status = status
     plan.structures = structures
-    plan.structures.forEach((structure) => {
-        structure.duration.diff = (moment.unix(structure.duration.sellEnd).diff((moment.unix(structure.duration.sellStart)), 'days')) + 1
-        structure.totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
-    })
     plan.totalPackagePrice = totalPackagePrice
     
     if(status === 'done') {
