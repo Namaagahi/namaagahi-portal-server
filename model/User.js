@@ -6,7 +6,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    username: {
+    username: { 
         type: String,
         required: true
     },
@@ -25,6 +25,9 @@ const userSchema = new Schema({
     active: {
         type: Boolean,
         default: true
+    },
+    cloudinary_id: {
+      type: String,
     },
 
     refreshToken: [String]

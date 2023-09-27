@@ -2,6 +2,7 @@ const User = require('../model/User')
 const Note = require('../model/Note')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
+const cloudinary = require('../config/cloudinaryConfig')
 
 // @desc Get all users
 // @route GET /users
@@ -46,36 +47,54 @@ const createNewUser = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
 
     const {
-        id,
-        name,
-        username,
-        roles,
-        password,
-        active,
-        avatar
+      id,
+      name,
+      username,
+      roles,
+      password,
+      active,
+      avatar
     } = req.body
-    
-    if(!id || !name || !username || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') 
-        return res.status(400).json({ message : 'BAD REQUEST : All fields are required' })
-    
+  
+    if (
+      !id ||
+      !name ||
+      !username ||
+      !Array.isArray(roles) ||
+      !roles.length
+    )
+      return res
+        .status(400)
+        .json({ message: 'BAD REQUEST : All fields are required' })
+      
     const user = await User.findById(id).exec()
-    if(!user) res.status(400).json({ message: 'BAD REQUEST : User not found' })
-
+    if (!user) return res.status(400).json({ message: 'BAD REQUEST : User not found' })
+  
     const duplicate = await User.findOne({ username }).lean().exec()
-    if(duplicate && duplicate?._id.toString() !== id) 
-        return res.status(409).json({ message: 'CONFLICT : Duplicate username!' })
+    if (duplicate && duplicate._id.toString() !== id)
+      return res.status(409).json({ message: 'CONFLICT : Duplicate username!' })
+      if(req.file) {
+        const result = await cloudinary.uploader.upload(req.file.path)
+        user.username = username
+        user.roles = roles
+        user.active = active
+        user.name = name
+        user.avatar = result.secure_url
+        user.cloudinary_id = result.public_id
+      } else {
+        user.username = username
+        user.roles = roles
+        user.active = active
+        user.name = name
+        user.avatar = avatar
 
-    user.username = username
-    user.roles = roles
-    user.active = active
-    user.name = name
-    user.avatar = avatar
+      }
 
-    if(password) user.password = await bcrypt.hash(password, 10)
-    
+    if (password) user.password = await bcrypt.hash(password, 10)
+  
     const updatedUser = await user.save()
     res.status(201).json({ message: `${updatedUser.username} updated successfully!` })
-})
+  })
 
 // @desc Delete a user
 // @route DELETE /users

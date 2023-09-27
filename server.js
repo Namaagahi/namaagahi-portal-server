@@ -52,7 +52,6 @@ app.use('/initialCustomers', require('./routes/initialCustomerRoute'))
 app.use('/finalCustomers', require('./routes/finalCustomersRoutes'))
 app.use('/locations', require('./routes/locationRoutes'))
 app.use('/projectCodes', require('./routes/projectCodeRoutes'))
-app.use('/upload-image', require('./routes/uploadRoute'))
 
 // Custom 404 page
 app.all('*', (req, res) => {
@@ -67,7 +66,7 @@ app.use(errorHandler)
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB')
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 })
 // mongoose.connection.once('open', () => {
 //     console.log('Connected to MongoDB')

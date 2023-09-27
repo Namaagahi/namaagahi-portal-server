@@ -476,3 +476,44 @@
 20230926	08:55:20	8914d6bc-6779-4718-a35d-44aa621dbdd1	MongoServerError: E11000 duplicate key error collection: namaagahi.projectcodes index: code_1 dup key: { code: "BB10200214" }	PATCH	/projectCodes	http://localhost:3000}
 20230926	08:55:29	0756a561-1daa-465f-905f-7ca8d5c0f836	MongoServerError: E11000 duplicate key error collection: namaagahi.projectcodes index: code_1 dup key: { code: "BB10200214" }	PATCH	/projectCodes	http://localhost:3000}
 20230926	09:14:51	110c5251-7aa6-43b4-ac55-b3001ab5e14b	MongoServerError: E11000 duplicate key error collection: namaagahi.projectcodes index: code_1 dup key: { code: "BB10200214" }	PATCH	/projectCodes	http://localhost:3000}
+20230926	12:12:45	e255c74b-c2f9-42f4-9c78-2d89be312296	ValidationError: Plan validation failed: mark.name: Path `mark.name` is required.	PATCH	/plans	http://localhost:3000}
+20230926	12:14:03	530e304d-7852-4617-b064-ccf0d29c3e41	ValidationError: Plan validation failed: mark.name: Path `mark.name` is required.	PATCH	/plans	http://localhost:3000}
+20230926	13:41:18	32284541-e97b-4a63-b1e9-cdf6fcdb9957	ValidationError: Plan validation failed: mark.name: Path `mark.name` is required.	PATCH	/plans	http://localhost:3000}
+20230926	13:43:17	023e6e6e-84be-427d-8f27-fba9f099a5bd	ValidationError: Plan validation failed: mark.name: Path `mark.name` is required.	PATCH	/plans	http://localhost:3000}
+20230926	13:44:00	84035d92-bc4a-43d5-929d-409b98b68415	ValidationError: Plan validation failed: mark.name: Path `mark.name` is required.	PATCH	/plans	http://localhost:3000}
+20230926	13:44:39	dfbad222-4bf3-49c8-b729-4c7f4c76edb8	ValidationError: Plan validation failed: totalPackagePrice: Path `totalPackagePrice` is required.	PATCH	/plans	http://localhost:3000}
+20230926	13:45:10	b1f6b77c-6741-455e-a9a8-cf3e7dcb21f1	ValidationError: Plan validation failed: totalPackagePrice: Path `totalPackagePrice` is required.	PATCH	/plans	http://localhost:3000}
+20230926	14:23:57	d579bb70-d8d6-4915-bb2d-342cc80e8cd2	MongoServerError: E11000 duplicate key error collection: namaagahi.projectcodes index: code_1 dup key: { code: "BB10200214" }	PATCH	/projectCodes	http://localhost:3000}
+20230926	14:26:18	135c0dae-6eb4-4267-b19c-6516fdaca11c	MongoServerError: E11000 duplicate key error collection: namaagahi.projectcodes index: code_1 dup key: { code: "BB10200214" }	PATCH	/projectCodes	http://localhost:3000}
+20230926	14:27:02	9151247c-99be-4942-b2e9-e3da322da6ff	MongoServerError: E11000 duplicate key error collection: namaagahi.projectcodes index: code_1 dup key: { code: "BB10200214" }	PATCH	/projectCodes	http://localhost:3000}
+20230926	14:52:50	607e5769-ac63-4cb8-b7e8-b79e6bf975b6	MongoServerError: E11000 duplicate key error collection: namaagahi.projectcodes index: code_1 dup key: { code: "BB10200214" }	PATCH	/projectCodes	http://localhost:3000}
+20230926	18:42:48	4ea32944-bb75-44fa-9b09-eda02245869d	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	undefined}
+20230926	18:45:34	64b16172-9937-461a-aa2d-d0f1ab2f8de3	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	undefined}
+20230926	18:55:24	b5a49675-fe78-4612-8e55-132f34eafae1	MulterError: Unexpected field	POST	/fakeUser	undefined}
+20230926	18:57:59	372a019d-7c91-4a01-a76a-212ec6af4d90	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	undefined}
+20230926	19:12:46	326a5c9f-2631-4181-a4c8-f4f4d40850bd	CastError: Cast to ObjectId failed for value ""646892dbe84ab0749182447a"" (type string) at path "_id" for model "User"	PATCH	/users	undefined}
+20230927	08:45:01	8acf6510-5d6f-479c-acea-0c1b65fa8a4b	MulterError: Unexpected field	PATCH	/users	http://localhost:3000}
+20230927	08:46:56	f817ada9-aeef-43cd-9fd6-513376120cca	MulterError: Unexpected field	PATCH	/users	http://localhost:3000}
+20230927	09:03:06	7b00f7bd-ba60-4f89-bf44-c57169d2569e	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20230927	09:23:20	2c5deb10-6972-4828-b21b-0f63b293e9ff	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20230927	09:23:58	8d47eff9-5878-47fe-9e80-3db6e935907a	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20230927	09:24:04	e18edea4-84ac-4cb5-bf9b-097428388b9e	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20230927	09:25:22	c96a0cd7-3af1-406a-bd56-41286df24e5e	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20230927	09:31:41	5e4b6df8-096c-4d16-98ed-dc30aa1850a0	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20230927	09:31:50	3c5022ea-120f-4e61-8429-f3284e1a5b17	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20230927	09:32:06	4492b6e2-c860-45c3-bcc8-6b2292881137	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20230927	09:32:34	53f04812-1937-44de-9817-585682d9471e	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20230927	09:33:25	81756f06-f34b-4f0f-9b77-49022e679236	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20230927	09:33:44	1dd33c13-2db5-4c54-bdef-206facbe0b3d	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20230927	09:34:36	4a691e37-740b-471e-bc7e-e8061383f2dc	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20230927	09:35:13	ac9132ee-e2db-4c64-87c2-f02ec86c872a	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20230927	10:10:16	a7a98d91-06e6-428e-8063-95ce84168d7e	ValidationError: User validation failed: avatar: Cast to string failed for value "{}" (type Object) at path "avatar"	PATCH	/users	http://localhost:3000}
+20230927	10:42:10	768c3944-0d1f-48f5-a921-ab894ac73410	ValidationError: User validation failed: avatar: Cast to string failed for value "{}" (type Object) at path "avatar"	PATCH	/users	http://localhost:3000}
+20230927	10:44:33	879e86ba-b7d6-4c12-9623-c54159608f6f	ValidationError: User validation failed: avatar: Cast to string failed for value "{}" (type Object) at path "avatar"	PATCH	/users	http://localhost:3000}
+20230927	10:48:34	0830a954-97b1-407c-832c-ccfe9380b5be	ValidationError: User validation failed: avatar: Cast to string failed for value "{}" (type Object) at path "avatar"	PATCH	/users	http://localhost:3000}
+20230927	10:54:52	ca6acad4-068c-4bf6-a5af-2d7370480de6	ValidationError: User validation failed: avatar: Cast to string failed for value "{}" (type Object) at path "avatar"	PATCH	/users	http://localhost:3000}
+20230927	10:56:53	13f01c53-ae46-40dc-b276-6897409a6921	ValidationError: User validation failed: avatar: Cast to string failed for value "{}" (type Object) at path "avatar"	PATCH	/users	http://localhost:3000}
+20230927	11:02:57	4a614b50-461a-4505-9be8-90ad3831a9da	ValidationError: User validation failed: avatar: Cast to string failed for value "{}" (type Object) at path "avatar"	PATCH	/users	http://localhost:3000}
+20230927	11:09:32	70b61395-9c39-4c7a-8895-7ed02fbbc5f4	ValidationError: User validation failed: avatar: Cast to string failed for value "{}" (type Object) at path "avatar"	PATCH	/users	http://localhost:3000}
+20230927	11:10:24	694651dd-b9e0-4f94-9db0-5fbe2d315923	ValidationError: User validation failed: avatar: Cast to string failed for value "{}" (type Object) at path "avatar"	PATCH	/users	http://localhost:3000}
+20230927	11:17:07	5ad87cdf-7ee0-45dc-a383-2535a4767eb6	ValidationError: User validation failed: avatar: Cast to string failed for value "{}" (type Object) at path "avatar"	PATCH	/users	http://localhost:3000}
