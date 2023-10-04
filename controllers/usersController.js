@@ -59,9 +59,7 @@ const updateUser = asyncHandler(async (req, res) => {
     if (
       !id ||
       !name ||
-      !username ||
-      !Array.isArray(roles) ||
-      !roles.length
+      !username 
     )
       return res
         .status(400)
@@ -73,10 +71,12 @@ const updateUser = asyncHandler(async (req, res) => {
     const duplicate = await User.findOne({ username }).lean().exec()
     if (duplicate && duplicate._id.toString() !== id)
       return res.status(409).json({ message: 'CONFLICT : Duplicate username!' })
+
+      console.log("REQ.FILE", req.file)
       if(req.file) {
         const result = await cloudinary.uploader.upload(req.file.path)
         user.username = username
-        user.roles = roles
+        user.roles = JSON.parse(roles)
         user.active = active
         user.name = name
         user.avatar = result.secure_url
@@ -86,7 +86,7 @@ const updateUser = asyncHandler(async (req, res) => {
         user.roles = roles
         user.active = active
         user.name = name
-        user.avatar = avatar
+        user.avatar = user.avatar
 
       }
 

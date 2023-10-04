@@ -517,3 +517,74 @@
 20230927	11:09:32	70b61395-9c39-4c7a-8895-7ed02fbbc5f4	ValidationError: User validation failed: avatar: Cast to string failed for value "{}" (type Object) at path "avatar"	PATCH	/users	http://localhost:3000}
 20230927	11:10:24	694651dd-b9e0-4f94-9db0-5fbe2d315923	ValidationError: User validation failed: avatar: Cast to string failed for value "{}" (type Object) at path "avatar"	PATCH	/users	http://localhost:3000}
 20230927	11:17:07	5ad87cdf-7ee0-45dc-a383-2535a4767eb6	ValidationError: User validation failed: avatar: Cast to string failed for value "{}" (type Object) at path "avatar"	PATCH	/users	http://localhost:3000}
+20230927	16:36:26	cbe76130-ddea-4082-829c-930cf3199f42	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:09:26	598adc6e-3f0f-479a-b018-cded4cd62984	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:09:45	85785325-7855-4cb2-ba6b-e7ada652237f	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:18:47	d5169da3-93c9-4d39-869f-c19aca09b9e0	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:19:48	71854dcc-9a38-4749-9949-af777b08359d	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:20:56	119090a8-6fb7-495d-8365-85eb196c90a9	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:21:41	67483fa6-aa3c-48f3-bdbc-c48739bd2b13	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:21:48	f0af2995-0c4c-4469-a127-42c59fc32c6c	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:22:30	ef86ce39-b4ab-471d-8eac-955f32baa3ed	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:38:42	166d5be4-c647-493b-b810-d463596c5af9	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:39:25	bf19789a-e18e-4246-a3a5-024de6e1b523	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:40:00	df6f4e6a-a24c-4c6a-8a3c-6ff0e365744c	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:40:43	d40b4fdb-1fc7-43a2-8c7e-6e0d7ac0c54b	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:40:54	fed2bd4c-43da-4946-a595-22517f83aecf	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:42:48	a2d56b5a-cc11-46d8-97ee-35a57b0dc17b	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:43:28	92f24b7e-eda5-4082-874c-bd5b8ef5eb2b	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:44:42	a56fcd7a-a087-4adb-9112-0020d3b932dc	SyntaxError: Unexpected token م in JSON at position 0	PATCH	/users	http://localhost:3000}
+20231001	09:44:42	076830b0-3bda-4f94-b7ba-be9b6f42414e	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:45:49	1e893c56-0640-47de-885f-a92502459118	SyntaxError: Unexpected token م in JSON at position 0	PATCH	/users	http://localhost:3000}
+20231001	09:45:49	f8c5f067-aba2-402f-b705-ca811eae33fc	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:48:29	36b7cacc-548f-4db9-af69-40a4904214e0	SyntaxError: Unexpected token م in JSON at position 0	PATCH	/users	http://localhost:3000}
+20231001	09:48:29	c7e961be-1a24-4e4b-849f-e86058d10b46	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:49:13	08c9cd4d-2d50-4936-9196-4045e84af3c9	SyntaxError: Unexpected token م in JSON at position 0	PATCH	/users	http://localhost:3000}
+20231001	09:49:13	7a0ea4e7-8ef4-49bf-a90e-ccb361bb9b70	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:59:26	a353913b-614d-4dc1-80cc-331af0cd5ede	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	09:59:46	6fa795af-14e5-4a94-ae90-4b9af620b1be	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:00:55	c50d8d1a-b499-489b-a403-18ad0c8cfe60	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:01:29	bb618ce3-b2cf-42d3-8a49-1a62b0202b5d	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:02:12	f1ad058b-d4c5-4ddc-a85f-ab6492fedce8	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:02:33	417d4e57-42d2-409e-a8c3-109986790b0a	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:02:44	740622ea-0f77-43ca-8542-2eb7ea431faa	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:04:07	079e3d44-1723-4995-a746-3710a101b47c	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:04:35	6f643c85-cfea-4d5f-a018-b54665971b4c	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:05:13	f9cf86bf-466a-4d15-9bf7-0ec9a1700528	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20231001	10:05:13	5ddc2871-7ecd-404e-b33d-df80559534da	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:08:31	0756c3d2-a312-4282-b48c-c6894161fc49	TypeError: Cannot read properties of undefined (reading 'buffer')	PATCH	/users	http://localhost:3000}
+20231001	10:08:31	bfc6f5ed-0df8-4c46-85ba-74bc78714fb9	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:09:07	0189d6f3-82e3-4ac4-a869-dd4646635d75	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20231001	10:09:07	e16b2f79-6f1b-4da6-8e04-883c3d3f29ef	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:09:25	a732acc5-1ad8-432c-96dd-2743dea20c1a	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20231001	10:09:25	a931595e-a343-46c6-9d55-5eec0dc15da3	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:09:37	8653efa0-769b-4d8d-bd42-f5ce6e447706	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20231001	10:09:37	7cac1311-0c83-46f7-8705-b84b094f51e5	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:11:04	288fc299-59fa-4bdd-8367-996bda908b40	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20231001	10:11:04	fd718ea4-b02c-48ec-bc7e-5b60858d2ebf	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:11:34	37d650f0-0c15-4fb4-a894-900f3e9b2d09	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20231001	10:11:34	f43160fd-3677-49eb-9e09-d10d81a74a34	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:12:17	4f06a490-25eb-4562-96f5-584ca02ba907	ReferenceError: avatar is not defined	PATCH	/users	http://localhost:3000}
+20231001	10:12:17	35e19639-e91e-4848-a492-00aa3d125939	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:12:42	df1f2305-b89b-459d-a45b-753a4d7875d1	Error: Missing required parameter - file	PATCH	/users	http://localhost:3000}
+20231001	10:12:42	17a5d2bc-b4dc-4a89-93a7-90eac4d3d66f	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:15:22	0777d2b1-a7e1-430b-8f16-b126e424a46a	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:25:32	9776d58d-f5ad-46be-8c90-672c2e24482f	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:25:57	4b91792e-df6c-4aff-96bd-237703629687	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:27:00	01e19c4b-7f4d-4be7-b2b2-6ff0a980d54c	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:41:38	eef05515-873f-4654-b6e7-b3d278adb033	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:41:50	05eca00a-08ea-46fd-a237-089709c33a86	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:41:54	71825854-8d44-4fa8-9061-164c75b2c196	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	10:42:03	b3b67103-9db1-4dda-9a89-aaa6dc913c7f	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	11:02:58	62d25182-ef66-4ce1-9719-8eac50675d4e	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20231001	11:02:58	a616363e-02ab-4277-9485-ba4f235aca92	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	11:03:08	5529f48a-c16c-4b32-a424-d5e944a50ac7	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20231001	11:03:08	8db2648d-895f-4bdb-8c67-a185b47ab3e8	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	11:05:02	eb8e706f-c4f3-4405-b5f1-9af749f93180	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20231001	11:05:02	ef1f4104-0e22-4e4f-b93c-465b2c9cb7a7	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	11:05:15	6ff30c7c-4bf6-4c93-9ce2-8bb01c791ebb	TypeError: Cannot read properties of undefined (reading 'path')	PATCH	/users	http://localhost:3000}
+20231001	11:05:15	a9cffbc4-3e8f-4461-989a-612f89a43dd5	Error: Cannot set headers after they are sent to the client	GET	/users	http://localhost:3000}
+20231001	12:36:15	ba9b4849-b261-41d9-affa-40c09fe1fe5a	Error: Multipart: Boundary not found	PATCH	/users	http://localhost:3000}
+20231001	12:37:23	597e0eb4-8702-43d0-94e4-d2ac76074186	Error: Multipart: Boundary not found	PATCH	/users	http://localhost:3000}
+20231001	12:45:46	8a3af5e8-084c-46c8-a66b-6b863da1f76d	Error: Multipart: Boundary not found	PATCH	/users	http://localhost:3000}
+20231001	13:33:12	9e2c7b08-e724-44b9-82e5-a41508e3c9b0	Error: Multipart: Boundary not found	PATCH	/users	http://localhost:3000}
