@@ -31,24 +31,31 @@ const createNewProjectCode = asyncHandler(async (req, res) => {
         finalCustomerId,
         brand,
         desc,
-        code
+        month
     } = req.body
+  
+    try {
+        const projectCode = new ProjectCode({
+            userId,
+            media,
+            year,
+            finalCustomerId,
+            brand,
+            desc,
+            month
+      })
+  
+        await projectCode.save()
     
-    if (!userId || !media || !finalCustomerId) 
-        return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
-    
-    const duplicate = await ProjectCode.findOne({ code }).lean().exec()
-    if (duplicate) 
-        return res.status(409).json({ message: 'CONFLICT :Duplicate project code id' })
-
-    const projectCode = await ProjectCode.create({ userId, media, year, finalCustomerId, brand, desc, code  })
-    if (projectCode) 
-        return res.status(201).json({ message: `CREATED: Project code ${req.body.code} created successfully!` })
-    else 
-        return res.status(400).json({ message: 'BAD REQUEST : Invalid project code data received' })
+        res.status(201).json({
+            message: 'Project code created successfully',
+            projectCode: { ...projectCode.toObject() }
+        })
+    } catch (error) {
+        res.status(400).json({ message: 'BAD REQUEST: Unable to create project code', error: error.message });
+    }
 })
-
-
+  
 // @desc Update a finalCustomer
 // @route PATCH /finalCustomers
 // @access Private
@@ -62,9 +69,7 @@ const updateProjectCode = asyncHandler(async (req, res) => {
         finalCustomerId,
         brand,
         desc,
-        jalaliMonth,
-        child,
-        code
+        month
     } = req.body
 
     if (!userId || !finalCustomerId || !brand || !year ) 
@@ -81,7 +86,7 @@ const updateProjectCode = asyncHandler(async (req, res) => {
         message: 'BAD REQUEST : Project Code not found' 
     })
 
-    const duplicate = await ProjectCode.findOne({ code }).lean().exec()
+    const duplicate = await ProjectCode.findOne({ id }).lean().exec()
     if (duplicate  && duplicate._id.toString() !== id) {
         console.log("duplicate", duplicate)
             return res.status(409).json({ 
@@ -96,11 +101,7 @@ const updateProjectCode = asyncHandler(async (req, res) => {
     projectCode.finalCustomerId = finalCustomerId
     projectCode.brand = brand
     projectCode.desc = desc
-    projectCode.code = code
-    projectCode.jalaliMonth = jalaliMonth
-    projectCode.children = [...projectCode.children, child]
-  
-
+    projectCode.month = month
 
     await projectCode.save()
   

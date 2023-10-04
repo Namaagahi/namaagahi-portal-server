@@ -588,3 +588,12 @@
 20231001	12:37:23	597e0eb4-8702-43d0-94e4-d2ac76074186	Error: Multipart: Boundary not found	PATCH	/users	http://localhost:3000}
 20231001	12:45:46	8a3af5e8-084c-46c8-a66b-6b863da1f76d	Error: Multipart: Boundary not found	PATCH	/users	http://localhost:3000}
 20231001	13:33:12	9e2c7b08-e724-44b9-82e5-a41508e3c9b0	Error: Multipart: Boundary not found	PATCH	/users	http://localhost:3000}
+20231004	15:14:33	5100805a-4ecb-47ca-9537-43e8221fd2d4	SyntaxError: Unexpected token } in JSON at position 205	POST	/projectCodes	undefined}
+20231004	15:15:42	ac365f89-29a5-49fd-bd99-f1e03c14e855	ValidationError: ProjectCode validation failed: code: Path `code` is required.	POST	/projectCodes	undefined}
+20231004	15:16:16	448e56b0-81c3-492b-8764-72f8e2fd9dae	ValidationError: ProjectCode validation failed: code: Path `code` is required.	POST	/projectCodes	undefined}
+20231004	15:28:26	b1e812d3-ef9d-448b-867d-273516ac81ad	ValidationError: ProjectCode validation failed: code: Path `code` is required.	POST	/projectCodes	undefined}
+20231004	15:56:22	c3eb5f0f-f505-4e1d-b046-b4bc9a6fc031	SyntaxError: Unexpected number in JSON at position 213	POST	/projectCodes	undefined}
+20231004	16:23:30	b45a2fba-7ccb-4cb7-b011-d65464c7fa97	TypeError: projectCode.children is not iterable	PATCH	/projectCodes	undefined}
+20231004	16:24:08	9a56ff09-0618-4d2f-87dc-f0270204f759	TypeError: projectCode.children is not iterable	PATCH	/projectCodes	undefined}
+20231004	16:24:52	a5ca7a2e-b6f7-4144-8047-249b17c38043	TypeError: projectCode.children is not iterable	PATCH	/projectCodes	undefined}
+20231004	16:26:09	cf8156e6-d5fd-48bf-9fe0-84f53cd07868	ReferenceError: code is not defined	PATCH	/projectCodes	undefined}

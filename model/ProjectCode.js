@@ -1,4 +1,4 @@
-const moment = require('jalali-moment');
+const moment = require('jalali-moment')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -16,7 +16,7 @@ const projectCodeSchema = new Schema(
     },
     year: {
       type: Number,
-      default: () => getEquivalentValue(moment(new Date().toISOString().slice(0,10), 'YYYY-MM-DD').jYear())
+      default: () => getEquivalentValue(moment(new Date().toISOString().slice(0, 10), 'YYYY-MM-DD').jYear()),
     },
     finalCustomerId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -31,60 +31,62 @@ const projectCodeSchema = new Schema(
       type: String,
       required: false,
     },
+    month: {
+      type: Number,
+      required: false,
+      min: 1,
+      max: 12,
+    },
     code: {
       type: String,
       required: false,
     },
-    jalaliMonth: {
-      type: String,
-      required: false,
-      enum: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', ]
-    },
-    children: {
-      type: [String],
-      default: [],
-    },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 )
 
-function getEquivalentValue(persianYear) {
+projectCodeSchema.pre('save', async function (next) {
+  try {
+    const { media, year, month } = this
+    const counter = await this.constructor.generateCounter(media, year, month)
+    this.code = generateProjectCode(media, year, counter, month)
+    next()
+  } catch (error) {
+    next(error)
+  }
+})
 
-    if (persianYear < 1400) throw new Error('Invalid Persian year')
-    const equivalentValue = ((persianYear - 1400) * 100)
-    return equivalentValue
+function getEquivalentValue(persianYear) {
+  if (persianYear < 1400) throw new Error('Invalid Persian year')
+  return (persianYear - 1400) * 100
 }
 
-projectCodeSchema.pre('save', async function (next) {
-  const mediaTypes = {
-    BB: '10',
-    MTR: '20',
-    BUS: '30',
-    NMV: '40',
-  };
+projectCodeSchema.statics.generateCounter = async function () {
+  try {
+    const count = await this.countDocuments()
 
-  if (!this.code) {
-    const count = await this.constructor.countDocuments() + 200
-    const counter = count + 1
-    this.code = `${this.media}${mediaTypes[this.media]}${this.year}${counter.toString().padStart(3,'0')}`
-  } else {
-    const count = await this.constructor.countDocuments() + 200
-    const counter = count + 1
-    this.code = `${this.media}${mediaTypes[this.media]}${this.year}${counter.toString().padStart(3,'0')}`
+    return count + 200
+  } catch (error) {
+    throw new Error('Error generating counter: ' + error.message)
+  }
+}
+
+function generateProjectCode(media, year, counter, month) {
+  const mediaCodeMap = {
+    'BB': '10',
+    'MTR': '20',
+    'BUS': '30',
+    'NMV': '40',
   }
 
-  if (this.isModified) {
-    const parentCode = await this.constructor.findOne({ code: this.parentCode }).exec()
-    if (parentCode) {
-      const childCode = `${parentCode.code}-${this.jalaliMonth}`
-      parentCode.children.push(childCode)
-      await parentCode.save()
-    }
-  }
+  const mediaCode = mediaCodeMap[media] || '00' 
+  const yearCode = getEquivalentValue(year)
+  const counterCode = counter.toString().padStart(3, '0')
+  const monthCode = month ? `-${month.toString().padStart(2, '0')}` : ''
 
-  next()
-})
+  return `${media}${mediaCode}${yearCode}${counterCode}${monthCode}`
+}
 
 module.exports = mongoose.model('ProjectCode', projectCodeSchema)
