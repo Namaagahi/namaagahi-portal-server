@@ -72,7 +72,6 @@ const updateUser = asyncHandler(async (req, res) => {
     if (duplicate && duplicate._id.toString() !== id)
       return res.status(409).json({ message: 'CONFLICT : Duplicate username!' })
 
-      console.log("REQ.FILE", req.file)
       if(req.file) {
         const result = await cloudinary.uploader.upload(req.file.path)
         user.username = username

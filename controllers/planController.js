@@ -96,10 +96,8 @@ const updatePlan = asyncHandler(async (req, res) => {
     plan.totalPackagePrice = totalPackagePrice
     
     if(status === 'done') {
-        console.log("TO DONNNNEEE")
         await updateStructures(structures, false)
     } else {
-        console.log("TO NOT DOOOONE")
         await updateStructures(structures, true)
     }
     const updatedPlan = await plan.save()
@@ -136,7 +134,6 @@ async function updateStructures(structures, isAvailable) {
     for (const structure of structures) {
         const structureId = structure.structureId
         const foundStructure = await Structure.findOne({ _id: structureId }).exec()
-        console.log("foundStructure", foundStructure)
         if (foundStructure) {
             foundStructure.isAvailable = isAvailable
             await foundStructure.save()

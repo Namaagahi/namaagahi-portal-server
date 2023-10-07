@@ -117,7 +117,6 @@ const boxSchema = new Schema({
                         type: Number,
                         required: false,
                         default: function() {
-                            // console.log(this)
                             return this.marks.markOptions.docSize * this.costs.fixedCosts.squareCost
                         }
                     },

@@ -120,7 +120,6 @@ const updateFinalCustomer = asyncHandler(async (req, res) => {
         success: false, 
         message: 'BAD REQUEST : FinalCustomer not found' 
     })
-    console.log("IF CHECK", planId && !finalCustomer.planIds.includes(planId))
     if (planId && !finalCustomer.planIds.includes(planId)) finalCustomer.planIds.push(planId)
       
     finalCustomer.userId = userId

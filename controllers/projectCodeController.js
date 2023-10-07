@@ -31,28 +31,44 @@ const createNewProjectCode = asyncHandler(async (req, res) => {
         finalCustomerId,
         brand,
         desc,
-        month
-    } = req.body
-  
+        month,
+        code
+    } = req.body;
+
     try {
-        const projectCode = new ProjectCode({
-            userId,
-            media,
-            year,
-            finalCustomerId,
-            brand,
-            desc,
-            month
-      })
-  
-        await projectCode.save()
-    
+        if (code) {
+            const projectCode = new ProjectCode({
+                userId,
+                media,
+                year,
+                finalCustomerId,
+                brand,
+                desc,
+                month,
+                code
+            })
+
+            await projectCode.save()
+        } else {
+            const projectCode = new ProjectCode({
+                userId,
+                media,
+                year,
+                finalCustomerId,
+                brand,
+                desc,
+                month
+            })
+
+            await projectCode.save()
+        }
+
         res.status(201).json({
             message: 'Project code created successfully',
-            projectCode: { ...projectCode.toObject() }
+            // projectCode: { ...projectCode.toObject() }
         })
     } catch (error) {
-        res.status(400).json({ message: 'BAD REQUEST: Unable to create project code', error: error.message });
+        res.status(400).json({ message: 'BAD REQUEST: Unable to create project code', error: error.message })
     }
 })
   
@@ -88,7 +104,6 @@ const updateProjectCode = asyncHandler(async (req, res) => {
 
     const duplicate = await ProjectCode.findOne({ id }).lean().exec()
     if (duplicate  && duplicate._id.toString() !== id) {
-        console.log("duplicate", duplicate)
             return res.status(409).json({ 
                 success: false, 
                 message: 'CONFLICT :Duplicate Project Code id' 

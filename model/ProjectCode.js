@@ -40,6 +40,7 @@ const projectCodeSchema = new Schema(
     code: {
       type: String,
       required: false,
+      unique: false
     },
   },
   {
@@ -47,11 +48,29 @@ const projectCodeSchema = new Schema(
   }
 )
 
+
 projectCodeSchema.pre('save', async function (next) {
   try {
-    const { media, year, month } = this
-    const counter = await this.constructor.generateCounter(media, year, month)
-    this.code = generateProjectCode(media, year, counter, month)
+    const { media, year, month, code } = this
+    if (!this.code) {
+      const counter = await this.constructor.generateCounter(media, year, month)
+
+      const generatedCode = generateProjectCode(media, year, counter, month)
+
+      const existingProjectCode = await this.constructor.findOne({ code: generatedCode })
+
+      if (existingProjectCode && existingProjectCode.month) {
+        if (this.month !== existingProjectCode.month) {
+          this.code = generatedCode
+        } else {
+          throw new Error('Duplicate project code')
+        }
+      } else {
+        this.code = generatedCode
+      }
+    } else {
+      this.code = `${code}-${month.toString().padStart(2, '0')}`
+    }
     next()
   } catch (error) {
     next(error)
