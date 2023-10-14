@@ -597,3 +597,8 @@
 20231004	16:24:08	9a56ff09-0618-4d2f-87dc-f0270204f759	TypeError: projectCode.children is not iterable	PATCH	/projectCodes	undefined}
 20231004	16:24:52	a5ca7a2e-b6f7-4144-8047-249b17c38043	TypeError: projectCode.children is not iterable	PATCH	/projectCodes	undefined}
 20231004	16:26:09	cf8156e6-d5fd-48bf-9fe0-84f53cd07868	ReferenceError: code is not defined	PATCH	/projectCodes	undefined}
+20231009	09:57:10	532c40c1-aa51-430f-bb95-056317bc2b6f	TypeError: Cannot read properties of undefined (reading 'toString')	PATCH	/projectCodes	http://localhost:3000}
+20231014	11:46:10	cfb4346a-1531-46d4-b51d-5c5ac4eca75e	ValidationError: Plan validation failed: mark.name: Path `mark.name` is required., structures.0.structureRecord: Path `structureRecord` is required.	POST	/plans	undefined}
+20231014	11:46:34	44c69942-9b50-42bb-b0c4-1be4c992f7b1	ValidationError: Plan validation failed: mark.name: Path `mark.name` is required.	POST	/plans	undefined}
+20231014	14:54:55	985bb2e9-a5c2-4dc2-aa8f-92487a5239e4	ReferenceError: discountPercentage is not defined	PATCH	/plans	http://localhost:3000}
+20231014	15:00:56	583b6c1d-b989-4866-bf17-0679888e0c7f	ReferenceError: discountPercentage is not defined	POST	/plans	http://localhost:3000}

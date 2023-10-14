@@ -33,6 +33,7 @@ const createNewPlan = asyncHandler(async (req, res) => {
         initialCustomerId,
         finalCustomerId,
         projectCodeId,
+        userDefinedMonthlyFeeWithDiscount,
         brand,
         structures,
         totalPackagePrice
@@ -45,7 +46,18 @@ const createNewPlan = asyncHandler(async (req, res) => {
     if (duplicate) 
         return res.status(409).json({ message: 'CONFLICT :Duplicate plan id' })
 
-    const plan = await Plan.create({ planId, userId, mark, initialCustomerId, finalCustomerId, projectCodeId, brand, structures, totalPackagePrice  })
+    const plan = await Plan.create({
+        planId,
+        userId,
+        mark,
+        initialCustomerId,
+        finalCustomerId,
+        projectCodeId,
+        userDefinedMonthlyFeeWithDiscount,
+        brand,
+        structures,
+        totalPackagePrice
+     })
     if (plan) 
         return res.status(201).json({ message: `CREATED: Plan ${req.body.planId} created successfully!` })
     else 
@@ -65,6 +77,7 @@ const updatePlan = asyncHandler(async (req, res) => {
         initialCustomerId,
         finalCustomerId,
         projectCodeId,
+        userDefinedMonthlyFeeWithDiscount,
         brand,
         status,
         structures,
@@ -90,6 +103,7 @@ const updatePlan = asyncHandler(async (req, res) => {
     plan.initialCustomerId = initialCustomerId
     plan.finalCustomerId = finalCustomerId
     plan.projectCodeId = projectCodeId
+    plan.userDefinedMonthlyFeeWithDiscount = userDefinedMonthlyFeeWithDiscount
     plan.brand = brand
     plan.status = status
     plan.structures = structures

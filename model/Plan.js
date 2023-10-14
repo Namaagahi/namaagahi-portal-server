@@ -57,6 +57,10 @@ const planSchema = new Schema({
             required: true,
             default: 'suggested'
         },
+        userDefinedMonthlyFeeWithDiscount: {
+            type: Boolean,
+            default: true, 
+          },
         structures: [{
             structureId: {
                 type: mongoose.Schema.Types.ObjectId,
@@ -73,7 +77,9 @@ const planSchema = new Schema({
             },
             discountType: {
                 type: String, 
-                required: false
+                required: false,
+                enum: ['percentage', 'number'],
+                default: 'percentage'
             },
             monthlyFee: {
                 type: Number,
@@ -134,7 +140,6 @@ planSchema.virtual('structures.structureDurationDiff').get(function() {
     })
 })
 
-
 planSchema.pre('save', function(next) {
     const doc = this
   
@@ -145,8 +150,9 @@ planSchema.pre('save', function(next) {
 
     doc.structures.forEach((structure, index) => {
       if (doc.isNew || typeof structure.duration.diff === 'undefined' || structure.duration.diff === null) {
-        const diff = (moment.unix(structure.duration.sellEnd).diff((moment.unix(structure.duration.sellStart)), 'days')) + 1
-        doc.structures[index].duration.diff = diff
+            const structureDiff = 
+                (moment.unix(structure.duration.sellEnd).diff((moment.unix(structure.duration.sellStart)), 'days')) + 1
+            doc.structures[index].duration.diff = structureDiff
       }
     })
 
@@ -156,6 +162,27 @@ planSchema.pre('save', function(next) {
         doc.structures[index].percentage = percentage
       }
     })
+
+    doc.structures.forEach((structure) => {
+        if (doc.userDefinedMonthlyFeeWithDiscount) {
+          if (structure.discountType === 'percentage') {
+            const discountPercentage = structure.discountFee / 100
+            structure.monthlyFeeWithDiscount = structure.monthlyFee * (1 - discountPercentage)
+          } else if (structure.discountType === 'number') {
+            structure.monthlyFeeWithDiscount = structure.monthlyFee - structure.discountFee
+          }
+        } else {
+          const monthlyFee = structure.monthlyFee
+          const monthlyFeeWithDiscount = structure.monthlyFeeWithDiscount
+    
+          if (monthlyFeeWithDiscount < monthlyFee) {
+            const discountPercentage = 100 - (monthlyFeeWithDiscount * 100) / monthlyFee
+            structure.discountType = 'percentage'
+            structure.discountFee = discountPercentage
+          } else {
+          }
+        }
+      })
 
     doc.structures.forEach((structure, index) => {
         if (structure.isModified('percentage')) {
@@ -169,7 +196,8 @@ planSchema.pre('save', function(next) {
             structure.isModified('duration.sellStart') ||
             structure.isModified('duration.sellEnd')
         ){
-            const structureDiff = (moment.unix(structure.duration.sellEnd).diff((moment.unix(structure.duration.sellStart)), 'days')) + 1
+            const structureDiff = 
+                (moment.unix(structure.duration.sellEnd).diff((moment.unix(structure.duration.sellStart)), 'days')) + 1
             doc.structures[index].duration.diff = structureDiff
         }
     })
@@ -204,6 +232,8 @@ planSchema.pre('save', function(next) {
             if(doc.mark.name === 'regular') {
                 const totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
                 doc.structures[index].totalPeriodCost = totalPeriodCost
+                const discountPercentage = structure.discountFee / 100
+                structure.monthlyFeeWithDiscount = structure.monthlyFee * (1 - discountPercentage)
             } else {
                 const totalPeriodCost = (structure.calculatedInPackageFee / 30) * structure.duration.diff
                 doc.structures[index].totalPeriodCost = totalPeriodCost

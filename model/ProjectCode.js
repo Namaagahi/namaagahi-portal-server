@@ -52,7 +52,10 @@ const projectCodeSchema = new Schema(
 projectCodeSchema.pre('save', async function (next) {
   try {
     const { media, year, month, code } = this
-    if (!this.code) {
+    if (this.isModified('media') || this.isModified('year')) {
+      const counter = await this.constructor.generateCounter(media, year, month);
+      this.code = generateProjectCode(media, year, counter, month);
+    } else if (!this.code) {
       const counter = await this.constructor.generateCounter(media, year, month)
 
       const generatedCode = generateProjectCode(media, year, counter, month)
@@ -69,8 +72,14 @@ projectCodeSchema.pre('save', async function (next) {
         this.code = generatedCode
       }
     } else {
-      this.code = `${code}-${month.toString().padStart(2, '0')}`
+      if(month) {
+        this.code = `${code}-${month.toString().padStart(2, '0')}`
+      } else {
+        this.code = code
+      }
     }
+
+
     next()
   } catch (error) {
     next(error)

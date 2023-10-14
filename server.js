@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
-const app = express()
+const http = require('http')
+const app = express() 
 const path = require('path')
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
@@ -11,6 +12,15 @@ const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
 const connectDB = require('./config/dbConnect')
 const PORT = process.env.PORT || 3500
+const ws = require('ws')
+const server = new ws.Server({port: '3100'})
+
+server.on('connection', socket => {
+    socket.on('message', message => {
+        console.log(message)
+        socket.send(`${message}`)
+    })
+})
 
 // connect to MongoDB
 connectDB()
@@ -52,6 +62,7 @@ app.use('/initialCustomers', require('./routes/initialCustomerRoute'))
 app.use('/finalCustomers', require('./routes/finalCustomersRoutes'))
 app.use('/locations', require('./routes/locationRoutes'))
 app.use('/projectCodes', require('./routes/projectCodeRoutes'))
+app.use('/tickets', require('./routes/ticketRoutes'))
 
 // Custom 404 page
 app.all('*', (req, res) => {
@@ -68,10 +79,6 @@ mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB')
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 })
-// mongoose.connection.once('open', () => {
-//     console.log('Connected to MongoDB')
-//     app.listen(PORT, '192.168.68.35', () => console.log(`Server running on port ${PORT}`));
-// })
 
 mongoose.connection.on('error', err => {
     console.log(err)
