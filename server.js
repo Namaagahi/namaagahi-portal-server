@@ -1,6 +1,5 @@
 require('dotenv').config()
 const express = require('express')
-const http = require('http')
 const app = express() 
 const path = require('path')
 const cors = require('cors')
@@ -12,15 +11,69 @@ const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
 const connectDB = require('./config/dbConnect')
 const PORT = process.env.PORT || 3500
-const ws = require('ws')
-const server = new ws.Server({port: '3100'})
+const http = require("http")
+const { Server } = require("socket.io")
+const httpServer = http.createServer()
+const Message = require('./model/Message')
+const User = require('./model/User')
 
-server.on('connection', socket => {
-    socket.on('message', message => {
-        console.log(message)
-        socket.send(`${message}`)
+const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+
+const io = require("socket.io")(server, {
+    allowEIO3: true,
+    cors: {
+      origin: true,
+      methods: ['GET', 'POST'],
+      credentials: true
+    }
+})
+
+io.use(async (socket, next) => {
+  try {
+    const token = socket.handshake.query.token
+    const payload = await jwt.verify(token, process.env.SECRET)
+    socket.userId = payload.id;
+    next()
+  } catch (err) {}
+})
+
+io.on("connection", (socket) => {
+    console.log("Connected: " + socket.userId)
+  
+    socket.on("disconnect", () => {
+      console.log("Disconnected: " + socket.userId)
+    })
+  
+    socket.on("joinRoom", ({ chatroomId }) => {
+      socket.join(chatroomId);
+      console.log("A user joined chatroom: " + chatroomId)
+    })
+  
+    socket.on("leaveRoom", ({ chatroomId }) => {
+      socket.leave(chatroomId);
+      console.log("A user left chatroom: " + chatroomId)
+    })
+  
+    socket.on("chatroomMessage", async ({ chatroomId, message }) => {
+      if (message.trim().length > 0) {
+        const user = await User.findOne({ _id: socket.userId })
+        const newMessage = new Message({
+          chatroom: chatroomId,
+          user: socket.userId,
+          message,
+        })
+
+        io.to(chatroomId).emit("newMessage", {
+          message,
+          name: user.name,
+          userId: socket.userId,
+        })
+
+        await newMessage.save()
+      }
     })
 })
+  
 
 // connect to MongoDB
 connectDB()
@@ -62,6 +115,7 @@ app.use('/initialCustomers', require('./routes/initialCustomerRoute'))
 app.use('/finalCustomers', require('./routes/finalCustomersRoutes'))
 app.use('/locations', require('./routes/locationRoutes'))
 app.use('/projectCodes', require('./routes/projectCodeRoutes'))
+app.use('/chatrooms', require('./routes/chatroomRoutes'))
 app.use('/tickets', require('./routes/ticketRoutes'))
 
 // Custom 404 page
@@ -77,7 +131,7 @@ app.use(errorHandler)
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB')
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+    server
 })
 
 mongoose.connection.on('error', err => {

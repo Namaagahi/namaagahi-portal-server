@@ -28,10 +28,11 @@ const createNewUser = asyncHandler(async (req, res) => {
     } = req.body
 
     if(!name || !username || !password || !Array.isArray(roles) || !roles.length ) 
-        return res.status(400).json({ message : 'BAD REQUEST : All fields are required' })
+      return res.status(400).json({ message : 'BAD REQUEST : All fields are required' })
     
     const duplicate = await User.findOne({ username }).lean().exec()
-    if(duplicate) return res.status(409).json({ message: 'CONFLICT : This username already exists!' })
+    if(duplicate) 
+      return res.status(409).json({ message: 'CONFLICT : This username already exists!' })
 
     const hashedPassword = await bcrypt.hash(password, 10)
     
