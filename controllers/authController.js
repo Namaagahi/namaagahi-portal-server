@@ -1,8 +1,8 @@
 const User = require('../model/User')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+// const jwt = require('jsonwebtoken')
+const jwt = require("jwt-then")
 const asyncHandler = require('express-async-handler')
-const Cookies = require('universal-cookie')
 
 // @desc Login
 // @route POST /auth
@@ -22,7 +22,7 @@ const login = asyncHandler(async (req, res) => {
     const match = await bcrypt.compare(password, foundUser.password)
     if (!match) return res.status(401).json({ message: 'Unauthorized: wrong password.' })
     
-    const accessToken = jwt.sign(
+    const accessToken = await jwt.sign(
         {
             "UserInfo": {
                 "id": foundUser.id,
@@ -37,7 +37,7 @@ const login = asyncHandler(async (req, res) => {
     )
     
     
-    const refreshToken = jwt.sign(
+    const refreshToken = await jwt.sign(
         { "username": foundUser.username },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: '7d' }
@@ -54,13 +54,13 @@ const login = asyncHandler(async (req, res) => {
 // @desc Refresh
 // @route GET /auth/refresh
 // @access Public - because access token has expired
-const refresh = (req, res) => {
+const refresh = asyncHandler(async(req, res) => {
 
     const cookies = req.cookies
     if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized: no cookies' })
     const refreshToken = cookies.jwt
 
-    jwt.verify(
+    await jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
 
@@ -71,7 +71,7 @@ const refresh = (req, res) => {
             const foundUser = await User.findOne({ username: decoded.username }).exec()
             if (!foundUser) return res.status(401).json({ message: 'Unauthorized: no user found' })
 
-            const accessToken = jwt.sign(
+            const accessToken = await jwt.sign(
                 {
                     "UserInfo": {
                         "id": foundUser.id,
@@ -88,7 +88,7 @@ const refresh = (req, res) => {
             res.json({ accessToken })
         }
     )
-}
+})
 
 // @desc Logout
 // @route POST /auth/logout

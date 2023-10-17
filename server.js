@@ -12,11 +12,9 @@ const mongoose = require('mongoose')
 const connectDB = require('./config/dbConnect')
 const PORT = process.env.PORT || 3500
 const http = require("http")
-const { Server } = require("socket.io")
-const httpServer = http.createServer()
 const Message = require('./model/Message')
 const User = require('./model/User')
-
+const jwt = require("jwt-then");
 const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 
 const io = require("socket.io")(server, {
@@ -28,52 +26,55 @@ const io = require("socket.io")(server, {
     }
 })
 
+
 io.use(async (socket, next) => {
   try {
-    const token = socket.handshake.query.token
-    const payload = await jwt.verify(token, process.env.SECRET)
-    socket.userId = payload.id;
-    next()
-  } catch (err) {}
-})
+    const token = socket.handshake.query.token;
+    const payload = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    console.log("payload", payload)
+    socket.userId = payload.UserInfo.id;
+    next();
+  } catch (err) {
+    console.log("ERROR", err)
+  }
+});
 
 io.on("connection", (socket) => {
-    console.log("Connected: " + socket.userId)
-  
-    socket.on("disconnect", () => {
-      console.log("Disconnected: " + socket.userId)
-    })
-  
-    socket.on("joinRoom", ({ chatroomId }) => {
-      socket.join(chatroomId);
-      console.log("A user joined chatroom: " + chatroomId)
-    })
-  
-    socket.on("leaveRoom", ({ chatroomId }) => {
-      socket.leave(chatroomId);
-      console.log("A user left chatroom: " + chatroomId)
-    })
-  
-    socket.on("chatroomMessage", async ({ chatroomId, message }) => {
-      if (message.trim().length > 0) {
-        const user = await User.findOne({ _id: socket.userId })
-        const newMessage = new Message({
-          chatroom: chatroomId,
-          user: socket.userId,
-          message,
-        })
+  console.log("SOCKET USERID", socket.userId)
 
-        io.to(chatroomId).emit("newMessage", {
-          message,
-          name: user.name,
-          userId: socket.userId,
-        })
+  console.log("Connected: " + socket.userId);
 
-        await newMessage.save()
-      }
-    })
-})
-  
+  socket.on("disconnect", () => {
+    console.log("Disconnected: " + socket.userId);
+  });
+
+  socket.on("joinRoom", ({ chatroomId }) => {
+    socket.join(chatroomId);
+    console.log("A user joined chatroom: " + chatroomId);
+  });
+
+  socket.on("leaveRoom", ({ chatroomId }) => {
+    socket.leave(chatroomId);
+    console.log("A user left chatroom: " + chatroomId);
+  });
+
+  socket.on("chatroomMessage", async ({ chatroomId, message }) => {
+    if (message.trim().length > 0) {
+      const user = await User.findOne({ _id: socket.userId });
+      const newMessage = new Message({
+        chatroom: chatroomId,
+        user: socket.userId,
+        message,
+      });
+      io.to(chatroomId).emit("newMessage", {
+        message,
+        name: user.name,
+        userId: socket.userId,
+      });
+      await newMessage.save();
+    }
+  });
+});
 
 // connect to MongoDB
 connectDB()

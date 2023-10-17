@@ -1510,3 +1510,5 @@
 20231015	11:39:52	f10db60a-3904-4931-8574-94a8e112b46a	Error: Not allowed by CORS	GET	/socket.io/?EIO=4&transport=polling&t=OioOcbz	http://127.0.0.1:5500}
 20231015	11:39:54	c1fc12d3-cb00-4293-bb99-6e510cdeeec8	Error: Not allowed by CORS	GET	/socket.io/?EIO=4&transport=polling&t=OioOd5C	http://127.0.0.1:5500}
 20231015	11:39:54	212978ac-4881-463f-bfbc-1f0c9f05cbe4	Error: Not allowed by CORS	GET	/socket.io/?EIO=4&transport=polling&t=OioOd5C	http://127.0.0.1:5500}
+20231016	16:49:29	d39a4866-9ad4-42d2-a8a2-5c3bf4bf3cc2	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20231016	16:49:55	1d04c30e-688b-488f-9061-f698474ce1c3	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
