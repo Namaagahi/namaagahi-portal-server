@@ -32,10 +32,6 @@ const createNewChatroom = async (req, res) => {
     if (!userId || !name) 
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
 
-    const nameRegex = /^[A-Za-z\s]+$/
-    if (!nameRegex.test(name)) 
-        return res.status(400).json({message : 'BAD REQUEST : Only alphabets are accepted as chatroom name'})
-
     const chatroomExists = await Chatroom.findOne({ userId, name })
     if (chatroomExists) 
         return res.status(409).json({ message: 'CONFLICT : This chatroom already exists!' })

@@ -17,11 +17,11 @@ const Message = require('./model/Message')
 const User = require('./model/User')
 
 const io = require("socket.io")(server, {
-  allowEIO3: true,
+  allowEIO3: false,
   cors: {
     origin: true,
     methods: ['GET', 'POST'],
-    credentials: true
+    credentials: false
   }
 })
 
@@ -114,6 +114,7 @@ app.use('/initialCustomers', require('./routes/initialCustomerRoute'))
 app.use('/finalCustomers', require('./routes/finalCustomersRoutes'))
 app.use('/locations', require('./routes/locationRoutes'))
 app.use('/projectCodes', require('./routes/projectCodeRoutes'))
+app.use('/chatrooms', require('./routes/chatroomRoutes'))
 app.use('/tickets', require('./routes/ticketRoutes'))
 
 // Custom 404 page

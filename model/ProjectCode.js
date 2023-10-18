@@ -95,7 +95,7 @@ projectCodeSchema.statics.generateCounter = async function () {
   try {
     const count = await this.countDocuments()
 
-    return count + 200
+    return count + 201
   } catch (error) {
     throw new Error('Error generating counter: ' + error.message)
   }
