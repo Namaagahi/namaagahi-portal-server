@@ -1514,3 +1514,9 @@
 20231016	16:49:55	1d04c30e-688b-488f-9061-f698474ce1c3	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
 20231017	17:04:45	131939d5-6b1c-4725-974a-1c6896ee9e5f	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
 20231018	09:46:04	a5b57907-2281-4f1b-b109-ecdb30743963	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20231018	13:34:05	c2437f09-517a-438c-bfb1-2a9b6ca48044	ReferenceError: Cannot access 'discountPercentage' before initialization	POST	/plans	http://localhost:3000}
+20231018	13:44:27	7073b5a5-0852-49f9-9952-332e92795359	ReferenceError: discountPercentage is not defined	POST	/plans	http://localhost:3000}
+20231018	15:20:59	1bca75d6-dd12-4db2-86bb-8ba7eb701b86	ReferenceError: index is not defined	PATCH	/plans	http://localhost:3000}
+20231018	15:21:00	d10ba29d-200e-4bf0-949a-834fc524b8b8	ReferenceError: index is not defined	PATCH	/plans	http://localhost:3000}
+20231018	15:42:21	327b1061-950d-4c32-8b15-ac304a87488d	ReferenceError: monthlyFeeWithDiscount is not defined	PATCH	/plans	http://localhost:3000}
+20231018	15:47:18	02ba8f9d-e515-4082-9623-440fb64007ff	ReferenceError: monthlyFeeWithDiscount is not defined	POST	/plans	http://localhost:3000}

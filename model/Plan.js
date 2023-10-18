@@ -163,24 +163,43 @@ planSchema.pre('save', function(next) {
       }
     })
 
-    doc.structures.forEach((structure) => {
+    doc.structures.forEach((structure, index) => {
+        if (
+            structure.isModified('totalPeriodCost') ||
+            structure.isModified('monthlyFeeWithDiscount') ||
+            structure.isModified('duration.diff') || 
+            structure.isModified('calculatedInPackageFee') ||
+            structure.isModified('discountFee') || 
+            structure.isModified('monthlyFee') 
+            ) {
+            if(doc.mark.name === 'regular') {
+                console.log("THIS IS BEING CALLEDDDDDDDDDDDDDD!")
+                if (doc.userDefinedMonthlyFeeWithDiscount) {
+                    if (structure.discountType === 'percentage') {
+                        const totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
+                        doc.structures[index].totalPeriodCost = totalPeriodCost
+                        structure.discountFee = 100 - ((structure.monthlyFeeWithDiscount * 100) / structure.monthlyFee)
+                    }   
+                } else {
+                    structure.monthlyFeeWithDiscount = structure.monthlyFee - (structure.monthlyFee * (structure.discountFee / 100 ))
+                    const totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
+                    doc.structures[index].totalPeriodCost = totalPeriodCost
+                }
+            } else {
+                const totalPeriodCost = (structure.calculatedInPackageFee / 30) * structure.duration.diff
+                doc.structures[index].totalPeriodCost = totalPeriodCost
+            }
+        }
         if (doc.userDefinedMonthlyFeeWithDiscount) {
           if (structure.discountType === 'percentage') {
-            const discountPercentage = structure.discountFee / 100
-            structure.monthlyFeeWithDiscount = structure.monthlyFee * (1 - discountPercentage)
+            const monthlyFeeWithDiscount = structure.monthlyFeeWithDiscount
+            structure.discountFee = 100 - ((monthlyFeeWithDiscount * 100) / structure.monthlyFee)
           } else if (structure.discountType === 'number') {
             structure.monthlyFeeWithDiscount = structure.monthlyFee - structure.discountFee
           }
         } else {
-          const monthlyFee = structure.monthlyFee
-          const monthlyFeeWithDiscount = structure.monthlyFeeWithDiscount
-    
-          if (monthlyFeeWithDiscount < monthlyFee) {
-            const discountPercentage = 100 - (monthlyFeeWithDiscount * 100) / monthlyFee
-            structure.discountType = 'percentage'
-            structure.discountFee = discountPercentage
-          } else {
-          }
+            const totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
+            doc.structures[index].totalPeriodCost = totalPeriodCost
         }
       })
 
@@ -190,7 +209,7 @@ planSchema.pre('save', function(next) {
             doc.structures[index].percentage = percentage
         }
     })
-    
+     
     doc.structures.forEach((structure, index) => {
         if (        
             structure.isModified('duration.sellStart') ||
@@ -215,25 +234,6 @@ planSchema.pre('save', function(next) {
             if(doc.mark.name === 'regular') {
                 const totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
                 doc.structures[index].totalPeriodCost = totalPeriodCost
-            } else {
-                const totalPeriodCost = (structure.calculatedInPackageFee / 30) * structure.duration.diff
-                doc.structures[index].totalPeriodCost = totalPeriodCost
-            }
-        }
-    })
-
-    doc.structures.forEach((structure, index) => {
-        if (
-            structure.isModified('totalPeriodCost') ||
-            structure.isModified('monthlyFeeWithDiscount') ||
-            structure.isModified('duration.diff') || 
-            structure.isModified('calculatedInPackageFee') 
-            ) {
-            if(doc.mark.name === 'regular') {
-                const totalPeriodCost = (structure.monthlyFeeWithDiscount / 30) * structure.duration.diff
-                doc.structures[index].totalPeriodCost = totalPeriodCost
-                const discountPercentage = structure.discountFee / 100
-                structure.monthlyFeeWithDiscount = structure.monthlyFee * (1 - discountPercentage)
             } else {
                 const totalPeriodCost = (structure.calculatedInPackageFee / 30) * structure.duration.diff
                 doc.structures[index].totalPeriodCost = totalPeriodCost

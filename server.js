@@ -1,6 +1,5 @@
 require('dotenv').config()
 const express = require('express')
-const http = require('http')
 const app = express() 
 const path = require('path')
 const cors = require('cors')
@@ -28,11 +27,11 @@ const io = require("socket.io")(server, {
 
 io.use(async (socket, next) => {
   try {
-    const token = socket.handshake.query.token;
-    const payload = await socketToken.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const token = socket.handshake.query.token
+    const payload = await socketToken.verify(token, process.env.ACCESS_TOKEN_SECRET)
     console.log("payload", payload)
-    socket.userId = payload.UserInfo.id;
-    next();
+    socket.userId = payload.UserInfo.id
+    next()
   } catch (err) {
     console.log("ERROR", err)
   }
@@ -41,20 +40,20 @@ io.use(async (socket, next) => {
 io.on("connection", (socket) => {
   console.log("SOCKET USERID", socket.userId)
 
-  console.log("Connected: " + socket.userId);
+  console.log("Connected: " + socket.userId)
 
   socket.on("disconnect", () => {
-    console.log("Disconnected: " + socket.userId);
+    console.log("Disconnected: " + socket.userId)
   })
 
   socket.on("joinRoom", ({ chatroomId }) => {
     socket.join(chatroomId);
-    console.log("A user joined chatroom: " + chatroomId);
+    console.log("A user joined chatroom: " + chatroomId)
   })
 
   socket.on("leaveRoom", ({ chatroomId }) => {
     socket.leave(chatroomId);
-    console.log("A user left chatroom: " + chatroomId);
+    console.log("A user left chatroom: " + chatroomId)
   })
 
   socket.on("chatroomMessage", async ({ chatroomId, message }) => {
@@ -69,7 +68,7 @@ io.on("connection", (socket) => {
         message,
         name: user.name,
         userId: socket.userId,
-      });
+      })
       await newMessage.save()
     }
   })
