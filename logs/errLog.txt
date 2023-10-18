@@ -1512,3 +1512,5 @@
 20231015	11:39:54	212978ac-4881-463f-bfbc-1f0c9f05cbe4	Error: Not allowed by CORS	GET	/socket.io/?EIO=4&transport=polling&t=OioOd5C	http://127.0.0.1:5500}
 20231016	16:49:29	d39a4866-9ad4-42d2-a8a2-5c3bf4bf3cc2	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
 20231016	16:49:55	1d04c30e-688b-488f-9061-f698474ce1c3	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20231017	17:04:45	131939d5-6b1c-4725-974a-1c6896ee9e5f	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20231018	09:46:04	a5b57907-2281-4f1b-b109-ecdb30743963	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}

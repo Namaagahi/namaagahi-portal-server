@@ -1,7 +1,7 @@
 const User = require('../model/User')
 const bcrypt = require('bcrypt')
-// const jwt = require('jsonwebtoken')
-const jwt = require("jwt-then")
+const jwt = require('jsonwebtoken')
+const socketToken = require("jwt-then")
 const asyncHandler = require('express-async-handler')
 
 // @desc Login
@@ -22,7 +22,21 @@ const login = asyncHandler(async (req, res) => {
     const match = await bcrypt.compare(password, foundUser.password)
     if (!match) return res.status(401).json({ message: 'Unauthorized: wrong password.' })
     
-    const accessToken = await jwt.sign(
+    const accessToken = jwt.sign(
+        {
+            "UserInfo": {
+                "id": foundUser.id,
+                "username": foundUser.username,
+                "name": foundUser.name,
+                "avatar": foundUser.avatar,
+                "roles": foundUser.roles
+            }
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: '15m' }
+    )
+
+    const socketAccessToken = await socketToken.sign(
         {
             "UserInfo": {
                 "id": foundUser.id,
@@ -36,8 +50,7 @@ const login = asyncHandler(async (req, res) => {
         { expiresIn: '15m' }
     )
     
-    
-    const refreshToken = await jwt.sign(
+    const refreshToken = jwt.sign(
         { "username": foundUser.username },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: '7d' }
@@ -48,19 +61,19 @@ const login = asyncHandler(async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000,
     })
     
-    res.json({ accessToken })
+    res.json({ accessToken, socketAccessToken })
 })
 
 // @desc Refresh
 // @route GET /auth/refresh
 // @access Public - because access token has expired
-const refresh = asyncHandler(async(req, res) => {
+const refresh = (req, res) => {
 
     const cookies = req.cookies
     if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized: no cookies' })
     const refreshToken = cookies.jwt
 
-    await jwt.verify(
+    jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
 
@@ -71,7 +84,7 @@ const refresh = asyncHandler(async(req, res) => {
             const foundUser = await User.findOne({ username: decoded.username }).exec()
             if (!foundUser) return res.status(401).json({ message: 'Unauthorized: no user found' })
 
-            const accessToken = await jwt.sign(
+            const accessToken = jwt.sign(
                 {
                     "UserInfo": {
                         "id": foundUser.id,
@@ -88,7 +101,7 @@ const refresh = asyncHandler(async(req, res) => {
             res.json({ accessToken })
         }
     )
-})
+}
 
 // @desc Logout
 // @route POST /auth/logout
