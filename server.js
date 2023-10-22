@@ -78,6 +78,7 @@ app.use('/finalCustomers', require('./routes/finalCustomersRoutes'))
 app.use('/locations', require('./routes/locationRoutes'))
 app.use('/projectCodes', require('./routes/projectCodeRoutes'))
 app.use('/chatrooms', require('./routes/chatroomRoutes'))
+app.use('/messages', require('./routes/messageRouter'))
 app.use('/tickets', require('./routes/ticketRoutes'))
 
 // Custom 404 page
@@ -120,6 +121,15 @@ io.on("connection", (socket) => {
     console.log("A user left chatroom: " + chatroomId)
   })
 
+  socket.on("typing", (user) => {
+    console.log(`${user} is typing`)
+    socket.broadcast.emit("user-typing", user)
+  })
+
+  socket.on("stop-typing", (user) => {
+    socket.broadcast.emit("user-stop-typing", user)
+  })
+
   socket.on("chatroomMessage", async ({ chatroomId, message }) => {
     if (message.trim().length > 0) {
       const user = await User.findOne({ _id: socket.userId })
@@ -128,6 +138,7 @@ io.on("connection", (socket) => {
         user: socket.userId,
         message,
       })
+      
       io.to(chatroomId).emit("newMessage", {
         message,
         name: user.name,

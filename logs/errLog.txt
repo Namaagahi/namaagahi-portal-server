@@ -1520,3 +1520,16 @@
 20231018	15:21:00	d10ba29d-200e-4bf0-949a-834fc524b8b8	ReferenceError: index is not defined	PATCH	/plans	http://localhost:3000}
 20231018	15:42:21	327b1061-950d-4c32-8b15-ac304a87488d	ReferenceError: monthlyFeeWithDiscount is not defined	PATCH	/plans	http://localhost:3000}
 20231018	15:47:18	02ba8f9d-e515-4082-9623-440fb64007ff	ReferenceError: monthlyFeeWithDiscount is not defined	POST	/plans	http://localhost:3000}
+20231021	14:13:59	c64ee1bf-93d4-4f3b-88af-9094246aef4a	TypeError: Cannot read properties of null (reading 'username')	GET	/messages	http://localhost:3000}
+20231021	14:14:00	bb3d4fcb-e9d8-4eac-b2f4-c637de615c24	TypeError: Cannot read properties of null (reading 'username')	GET	/messages	http://localhost:3000}
+20231021	14:15:14	b5dbbafb-6dd5-498a-babb-907373e2942b	TypeError: Cannot read properties of null (reading 'username')	GET	/messages	http://localhost:3000}
+20231021	14:15:15	a916e273-5583-40aa-8dee-9dca13946ede	TypeError: Cannot read properties of null (reading 'username')	GET	/messages	http://localhost:3000}
+20231021	14:15:26	f313a148-1122-4678-b54e-b73c4ab88ee3	TypeError: Cannot read properties of null (reading 'username')	GET	/messages	http://localhost:3000}
+20231021	14:15:26	2c8bd2ea-6f07-4a58-bcf1-7242131d5d12	TypeError: Cannot read properties of null (reading 'username')	GET	/messages	http://localhost:3000}
+20231021	14:18:03	3d87e541-70ed-4df5-9f0a-ef6576200e42	TypeError: Cannot read properties of null (reading 'username')	GET	/messages	http://localhost:3000}
+20231021	14:18:03	fc381de1-22fc-48ca-beed-ae322247b75f	TypeError: Cannot read properties of null (reading 'username')	GET	/messages	http://localhost:3000}
+20231021	14:18:28	aaf7e272-8b4a-4eaa-b794-0ede46e91a12	TypeError: Cannot read properties of null (reading 'username')	GET	/messages	http://localhost:3000}
+20231021	14:20:32	50bf20e5-2465-4c2c-bd6e-0e99102c3459	TypeError: Cannot read properties of null (reading 'username')	GET	/messages	undefined}
+20231022	08:33:04	e701daa5-1d5f-4692-93e2-93fd9ec04a27	TypeError: Cannot read properties of null (reading 'username')	GET	/messages	undefined}
+20231022	08:33:26	66851a92-e1e9-4700-a2ca-2d0e37dcb26d	TypeError: Cannot read properties of null (reading 'name')	GET	/messages	undefined}
+20231022	08:33:28	3fac82e6-b35b-48e4-9e95-11faa986663c	TypeError: Cannot read properties of null (reading 'name')	GET	/messages	undefined}
