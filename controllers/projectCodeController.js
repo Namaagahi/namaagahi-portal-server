@@ -57,7 +57,7 @@ const createNewProjectCode = asyncHandler(async (req, res) => {
                 finalCustomerId,
                 brand,
                 desc,
-                month
+                // month
             })
 
             await projectCode.save()

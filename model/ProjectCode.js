@@ -1,6 +1,8 @@
-const moment = require('jalali-moment')
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const moment = require('jalali-moment');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+let customCounter = 201; // Initialize your custom counter
 
 const projectCodeSchema = new Schema(
   {
@@ -40,7 +42,7 @@ const projectCodeSchema = new Schema(
     code: {
       type: String,
       required: false,
-      unique: false
+      unique: false,
     },
   },
   {
@@ -48,61 +50,40 @@ const projectCodeSchema = new Schema(
   }
 )
 
-
 projectCodeSchema.pre('save', async function (next) {
+  const doc = this;
 
   try {
-    const { media, year, month, code } = this
-    if (this.isModified('media') || this.isModified('year')) {
-      const counter = await this.constructor.generateCounter(media, year, month);
-      this.code = generateProjectCode(media, year, counter, month);
-    } else if (!this.code) {
-      const counter = await this.constructor.generateCounter(media, year, month)
+    const { media, year, month, code } = this;
 
-      const generatedCode = generateProjectCode(media, year, counter, month)
-
-      const existingProjectCode = await this.constructor.findOne({ code: generatedCode })
-
-      if (existingProjectCode && existingProjectCode.month) {
-        if (this.month !== existingProjectCode.month) {
-          this.code = generatedCode
-        } else {
-          throw new Error('Duplicate project code')
-        }
-      } else {
-        this.code = generatedCode
+    if (doc.isNew) {
+      if (!doc.code) {
+        const generatedCode = generateProjectCode(media, year, generateCounter())
+        doc.code = generatedCode
       }
-    } else {
-      if(month) {
-        this.code = `${code}-${month.toString().padStart(2, '0')}`
-      } else {
-        this.code = code
+
+      if (doc.code && doc.month) {
+        const generatedCode = expandProjectCode(code, month);
+        doc.code = generatedCode;
       }
     }
 
-
-    next()
+    next();
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 function getEquivalentValue(persianYear) {
-  if (persianYear < 1400) throw new Error('Invalid Persian year')
-  return (persianYear - 1400) * 100
+  if (persianYear < 1400) throw new Error('Invalid Persian year');
+  return (persianYear - 1400) * 100;
 }
 
-projectCodeSchema.statics.generateCounter = async function () {
-  try {
-    const count = await this.countDocuments()
-
-    return count + 201
-  } catch (error) {
-    throw new Error('Error generating counter: ' + error.message)
-  }
+function generateCounter () {
+  return customCounter++
 }
 
-function generateProjectCode(media, year, counter, month) {
+function generateProjectCode(media, year, counter) {
   const mediaCodeMap = {
     'BB': '10',
     'MTR': '20',
@@ -110,16 +91,13 @@ function generateProjectCode(media, year, counter, month) {
     'NMV': '40',
   }
 
-  const mediaCode = mediaCodeMap[media] || '00' 
-  const yearCode = getEquivalentValue(year)
-  const counterCode = counter.toString().padStart(3, '0')
-  const monthCode = month ? `-${month.toString().padStart(2, '0')}` : ''
-
-  if(month) {
-    return `${media}${mediaCode}${yearCode}${counterCode}${monthCode}`
-  } else {
-    return `${this.code}${monthCode}`
-  }
+  const mediaCode = mediaCodeMap[media] || '00';
+  const yearCode = getEquivalentValue(year);
+  return `${media}${mediaCode}${yearCode}${counter}`;
 }
 
-module.exports = mongoose.model('ProjectCode', projectCodeSchema)
+function expandProjectCode(code, month) {
+  return `${code}-${month.toString().padStart(2, '0')}`;
+}
+
+module.exports = mongoose.model('ProjectCode', projectCodeSchema);
