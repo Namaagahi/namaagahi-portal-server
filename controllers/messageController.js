@@ -30,27 +30,24 @@ const getAllMessages = asyncHandler(async (req, res) => {
     res.json(messagesWithUser)
 })
 
+// @desc Delete all messages in a chatroom
+// @route DELETE /chatrooms/:chatroomId/messages
+// @access Private
+
+const deleteChatroomMessages = asyncHandler(async (req, res) => {
+
+    const { chatroomId } = req.body
+  
+    const deleteResult = await Message.deleteMany({ chatroom: chatroomId });
+  
+    if (deleteResult.deletedCount > 0) {
+      return res.json({ message: `Deleted ${deleteResult.deletedCount} messages in the chatroom.` })
+    } else {
+      return res.status(404).json({ message: 'No messages found in the chatroom.' })
+    }
+  })
+
 module.exports = {
     getAllMessages,
-
+    deleteChatroomMessages
 }
-// const getAllMessages = asyncHandler(async (req, res) => {
-
-//     const skip = req.query.skip ? Number(req.query.skip) : 0
-//     const DEFAULT_LIMIT = 2
-// console.log("skip", skip)
-//     const messages = await Message.find().skip(skip).limit(DEFAULT_LIMIT).lean()
-//     if (!messages?.length) 
-//         return res.status(400).json({ message: 'BAD REQUEST : No messages found' })
-
-//     const messagesWithUser = await Promise.all(messages.map(async (message) => {
-//         const user = await User.findById(message.user).lean().exec()
-//         return { ...message, username: user.name }
-//     }))
-
-//     res.json(messagesWithUser)
-// })
-
-// module.exports = {
-//     getAllMessages,
-// }

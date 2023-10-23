@@ -50,6 +50,7 @@ const projectCodeSchema = new Schema(
 
 
 projectCodeSchema.pre('save', async function (next) {
+
   try {
     const { media, year, month, code } = this
     if (this.isModified('media') || this.isModified('year')) {
@@ -114,7 +115,11 @@ function generateProjectCode(media, year, counter, month) {
   const counterCode = counter.toString().padStart(3, '0')
   const monthCode = month ? `-${month.toString().padStart(2, '0')}` : ''
 
-  return `${media}${mediaCode}${yearCode}${counterCode}${monthCode}`
+  if(month) {
+    return `${media}${mediaCode}${yearCode}${counterCode}${monthCode}`
+  } else {
+    return `${this.code}${monthCode}`
+  }
 }
 
 module.exports = mongoose.model('ProjectCode', projectCodeSchema)

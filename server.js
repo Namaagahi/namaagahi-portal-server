@@ -121,14 +121,14 @@ io.on("connection", (socket) => {
     console.log("A user left chatroom: " + chatroomId)
   })
 
-  socket.on("typing", (user) => {
-    console.log(`${user} is typing`)
-    socket.broadcast.emit("user-typing", user)
-  })
+  // socket.on("typing", (user) => {
+  //   console.log(`${user} is typing`)
+  //   socket.broadcast.emit("user-typing", user)
+  // })
 
-  socket.on("stop-typing", (user) => {
-    socket.broadcast.emit("user-stop-typing", user)
-  })
+  // socket.on("stop-typing", (user) => {
+  //   socket.broadcast.emit("user-stop-typing", user)
+  // })
 
   socket.on("chatroomMessage", async ({ chatroomId, message }) => {
     if (message.trim().length > 0) {
