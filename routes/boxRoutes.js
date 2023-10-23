@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require("express")
 const router = express.Router()
 const boxController =  require('../controllers/boxController')
 
@@ -9,7 +9,7 @@ router.route('/')
     .delete(boxController.deleteBox)
 
 router.route("/:id")
-  .get(boxController.getBoxById);
+  .get(boxController.getBoxById)
 
 
 module.exports = router  

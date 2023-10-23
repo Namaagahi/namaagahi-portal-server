@@ -1,11 +1,21 @@
-const moment = require('jalali-moment');
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const moment = require('jalali-moment')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-let customCounter = 201; // Initialize your custom counter
+const projectCodeCounterSchema = new mongoose.Schema({
+  _id: { type: String, required: true },
+  sequence_value: { type: Number },
+})
+
+const ProjectCodeCounter = mongoose.model('ProjectCodeCounter', projectCodeCounterSchema)
 
 const projectCodeSchema = new Schema(
   {
+    count: {
+      type: Number,
+      unique: false,
+      required: false
+    }, 
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
@@ -51,36 +61,55 @@ const projectCodeSchema = new Schema(
 )
 
 projectCodeSchema.pre('save', async function (next) {
-  const doc = this;
+  const doc = this
 
   try {
-    const { media, year, month, code } = this;
+    const { media, year, month, code } = this
 
     if (doc.isNew) {
+      console.log("BOOOOOOOOOOOOOL", !month && !code)
+      if(!month && !code) {
+        const counter = await ProjectCodeCounter.findById('count').exec()
+        if (!counter) await ProjectCodeCounter.create({ _id: 'count', sequence_value: 200 })
+        
+        const updatedCounter = await ProjectCodeCounter.findByIdAndUpdate(
+          'count',
+          { $inc: { sequence_value: 1 } },
+          { new: true }
+        )
+        this.count = updatedCounter.sequence_value
+      }
+
       if (!doc.code) {
-        const generatedCode = generateProjectCode(media, year, generateCounter())
+        const generatedCode = generateProjectCode(media, year, generateCounter(doc.count))
         doc.code = generatedCode
       }
 
       if (doc.code && doc.month) {
-        const generatedCode = expandProjectCode(code, month);
-        doc.code = generatedCode;
+        const generatedCode = expandProjectCode(code, month)
+        doc.code = generatedCode
+        doc.count = 0
+      }
+    } else {
+      if (this.isModified('media') || this.isModified('year')) {
+        this.code = generateProjectCode(media, year, this.count)
       }
     }
 
-    next();
+    next()
   } catch (error) {
-    next(error);
+    next(error)
   }
-});
+})
 
 function getEquivalentValue(persianYear) {
-  if (persianYear < 1400) throw new Error('Invalid Persian year');
-  return (persianYear - 1400) * 100;
+  if (persianYear < 1400) throw new Error('Invalid Persian year')
+  return (persianYear - 1400) * 100
 }
 
-function generateCounter () {
-  return customCounter++
+function generateCounter (count) {
+  return count++
+
 }
 
 function generateProjectCode(media, year, counter) {
@@ -91,13 +120,13 @@ function generateProjectCode(media, year, counter) {
     'NMV': '40',
   }
 
-  const mediaCode = mediaCodeMap[media] || '00';
-  const yearCode = getEquivalentValue(year);
-  return `${media}${mediaCode}${yearCode}${counter}`;
+  const mediaCode = mediaCodeMap[media] || '00'
+  const yearCode = getEquivalentValue(year)
+  return `${media}${mediaCode}${yearCode}${counter}`
 }
 
 function expandProjectCode(code, month) {
-  return `${code}-${month.toString().padStart(2, '0')}`;
+  return `${code}-${month.toString().padStart(2, '0')}`
 }
 
-module.exports = mongoose.model('ProjectCode', projectCodeSchema);
+module.exports = mongoose.model('ProjectCode', projectCodeSchema)

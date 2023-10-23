@@ -146,7 +146,7 @@ const getBoxById = asyncHandler(async (req, res) => {
   const boxWithUser = { ...box, username: user.username }
 
   res.json(boxWithUser)
-});
+})
 
 // @desc update box structures when create or update
 // @middleware
@@ -156,7 +156,7 @@ async function updateStructures(structures, boxId, isCreation) {
   const updatedStructures = []
 
   for (const structure of structures) {
-    const structureId = structure.structureId; 
+    const structureId = structure.structureId 
     const foundStructure = await Structure.findOne({ _id: structureId }).exec()
     console.log("foundStructure", foundStructure)
     if (foundStructure) {
@@ -192,7 +192,7 @@ async function updateStructuresOnBoxDeletion(boxId) {
     { $set: { isChosen: false, parent: '' } }
   ).exec()
 
-  return updatedStructures;
+  return updatedStructures
 }
 
 module.exports = {

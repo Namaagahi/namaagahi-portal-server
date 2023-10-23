@@ -33,7 +33,7 @@ const createNewProjectCode = asyncHandler(async (req, res) => {
         desc,
         month,
         code
-    } = req.body;
+    } = req.body
 
     try {
         if (code) {

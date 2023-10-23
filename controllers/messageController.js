@@ -38,7 +38,7 @@ const deleteChatroomMessages = asyncHandler(async (req, res) => {
 
     const { chatroomId } = req.body
   
-    const deleteResult = await Message.deleteMany({ chatroom: chatroomId });
+    const deleteResult = await Message.deleteMany({ chatroom: chatroomId })
   
     if (deleteResult.deletedCount > 0) {
       return res.json({ message: `Deleted ${deleteResult.deletedCount} messages in the chatroom.` })

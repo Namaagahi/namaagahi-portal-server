@@ -246,7 +246,7 @@ planSchema.pre('save', function(next) {
 
 planSchema.pre('save', async function (next) {
     if (this.isNew) {
-      const counter = await Counter.findById('planId').exec();
+      const counter = await Counter.findById('planId').exec()
       if (!counter) await Counter.create({ _id: 'planId', sequence_value: 1000 })
       
       const updatedCounter = await Counter.findByIdAndUpdate(
@@ -261,6 +261,6 @@ planSchema.pre('save', async function (next) {
 
   })
 
-  const Plan = mongoose.model('Plan', planSchema);
+  const Plan = mongoose.model('Plan', planSchema)
   
-  module.exports = Plan;
+  module.exports = Plan

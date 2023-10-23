@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require("express")
 const router = express.Router()
-const locationController =  require('../controllers/locationController');
+const locationController =  require('../controllers/locationController')
 
 router.route('/')
     .get(locationController.getAllLocations)

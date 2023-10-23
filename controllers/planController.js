@@ -87,7 +87,7 @@ const updatePlan = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
     
   
-    const plan = await Plan.findById(id).exec();
+    const plan = await Plan.findById(id).exec()
     if (!plan) 
         return res.status(400).json({ message: 'BAD REQUEST : Plan not found' })
   

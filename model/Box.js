@@ -227,7 +227,7 @@ boxSchema.virtual('structures.structureFixedPeriodCost').get(function() {
 
 boxSchema.virtual('dailyVariableCost').get(function() {
     return this.costs.variableCosts.reduce((acc, curr) => {
-      return acc + curr.figures.dailyCost;
+      return acc + curr.figures.dailyCost
     }, 0)
 })
   
@@ -272,7 +272,7 @@ boxSchema.pre('save', function(next) {
         structure.costs.variableCosts.forEach((variableCost) => {
         dailyVariableCost += variableCost.figures?.dailyCost || 0
         })
-        structure.costs.dailyVariableCost = dailyVariableCost;
+        structure.costs.dailyVariableCost = dailyVariableCost
         structure.costs.totalDailyCost = (structure.costs.fixedCosts.dailyCost || 0) + dailyVariableCost
         structure.costs.totalMonthlyCost = structure.costs.monthlyVariableCost + structure.costs.fixedCosts.monthlyCost
         structure.costs.totalPeriodCost = structure.costs.totalDailyCost * structure.duration.diff
@@ -282,14 +282,14 @@ boxSchema.pre('save', function(next) {
         if (structure.costs.variableCosts && structure.costs.variableCosts.length > 0) {
             structure.costs.variableCosts.forEach((variableCost) => {
                 if (variableCost.figures.monthlyCost) {
-                    const monthlyCost = variableCost.figures.monthlyCost;
-                    const durationDiff = structure.duration.diff;
+                    const monthlyCost = variableCost.figures.monthlyCost
+                    const durationDiff = structure.duration.diff
 
-                    const periodCost = (monthlyCost / 30) * durationDiff;
-                    variableCost.figures.periodCost = periodCost;
+                    const periodCost = (monthlyCost / 30) * durationDiff
+                    variableCost.figures.periodCost = periodCost
 
-                    const dailyCost = monthlyCost / 30;
-                    variableCost.figures.dailyCost = dailyCost;
+                    const dailyCost = monthlyCost / 30
+                    variableCost.figures.dailyCost = dailyCost
                 }
             })
         }

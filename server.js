@@ -112,23 +112,14 @@ io.on("connection", (socket) => {
   })
 
   socket.on("joinRoom", ({ chatroomId }) => {
-    socket.join(chatroomId);
+    socket.join(chatroomId)
     console.log("A user joined chatroom: " + chatroomId)
   })
 
   socket.on("leaveRoom", ({ chatroomId }) => {
-    socket.leave(chatroomId);
+    socket.leave(chatroomId)
     console.log("A user left chatroom: " + chatroomId)
   })
-
-  // socket.on("typing", (user) => {
-  //   console.log(`${user} is typing`)
-  //   socket.broadcast.emit("user-typing", user)
-  // })
-
-  // socket.on("stop-typing", (user) => {
-  //   socket.broadcast.emit("user-stop-typing", user)
-  // })
 
   socket.on("chatroomMessage", async ({ chatroomId, message }) => {
     if (message.trim().length > 0) {
