@@ -15,7 +15,7 @@ const projectCodeSchema = new Schema(
       type: Number,
       unique: false,
       required: false
-    }, 
+    },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
@@ -67,17 +67,16 @@ projectCodeSchema.pre('save', async function (next) {
     const { media, year, month, code } = this
 
     if (doc.isNew) {
-      console.log("BOOOOOOOOOOOOOL", !month && !code)
       if(!month && !code) {
         const counter = await ProjectCodeCounter.findById('count').exec()
         if (!counter) await ProjectCodeCounter.create({ _id: 'count', sequence_value: 200 })
-        
+
         const updatedCounter = await ProjectCodeCounter.findByIdAndUpdate(
           'count',
           { $inc: { sequence_value: 1 } },
           { new: true }
         )
-        this.count = updatedCounter.sequence_value
+        doc.count = updatedCounter.sequence_value
       }
 
       if (!doc.code) {
@@ -85,14 +84,14 @@ projectCodeSchema.pre('save', async function (next) {
         doc.code = generatedCode
       }
 
-      if (doc.code && doc.month) {
+      if (code && month) {
         const generatedCode = expandProjectCode(code, month)
         doc.code = generatedCode
-        doc.count = 0
+        doc.count = Math.random(new Date().getTime()).toFixed(3)
       }
     } else {
-      if (this.isModified('media') || this.isModified('year')) {
-        this.code = generateProjectCode(media, year, this.count)
+      if (doc.isModified('media') || doc.isModified('year')) {
+        doc.code = generateProjectCode(media, year, doc.count)
       }
     }
 
@@ -109,7 +108,6 @@ function getEquivalentValue(persianYear) {
 
 function generateCounter (count) {
   return count++
-
 }
 
 function generateProjectCode(media, year, counter) {
