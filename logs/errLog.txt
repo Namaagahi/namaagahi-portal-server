@@ -1534,3 +1534,4 @@
 20231022	08:33:26	66851a92-e1e9-4700-a2ca-2d0e37dcb26d	TypeError: Cannot read properties of null (reading 'name')	GET	/messages	undefined}
 20231022	08:33:28	3fac82e6-b35b-48e4-9e95-11faa986663c	TypeError: Cannot read properties of null (reading 'name')	GET	/messages	undefined}
 20231029	09:48:02	50581c37-743c-48cf-8afb-09fee63063d6	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
+20231104	08:44:21	368aba3f-ad20-4b0a-9d62-97e563b6851e	SyntaxError: Unexpected number in JSON at position 128	PATCH	/initialCustomers	undefined}

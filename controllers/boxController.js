@@ -3,13 +3,13 @@ const asyncHandler = require('express-async-handler')
 const User = require('../model/User')
 const Structure = require('../model/Structure')
 
-// @desc Get all boxes 
+// @desc Get all boxes
 // @route GET /boxes
 // @access Private
 const getAllBoxes = asyncHandler(async (req, res) => {
 
   const boxes = await Box.find().lean()
-  if (!boxes?.length) 
+  if (!boxes?.length)
     return res.status(400).json({ message: 'BAD REQUEST : No boxes found' })
 
   const boxesWithUser = await Promise.all(boxes.map(async (box) => {
@@ -34,11 +34,11 @@ const createNewBox = asyncHandler(async (req, res) => {
     structures
   } = req.body
 
-  if (!boxId || !userId || !name || !mark || !duration || !structures) 
+  if (!boxId || !userId || !name || !mark || !duration || !structures)
     return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
-  
+
   const duplicate = await Box.findOne({ name }).lean().exec()
-  if (duplicate) 
+  if (duplicate)
     return res.status(409).json({ message: 'CONFLICT :Duplicate box name' })
 
   const box = await Box.create({
@@ -52,7 +52,7 @@ const createNewBox = asyncHandler(async (req, res) => {
 
   if (box) {
     await updateStructures(structures, box.boxId, true)
-  
+
     return res.status(201).json({ message: `CREATED: Box ${req.body.name} created successfully!` })
   } else {
       return res.status(400).json({ message: 'BAD REQUEST: Invalid box data received' })
@@ -74,20 +74,20 @@ const updateBox = asyncHandler(async (req, res) => {
     duration,
     structures
   } = req.body
-  
-  if (!id || !boxId || !userId || !name || !mark || !duration || !username) 
+
+  if (!id || !boxId || !userId || !name || !mark || !duration || !username)
     return res.status(400).json({ message: 'BAD REQUEST : All fields are required' })
 
   const box = await Box.findById(id).exec()
 
-  if (!box) 
+  if (!box)
     return res.status(400).json({ message: 'BAD REQUEST : Box not found' })
-  
+
   const duplicate = await Box.findOne({ name }).lean().exec()
 
-  if (duplicate && duplicate._id.toString() !== id) 
+  if (duplicate && duplicate._id.toString() !== id)
     return res.status(409).json({ message: 'CONFLICT : Duplicate box name' })
-  
+
   box.userId = userId
   box.username = username
   box.boxId = boxId
@@ -95,7 +95,7 @@ const updateBox = asyncHandler(async (req, res) => {
   box.mark = mark
   box.duration = duration
   box.structures = structures
-  
+
   // Update structures
   await updateStructures(structures, box.boxId, false)
   await box.save()
@@ -115,11 +115,11 @@ const deleteBox = asyncHandler(async (req, res) => {
 
   await updateStructuresOnBoxDeletion(boxId)
 
-  if (!id || !boxId) 
+  if (!id || !boxId)
     return res.status(400).json({ message: 'Box ID required' })
-  
+
   const box = await Box.findById(id).exec()
-  if (!box) 
+  if (!box)
     return res.status(400).json({ message: 'Box not found' })
 
   const result = await box.deleteOne()
@@ -134,12 +134,12 @@ const deleteBox = asyncHandler(async (req, res) => {
 const getBoxById = asyncHandler(async (req, res) => {
   const { id } = req.params
 
-  if (!id) 
+  if (!id)
     return res.status(400).json({ message: 'Box ID required' })
 
   const box = await Box.findById(id).lean().exec()
 
-  if (!box) 
+  if (!box)
     return res.status(404).json({ message: 'Box not found' })
 
   const user = await User.findById(box.userId).lean().exec()
@@ -156,7 +156,7 @@ async function updateStructures(structures, boxId, isCreation) {
   const updatedStructures = []
 
   for (const structure of structures) {
-    const structureId = structure.structureId 
+    const structureId = structure.structureId
     const foundStructure = await Structure.findOne({ _id: structureId }).exec()
     console.log("foundStructure", foundStructure)
     if (foundStructure) {
@@ -168,6 +168,7 @@ async function updateStructures(structures, boxId, isCreation) {
   }
 
   if (!isCreation) {
+    console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
     const removedStructures = await Structure.find({
       _id: { $nin: structures.map(s => s.structureId) },
       parent: boxId

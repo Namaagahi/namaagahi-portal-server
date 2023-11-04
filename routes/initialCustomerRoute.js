@@ -5,6 +5,7 @@ const initialCustomerController =  require('../controllers/initialCustomerContro
 router.route('/')
     .get(initialCustomerController.getAllInitialCustomers)
     .post(initialCustomerController.createNewInitialCustomer)
+    .patch(initialCustomerController.updateInitialCustomer)
     .delete(initialCustomerController.deleteInitialCustomer)
 
-module.exports = router  
+module.exports = router
