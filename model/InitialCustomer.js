@@ -11,6 +11,14 @@ const initialCustomerSchema = new Schema({
       type: String,
       required: true
     },
+    agentName: {
+      type: String,
+      required: false
+    },
+    role: {
+      type: String,
+      required: false
+    },
     phoneNumber: {
       type: Number,
       required: false

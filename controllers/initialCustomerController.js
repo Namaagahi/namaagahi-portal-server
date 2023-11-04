@@ -27,7 +27,11 @@ const createNewInitialCustomer = asyncHandler(async (req, res) => {
 
     const {
         userId,
-        name
+        name,
+        agentName,
+        role,
+        phoneNumber,
+        introductionMethod
     } = req.body
 
     if (!userId || !name)
@@ -37,7 +41,7 @@ const createNewInitialCustomer = asyncHandler(async (req, res) => {
     if (duplicate)
         return res.status(409).json({ message: 'CONFLICT :Duplicate initialCustomer name' })
 
-    const initialCustomer = await InitialCustomer.create({ userId, name })
+    const initialCustomer = await InitialCustomer.create({ userId, name, agentName, role, phoneNumber, introductionMethod })
     if (initialCustomer)
         return res.status(201).json({ message: `CREATED: InitialCustomer ${req.body.name} created successfully!` })
     else
@@ -54,6 +58,8 @@ const updateInitialCustomer = asyncHandler(async (req, res) => {
     id,
     userId,
     name,
+    agentName,
+    role,
     phoneNumber,
     introductionMethod
   } = req.body
@@ -71,6 +77,8 @@ const updateInitialCustomer = asyncHandler(async (req, res) => {
   // Update and store user
   initialCustomer.userId = userId
   initialCustomer.name = name
+  initialCustomer.agentName = agentName
+  initialCustomer.role = role
   initialCustomer.phoneNumber = phoneNumber
   initialCustomer.introductionMethod = introductionMethod
 

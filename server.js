@@ -1,6 +1,6 @@
 require('dotenv').config()
 const express = require('express')
-const app = express() 
+const app = express()
 const path = require('path')
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
@@ -59,7 +59,7 @@ app.use(express.urlencoded({ extended: false }))
 // built-in middleware to handle json
 app.use(express.json())
 
-// middleware for cookies 
+// middleware for cookies
 app.use(cookieParser())
 
 // serve static files
@@ -69,7 +69,6 @@ app.use('/', express.static(path.join(__dirname, 'public')))
 app.use('/', require('./routes/root'))
 app.use('/auth', require('./routes/authRoutes'))
 app.use('/users', require('./routes/userRoutes'))
-app.use('/notes', require('./routes/noteRoutes'))
 app.use('/structures', require('./routes/structureRouter'))
 app.use('/boxes', require('./routes/boxRoutes'))
 app.use('/plans', require('./routes/planRoutes'))
@@ -129,7 +128,7 @@ io.on("connection", (socket) => {
         user: socket.userId,
         message,
       })
-      
+
       io.to(chatroomId).emit("newMessage", {
         message,
         name: user.name,
