@@ -4,7 +4,7 @@ const ticketController = require('../controllers/ticketController')
 
 router.route('/')
     .get(ticketController.getAllTickets)
-    // .post(ticketController.createNewStructure)
+    .post(ticketController.createTicket)
     // .patch(ticketController.updateStructure)
     // .delete(ticketController.deleteStructure)
 

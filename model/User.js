@@ -6,7 +6,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    username: { 
+    username: {
         type: String,
         required: true
     },
@@ -14,10 +14,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    avatar: {
-        type: String,
-        default: 'https://s8.uupload.ir/files/profile-fallback_qieo.png'
-    },
+    // avatar: {
+    //     type: String,
+    //     default: 'https://s8.uupload.ir/files/profile-fallback_qieo.png'
+    // },
     roles: [{
         type: String,
         default: "Planner"
@@ -25,9 +25,6 @@ const userSchema = new Schema({
     active: {
         type: Boolean,
         default: true
-    },
-    cloudinary_id: {
-      type: String,
     },
 
     refreshToken: [String]

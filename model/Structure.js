@@ -10,7 +10,7 @@ const structureSchema = new Schema({
         parent: {
             type: String,
             required: false,
-            default: '' 
+            default: ''
         },
         name: {
             type: String,

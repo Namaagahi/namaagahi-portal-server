@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const usersController = require('../controllers/usersController')
-const upload = require('../config/multerConfig')
+const multer = require('multer')
+const upload = multer({ dest: '/uploads/' })
 
 router.route('/')
     .get(usersController.getAllUsers)
-    .post(usersController.createNewUser)
-    .patch(upload.single("image"), usersController.updateUser)
+    .post(upload.single('avatar'), usersController.createNewUser)
+    .patch(usersController.updateUser)
     .delete(usersController.deleteUser)
 
 module.exports = router

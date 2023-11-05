@@ -1,9 +1,19 @@
 const mongoose = require('mongoose')
 
 const ticketSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  },
   subject: {
     type: String,
     required: true,
+  },
+  initialCustomerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'InitialCustomer'
   },
   startDate: {
     type: Number,
@@ -31,18 +41,10 @@ const ticketSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  assignedUsers: [
-    {
+  assignedUsers: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-    },
-  ],
-  attachments: [
-    {
-      filename: String,
-      filePath: String,
-    },
-  ],
+    }]
 })
 
 const Ticket = mongoose.model('Ticket', ticketSchema)

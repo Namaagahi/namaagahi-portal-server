@@ -1,7 +1,6 @@
 const User = require('../model/User')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
-const cloudinary = require('../config/cloudinaryConfig')
 
 // @desc Get all users
 // @route GET /users
@@ -18,12 +17,12 @@ const getAllUsers = asyncHandler(async (req, res) => {
 // @route POST /users
 // @access Private
 const createNewUser = asyncHandler(async (req, res) => {
-
+  console.log("REQ FILE", req.file)
     const {
         name,
         username,
         password,
-        roles
+        roles,
     } = req.body
 
     if(!name || !username || !password || !Array.isArray(roles) || !roles.length )
@@ -72,22 +71,11 @@ const updateUser = asyncHandler(async (req, res) => {
     if (duplicate && duplicate._id.toString() !== id)
       return res.status(409).json({ message: 'CONFLICT : Duplicate username!' })
 
-      if(req.file) {
-        const result = await cloudinary.uploader.upload(req.file.path)
-        user.username = username
-        user.roles = JSON.parse(roles)
-        user.active = active
-        user.name = name
-        user.avatar = result.secure_url
-        user.cloudinary_id = result.public_id
-      } else {
-        user.username = username
-        user.roles = roles
-        user.active = active
-        user.name = name
-        user.avatar = user.avatar
-
-      }
+    user.username = username
+    user.roles = roles
+    user.active = active
+    user.name = name
+    user.avatar = user.avatar
 
     if (password) user.password = await bcrypt.hash(password, 10)
 

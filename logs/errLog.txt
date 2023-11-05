@@ -1535,3 +1535,21 @@
 20231022	08:33:28	3fac82e6-b35b-48e4-9e95-11faa986663c	TypeError: Cannot read properties of null (reading 'name')	GET	/messages	undefined}
 20231029	09:48:02	50581c37-743c-48cf-8afb-09fee63063d6	Error: Cannot set headers after they are sent to the client	POST	/auth/logout	http://localhost:3000}
 20231104	08:44:21	368aba3f-ad20-4b0a-9d62-97e563b6851e	SyntaxError: Unexpected number in JSON at position 128	PATCH	/initialCustomers	undefined}
+20231104	16:40:14	a02eb521-04c5-4519-9282-4686c8529ab2	MulterError: Unexpected field	POST	/users	undefined}
+20231104	16:40:43	c3b77cc9-8705-4040-bb9d-cf474513b55a	MulterError: Unexpected field	POST	/users	undefined}
+20231104	16:41:11	9dc7f5a1-84c1-4980-9eac-65bd438af581	MulterError: Unexpected field	POST	/users	undefined}
+20231105	09:27:46	89a0caa0-e8a1-4d5c-935a-ac4d357df2c2	ValidationError: Ticket validation failed: initialCustomerId: Path `initialCustomerId` is required., userId: Path `userId` is required.	POST	/tickets	undefined}
+20231105	09:28:24	88423b98-4095-4bf0-986e-75e97511260d	ValidationError: Ticket validation failed: initialCustomerId: Path `initialCustomerId` is required., userId: Path `userId` is required.	POST	/tickets	undefined}
+20231105	09:29:10	56415a02-be3f-4a45-92a5-6c91c89e83da	ValidationError: Ticket validation failed: initialCustomerId: Path `initialCustomerId` is required., userId: Path `userId` is required.	POST	/tickets	undefined}
+20231105	09:29:47	5dff63f6-2217-4f45-8689-6c7c810d5d78	ValidationError: Ticket validation failed: initialCustomerId: Path `initialCustomerId` is required., userId: Path `userId` is required.	POST	/tickets	undefined}
+20231105	09:29:48	d7d1ec6e-2f66-4733-a3f7-02821a682384	ValidationError: Ticket validation failed: initialCustomerId: Path `initialCustomerId` is required., userId: Path `userId` is required.	POST	/tickets	undefined}
+20231105	09:30:39	6dae7e5f-d702-48c5-bdea-5613eb185cc2	ReferenceError: io is not defined	POST	/tickets	undefined}
+20231105	09:31:04	892ed803-b77a-45a4-991d-af5a917ea335	ReferenceError: io is not defined	POST	/tickets	undefined}
+20231105	10:32:20	e4f56740-e8a2-4c41-b1f4-e75376858b11	Error: Cannot set headers after they are sent to the client	POST	/tickets	undefined}
+20231105	10:43:57	5cdd3f48-1895-4926-a12c-0eb2d6285ace	Error: Cannot set headers after they are sent to the client	POST	/tickets	undefined}
+20231105	10:48:09	6280295a-f6ad-4c73-aef4-eed9b20d5f72	Error: Cannot set headers after they are sent to the client	POST	/tickets	undefined}
+20231105	10:48:43	02481c23-8817-4ff2-9542-c04990b16e2c	Error: Cannot set headers after they are sent to the client	POST	/tickets	undefined}
+20231105	10:50:32	a9dced94-21d4-4ee9-8fef-4ad9f5318aaf	Error: Cannot set headers after they are sent to the client	POST	/tickets	undefined}
+20231105	11:16:59	e073f251-08e3-4590-932b-8d96c04ffbca	Error: Cannot set headers after they are sent to the client	POST	/tickets	undefined}
+20231105	11:39:25	2f91453c-c9eb-4274-a1f9-a724e1fcd001	Error: Cannot set headers after they are sent to the client	POST	/tickets	undefined}
+20231105	12:20:55	ce57f1e8-7a41-4a3d-8a5a-a6fe231b8610	Error: Cannot set headers after they are sent to the client	POST	/tickets	undefined}
