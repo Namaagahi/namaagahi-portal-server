@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const ticketSchema = new mongoose.Schema({
+const proposalSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -47,6 +47,6 @@ const ticketSchema = new mongoose.Schema({
     }]
 })
 
-const Ticket = mongoose.model('Ticket', ticketSchema)
+const Proposal = mongoose.model('Proposal', proposalSchema)
 
-module.exports = Ticket
+module.exports = Proposal

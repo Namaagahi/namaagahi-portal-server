@@ -77,7 +77,7 @@ app.use('/locations', require('./routes/locationRoutes'))
 app.use('/projectCodes', require('./routes/projectCodeRoutes'))
 app.use('/chatrooms', require('./routes/chatroomRoutes'))
 app.use('/messages', require('./routes/messageRouter'))
-app.use('/tickets', require('./routes/ticketRoutes'))
+app.use('/proposals', require('./routes/proposalRoutes'))
 
 // Custom 404 page
 app.all('*', (req, res) => {
