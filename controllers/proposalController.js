@@ -115,7 +115,35 @@ const createProposal = asyncHandler(async (req, res) => {
 //   res.status(200).json(updatedProposal)
 // })
 
+// @desc Delete a proposal
+// @route DELETE /proposals
+// @access Private
+const deleteProposal = asyncHandler(async (req, res) => {
+
+  const { id } = req.body
+
+  if (!id)
+      return res.status(400).json({
+          success: false,
+          message: 'Proposal ID required'
+      })
+
+  const proposal = await Proposal.findByIdAndDelete(id)
+
+  if (!proposal)
+      return res.status(400).json({
+          success: false,
+          message: 'Proposal not found'
+      })
+
+  res.status(200).json({
+      success: true,
+      message: `DELETED: Proposal ${proposal.subject} deleted successfully!`
+  })
+})
+
 module.exports = {
   getAllProposals,
   createProposal,
+  deleteProposal
 }

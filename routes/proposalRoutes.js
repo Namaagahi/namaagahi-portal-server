@@ -6,6 +6,6 @@ router.route('/')
     .get(proposalController.getAllProposals)
     .post(proposalController.createProposal)
     // .patch(proposalController.updateStructure)
-    // .delete(proposalController.deleteStructure)
+    .delete(proposalController.deleteProposal)
 
 module.exports = router
