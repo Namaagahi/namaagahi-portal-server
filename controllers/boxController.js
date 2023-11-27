@@ -158,7 +158,6 @@ async function updateStructures(structures, boxId, isCreation) {
   for (const structure of structures) {
     const structureId = structure.structureId
     const foundStructure = await Structure.findOne({ _id: structureId }).exec()
-    console.log("foundStructure", foundStructure)
     if (foundStructure) {
       foundStructure.isChosen = true
       foundStructure.parent = boxId
@@ -168,7 +167,6 @@ async function updateStructures(structures, boxId, isCreation) {
   }
 
   if (!isCreation) {
-    console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
     const removedStructures = await Structure.find({
       _id: { $nin: structures.map(s => s.structureId) },
       parent: boxId

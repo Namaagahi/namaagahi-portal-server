@@ -19,7 +19,7 @@ const boxSchema = new Schema({
         mark: {
             name: {
                 type: String,
-                required: true  
+                required: true
             },
             markOptions: {
                 projectNumber: {
@@ -48,7 +48,7 @@ const boxSchema = new Schema({
                     return ((moment.unix(this.duration.endDate).diff((moment.unix(this.duration.startDate)), 'days')) + 1)
                 }
             }
-        }, 
+        },
         structures: [{
             structureId: {
                 type: mongoose.Schema.Types.ObjectId,
@@ -78,7 +78,7 @@ const boxSchema = new Schema({
             marks: {
                 name: {
                     type: String,
-                    required: true  
+                    required: true
                 },
                 markOptions: {
                     style: {
@@ -92,11 +92,11 @@ const boxSchema = new Schema({
                     length: {
                         type: Number,
                         required: true
-                    }, 
+                    },
                     width: {
                         type: Number,
                         required: true
-                    }, 
+                    },
                     printSize: {
                         type: Number,
                         required: true
@@ -135,17 +135,16 @@ const boxSchema = new Schema({
                 variableCosts: [{
                     name: {
                         type: String,
-                        required: true
+                        required: false
                     },
                     figures: {
                         monthlyCost: {
                             type: Number,
-                            required: true
+                            required: false
                         },
                         periodCost: {
                             type: Number,
-                            required: false,
-
+                            required: false
                         },
                         dailyCost: {
                             type: Number,
@@ -202,7 +201,7 @@ const boxSchema = new Schema({
                 required: true
             }
         }],
-    } 
+    }
 ,
     {
         timestamps: true,
@@ -211,7 +210,7 @@ const boxSchema = new Schema({
         optimisticConcurrency: true,
         versionKey: 'version'
     }
-) 
+)
 
 boxSchema.virtual('structures.structureDurationDiff').get(function() {
     return this.structures.map(structure => {
@@ -230,7 +229,7 @@ boxSchema.virtual('dailyVariableCost').get(function() {
       return acc + curr.figures.dailyCost
     }, 0)
 })
-  
+
 boxSchema.virtual('totalDailyCost').get(function() {
     return this.costs.fixedCosts.dailyCost + this.dailyVariableCost
 })
@@ -256,9 +255,12 @@ boxSchema.pre('save', function(next) {
         if (
             structure.isModified('costs.fixedCosts.squareCost') ||
             structure.isModified('marks.markOptions.docSize') ||
-            structure.isModified('duration.startDate') || 
+            structure.isModified('duration.startDate') ||
             structure.isModified('duration.endDate')
             ) {
+
+            structure.duration.startDate = doc.duration.startDate
+            structure.duration.endDate = doc.duration.endDate
             const structureDiff = (moment.unix(structure.duration.endDate).diff((moment.unix(structure.duration.startDate)), 'days')) + 1
             structure.duration.diff = structureDiff
             structure.costs.fixedCosts.monthlyCost = structure.marks.markOptions.docSize * structure.costs.fixedCosts.squareCost
@@ -279,20 +281,20 @@ boxSchema.pre('save', function(next) {
     })
 
     doc.structures.forEach((structure) => {
-        if (structure.costs.variableCosts && structure.costs.variableCosts.length > 0) {
-            structure.costs.variableCosts.forEach((variableCost) => {
-                if (variableCost.figures.monthlyCost) {
-                    const monthlyCost = variableCost.figures.monthlyCost
-                    const durationDiff = structure.duration.diff
+      if (structure.costs.variableCosts && structure.costs.variableCosts.length > 0) {
+        structure.costs.variableCosts.forEach((variableCost) => {
+          if (variableCost.figures.monthlyCost) {
+            const monthlyCost = variableCost.figures.monthlyCost
+            const durationDiff = structure.duration.diff
 
-                    const periodCost = (monthlyCost / 30) * durationDiff
-                    variableCost.figures.periodCost = periodCost
+            const periodCost = (monthlyCost / 30) * durationDiff
+            variableCost.figures.periodCost = periodCost
 
-                    const dailyCost = monthlyCost / 30
-                    variableCost.figures.dailyCost = dailyCost
-                }
-            })
-        }
+            const dailyCost = monthlyCost / 30
+            variableCost.figures.dailyCost = dailyCost
+            }
+        })
+      }
     })
 
     next()

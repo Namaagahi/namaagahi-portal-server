@@ -32,7 +32,7 @@ const createProposal = asyncHandler(async (req, res) => {
   // Create the proposal
  try {
 
-  if (!subject || !startDate || !endDate || !priority || !type || !assignedUsers) {
+  if (!subject || !startDate || !endDate || !priority || !type || !assignedUsers || !description) {
     return res.status(400).json({
       success: false,
       message: 'Bad Request: Required fields are missing.'
