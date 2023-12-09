@@ -44,9 +44,9 @@ const boxSchema = new Schema({
             diff: {
                 type: Number,
                 required: false,
-                default: function() {
-                    return ((moment.unix(this.duration.endDate).diff((moment.unix(this.duration.startDate)), 'days')) + 1)
-                }
+                // default: function() {
+                //     return ((moment.unix(this.duration.endDate).diff((moment.unix(this.duration.startDate)), 'days')) + 1)
+                // }
             }
         },
         structures: [{
@@ -212,11 +212,11 @@ const boxSchema = new Schema({
     }
 )
 
-boxSchema.virtual('structures.structureDurationDiff').get(function() {
-    return this.structures.map(structure => {
-        return ((moment.unix(structure.duration.endDate).diff((moment.unix(structure.duration.startDate)), 'days')) + 1)
-    })
-})
+// boxSchema.virtual('structures.structureDurationDiff').get(function() {
+//     return this.structures.map(structure => {
+//         return ((moment.unix(structure.duration.endDate).diff((moment.unix(structure.duration.startDate)), 'days')) + 1)
+//     })
+// })
 
 boxSchema.virtual('structures.structureFixedPeriodCost').get(function() {
     return this.structures.map(structure => {
@@ -246,22 +246,23 @@ boxSchema.virtual('totalPeriodCost').get(function() {
 boxSchema.pre('save', function(next) {
     const doc = this
 
-    if (doc.isNew || doc.isModified('duration')) {
-        const diff = (moment.unix(doc.duration.endDate).diff((moment.unix(doc.duration.startDate)), 'days')) + 1
+    if (doc.isNew  || doc.isModified('duration')) {
+        const diff = ((moment.unix(doc.duration.endDate).diff((moment.unix(doc.duration.startDate)), 'days')) + 1)
         doc.duration.diff = diff
     }
 
     doc.structures.forEach((structure) => {
-        if (
-            structure.isModified('costs.fixedCosts.squareCost') ||
-            structure.isModified('marks.markOptions.docSize') ||
-            structure.isModified('duration.startDate') ||
-            structure.isModified('duration.endDate')
-            ) {
+      if (doc.isNew) {
+        structure.duration.startDate = doc.duration.startDate
+        structure.duration.endDate = doc.duration.endDate
+      }
+  })
 
-            structure.duration.startDate = doc.duration.startDate
-            structure.duration.endDate = doc.duration.endDate
-            const structureDiff = (moment.unix(structure.duration.endDate).diff((moment.unix(structure.duration.startDate)), 'days')) + 1
+    doc.structures.forEach((structure) => {
+        if (
+            doc.isModified
+            ) {
+            const structureDiff = ((moment.unix(structure.duration.endDate).diff((moment.unix(structure.duration.startDate)), 'days')) + 1)
             structure.duration.diff = structureDiff
             structure.costs.fixedCosts.monthlyCost = structure.marks.markOptions.docSize * structure.costs.fixedCosts.squareCost
             structure.costs.fixedCosts.dailyCost = structure.costs.fixedCosts.monthlyCost / 30
