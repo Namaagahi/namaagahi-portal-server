@@ -10,7 +10,7 @@ const asyncHandler = require('express-async-handler')
 const login = asyncHandler(async (req, res) => {
 
     const {
-        username, 
+        username,  
         password
     } = req.body
 
