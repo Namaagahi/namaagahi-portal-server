@@ -107,7 +107,7 @@ const transporter = nodemailer.createTransport({
 
 const sendEmailToUsers = asyncHandler(async (req, res) => {
   console.log("Received request to send emails");
-  const { userIds } = req.body;
+  const { userIds, uuid } = req.body;
   try {
     for (const userId of userIds) {
       // Fetch user details based on userId
@@ -122,7 +122,7 @@ const sendEmailToUsers = asyncHandler(async (req, res) => {
       }
 
       // Construct email content
-      const emailContent = `با سلام,\n\nهمکار گرامی شما به پروپوزال جدیدی اساین شده اید . از لینک زیر میتوانید وارد حساب کاربری خود شده و بررسی لازم را انجام دهید : \n\n http://portal.namaagahi.com`;
+      const emailContent = `با سلام,\n\nهمکار گرامی شما به پروپوزال جدیدی با کد ${uuid} اساین شده اید . از لینک زیر میتوانید وارد حساب کاربری خود شده و بررسی لازم را انجام دهید : \n\n http://portal.namaagahi.com`;
 
       // Send email
       const mailOptions = {
