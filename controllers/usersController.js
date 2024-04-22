@@ -121,15 +121,24 @@ const sendEmailToUsers = asyncHandler(async (req, res) => {
         continue;
       }
 
-      // Construct email content
-      const emailContent = `با سلام,\n\nهمکار گرامی شما به پروپوزال جدیدی با کد ${uuid} اساین شده اید . از لینک زیر میتوانید وارد حساب کاربری خود شده و بررسی لازم را انجام دهید : \n\n http://portal.namaagahi.com`;
+      // Construct email content with RTL direction
+      const emailContent = `
+    <div dir="rtl">
+      <p>با سلام،</p>
+      <p>همکار گرامی،</p>
+      <p>شما به پروپوزال جدیدی با کد ${uuid} اساین شده اید.</p>
+      <p>از لینک زیر می‌توانید وارد حساب کاربری خود شده و بررسی لازم را انجام دهید:</p>
+      <p><a href="http://portal.namaagahi.com">http://portal.namaagahi.com</a></p>
+      <p>با تشکر</p>
+    </div>
+  `;
 
       // Send email
       const mailOptions = {
         from: "namaagahi.co@gmail.com",
         to: user.username, // Assuming the user's email is stored in the 'email' field
         subject: "Assign To New Proposal",
-        text: emailContent,
+        html: emailContent,
       };
 
       await transporter.sendMail(mailOptions);
