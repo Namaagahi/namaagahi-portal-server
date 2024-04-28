@@ -15,7 +15,7 @@ const planSchema = new Schema(
       type: Number,
       unique: true,
     },
-    proposalCode: { type: Number, unique: true },
+    proposalCode: { type: String, unique: true },
     mark: {
       name: {
         type: String,
