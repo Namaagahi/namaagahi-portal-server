@@ -18,7 +18,6 @@ const projectCodeSchema = new Schema(
       type: Number,
       unique: false,
       required: false,
-      default: 1,
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -104,6 +103,11 @@ projectCodeSchema.pre("save", async function (next) {
         doc.code = generatedCode;
         doc.count = Math.random(new Date().getTime()).toFixed(3);
       }
+      if (code) {
+        const generatedCode = expandProjectCode(code);
+        doc.code = generatedCode;
+        doc.count = Math.random(new Date().getTime()).toFixed(3);
+      }
     } else {
       if (doc.isModified("media") || doc.isModified("year")) {
         doc.code = generateProjectCode(media, year, doc.count);
@@ -139,7 +143,8 @@ function generateProjectCode(media, year, counter) {
 }
 
 function expandProjectCode(code, month) {
-  return `${code}-${month.toString().padStart(2, "0")}`;
+  if (month) return `${code}-${month.toString().padStart(2, "0")}`;
+  return `${code}`;
 }
 
 module.exports = mongoose.model("ProjectCode", projectCodeSchema);
