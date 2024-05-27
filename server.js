@@ -74,6 +74,7 @@ app.use("/", require("./routes/root"));
 app.use("/auth", require("./routes/authRoutes"));
 app.use("/users", require("./routes/userRoutes"));
 app.use("/structures", require("./routes/structureRouter"));
+app.use("/itAssets", require("./routes/assetRouter"));
 app.use("/boxes", require("./routes/boxRoutes"));
 app.use("/plans", require("./routes/planRoutes"));
 app.use("/initialCustomers", require("./routes/initialCustomerRoute"));
