@@ -101,34 +101,54 @@ const createProposal = asyncHandler(async (req, res) => {
 // @desc Update a proposal
 // @route PUT /proposal/:id
 // @access Private
-// const updateProposal = asyncHandler(async (req, res) => {
+const updateProposal = asyncHandler(async (req, res) => {
+  const {
+    proposalId,
+    subject,
+    startDate,
+    endDate,
+    priority,
+    status,
+    type,
+    description,
+    assignedUsers,
+  } = req.body;
 
-//   const proposalId = req.params.id
-//   const { subject, startDate, endDate, priority, status, type, description, assignedUsers } = req.body
+  if (
+    !proposalId ||
+    !subject ||
+    !startDate ||
+    !endDate ||
+    !priority ||
+    !status ||
+    !type ||
+    !description ||
+    !assignedUsers
+  )
+    return res
+      .status(400)
+      .json({ message: "BAD REQUEST : All fields are required" });
 
-//   // Update the proposal
-//   const updatedProposal = await Proposal.findByIdAndUpdate(
-//     proposalId,
-//     {
-//       subject,
-//       startDate,
-//       endDate,
-//       priority,
-//       status,
-//       type,
-//       description,
-//       assignedUsers,
-//     },
-//     { new: true }
-//   )
+  const proposal = await Proposal.findById(proposalId).exec();
+  if (!proposal)
+    return res
+      .status(400)
+      .json({ message: "BAD REQUEST : proposal not found" });
 
-//   // Emit a Socket.io event to notify assigned users
-//   assignedUsers.forEach((userId) => {
-//     io.getIO().to(userId).emit('proposalUpdated', updatedProposal)
-//   })
+  // Update the proposal
+  proposal.proposalId = proposalId;
+  proposal.subject = subject;
+  proposal.startDate = startDate;
+  proposal.endDate = endDate;
+  proposal.priority = priority;
+  proposal.status = status;
+  proposal.type = type;
+  proposal.description = description;
+  proposal.assignedUsers = assignedUsers;
 
-//   res.status(200).json(updatedProposal)
-// })
+  const updateditProposal = await proposal.save();
+  res.status(200).json(`'${updateditProposal.subject}' updated`);
+});
 
 // @desc Delete a proposal
 // @route DELETE /proposals
@@ -160,4 +180,5 @@ module.exports = {
   getAllProposals,
   createProposal,
   deleteProposal,
+  updateProposal,
 };
