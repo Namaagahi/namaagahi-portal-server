@@ -1607,3 +1607,12 @@
 20240611	13:06:59	2d5b7a02-bfb5-4f08-8d9a-e97542925a6e	TypeError: Cannot read properties of null (reading 'duration')	POST	/boxes	http://localhost:3000}
 20240611	13:07:49	59315eff-5512-453b-8cfa-1242c51de990	TypeError: Cannot read properties of null (reading 'duration')	POST	/boxes	http://localhost:3000}
 20240612	10:10:09	f8727174-6071-4320-8dcc-a88883649fa3	ValidationError: ITasset validation failed: asset.code: Path `asset.code` is required., asset.serial: Path `asset.serial` is required., asset.name: Path `asset.name` is required., personel.code: Path `personel.code` is required., personel.name: Path `personel.name` is required.	POST	/itAssets	http://localhost:3000}
+20240618	09:48:50	c10bc81c-54a6-4489-aa07-ad57cd9793f4	CastError: Cast to ObjectId failed for value "structures" (type string) at path "_id" for model "Box"	GET	/boxes/structures	undefined}
+20240618	13:03:10	b2d8a6ed-04e0-427c-aa4e-3841fec75fcd	TypeError: #<Object> is not a function	GET	/boxes	http://localhost:3000}
+20240618	13:03:15	47589c87-f101-4778-a73e-c5c232b48b6a	TypeError: #<Object> is not a function	GET	/boxes	http://localhost:3000}
+20240618	13:03:20	6a4bae93-d7f1-4dd2-9adf-a7cb1dddb43c	TypeError: #<Object> is not a function	GET	/boxes	http://localhost:3000}
+20240618	13:03:25	d58d51fe-d824-413e-a035-d4ed5c6a3f50	TypeError: #<Object> is not a function	GET	/boxes	http://localhost:3000}
+20240618	13:03:30	d4d31065-38cf-4bdb-b7d7-f75056984c19	TypeError: #<Object> is not a function	GET	/boxes	http://localhost:3000}
+20240618	13:03:35	7ec24ccf-4132-4e55-b1e6-05692216c25c	TypeError: #<Object> is not a function	GET	/boxes	http://localhost:3000}
+20240618	13:03:40	c3a59443-bf76-482b-8f15-438cb3eb8b57	TypeError: #<Object> is not a function	GET	/boxes	http://localhost:3000}
+20240618	13:03:46	8793a8dd-33af-4946-b6fa-9e0ab76d976f	TypeError: #<Object> is not a function	GET	/boxes	http://localhost:3000}
