@@ -62,20 +62,25 @@ const archiveExpiredBoxes = asyncHandler(async () => {
 // @route GET /boxes
 // @access Private
 const getAllBoxes = asyncHandler(async (req, res) => {
-  await archiveExpiredBoxes();
+  try {
+    await archiveExpiredBoxes();
 
-  const boxes = await Box.find().lean();
-  if (!boxes?.length)
-    return res.status(400).json({ message: "BAD REQUEST : No boxes found" });
+    const boxes = await Box.find().lean();
+    if (!boxes?.length)
+      return res.status(400).json({ message: "BAD REQUEST : No boxes found" });
 
-  const boxesWithUser = await Promise.all(
-    boxes.map(async (box) => {
-      const user = await User.findById(box.userId).lean().exec();
-      return { ...box, username: user.username };
-    })
-  );
+    const boxesWithUser = await Promise.all(
+      boxes.map(async (box) => {
+        const user = await User.findById(box.userId).lean().exec();
+        return { ...box, username: user.username };
+      })
+    );
 
-  res.json(boxesWithUser);
+    res.json(boxesWithUser);
+  } catch (error) {
+    console.error("Error fetching boxes:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 // @desc Create new box

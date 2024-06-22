@@ -45,9 +45,6 @@ const boxSchema = new Schema(
       diff: {
         type: Number,
         required: false,
-        // default: function() {
-        //     return ((moment.unix(this.duration.endDate).diff((moment.unix(this.duration.startDate)), 'days')) + 1)
-        // }
       },
     },
     structures: [
@@ -156,7 +153,9 @@ const boxSchema = new Schema(
                   type: Number,
                   required: false,
                   default: function () {
-                    return this.figures.monthlyCost / 30;
+                    return this.figures?.monthlyCost
+                      ? this.figures.monthlyCost / 30
+                      : 0;
                   },
                 },
               },
@@ -166,18 +165,22 @@ const boxSchema = new Schema(
             type: Number,
             required: true,
             default: function () {
-              return this.costs.variableCosts.reduce((acc, curr) => {
-                return acc + curr.figures.dailyCost;
-              }, 0);
+              return (
+                this.costs?.variableCosts?.reduce((acc, curr) => {
+                  return acc + (curr.figures?.dailyCost || 0);
+                }, 0) || 0
+              );
             },
           },
           monthlyVariableCost: {
             type: Number,
             required: true,
             default: function () {
-              return this.costs.variableCosts.reduce((acc, curr) => {
-                return acc + curr.figures.monthlyCost;
-              }, 0);
+              return (
+                this.costs?.variableCosts?.reduce((acc, curr) => {
+                  return acc + (curr.figures?.monthlyCost || 0);
+                }, 0) || 0
+              );
             },
           },
           totalDailyCost: {
@@ -185,7 +188,8 @@ const boxSchema = new Schema(
             required: true,
             default: function () {
               return (
-                this.costs.fixedCosts.dailyCost + this.costs.dailyVariableCost
+                (this.costs?.fixedCosts?.dailyCost || 0) +
+                (this.costs?.dailyVariableCost || 0)
               );
             },
           },
@@ -194,8 +198,8 @@ const boxSchema = new Schema(
             required: true,
             default: function () {
               return (
-                this.costs.monthlyVariableCost +
-                this.costs.fixedCosts.monthlyCost
+                (this.costs?.monthlyVariableCost || 0) +
+                (this.costs?.fixedCosts?.monthlyCost || 0)
               );
             },
           },
@@ -204,7 +208,7 @@ const boxSchema = new Schema(
             required: true,
             default: function () {
               const diff = this.parent().duration.diff ?? 0;
-              return this.costs.totalDailyCost * diff;
+              return (this.costs?.totalDailyCost || 0) * diff;
             },
           },
         },
@@ -227,39 +231,6 @@ const boxSchema = new Schema(
     versionKey: "version",
   }
 );
-
-// boxSchema.virtual('structures.structureDurationDiff').get(function() {
-//     return this.structures.map(structure => {
-//         return ((moment.unix(structure.duration.endDate).diff((moment.unix(structure.duration.startDate)), 'days')) + 1)
-//     })
-// })
-
-boxSchema.virtual("structures.structureFixedPeriodCost").get(function () {
-  return this.structures.map((structure) => {
-    return (
-      (structure.costs.fixedCosts.monthlyCost / 30) * structure.duration.diff
-    );
-  });
-});
-
-boxSchema.virtual("dailyVariableCost").get(function () {
-  return this.costs.variableCosts.reduce((acc, curr) => {
-    return acc + curr.figures.dailyCost;
-  }, 0);
-});
-
-boxSchema.virtual("totalDailyCost").get(function () {
-  return this.costs.fixedCosts.dailyCost + this.dailyVariableCost;
-});
-
-boxSchema.virtual("totalMonthlyCost").get(function () {
-  return this.costs.monthlyVariableCost + this.costs.fixedCosts.monthlyCost;
-});
-
-boxSchema.virtual("totalPeriodCost").get(function () {
-  const diff = this.parent().duration.diff ?? 0;
-  return this.totalDailyCost * diff;
-});
 
 boxSchema.pre("save", function (next) {
   const doc = this;
