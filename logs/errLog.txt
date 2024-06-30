@@ -14762,3 +14762,7 @@ Please open an issue with this stack trace at https://github.com/nodejs/node/iss
 This is caused by either a bug in Node.js or incorrect usage of Node.js internals.
 Please open an issue with this stack trace at https://github.com/nodejs/node/issues
 	GET	/boxes	http://localhost:3000}
+20240622	10:27:32	6aa2015d-a6cd-4d2f-88bc-b7c40eae6fac	ReferenceError: decrypt is not defined	GET	/users	undefined}
+20240622	10:28:56	e30c6b82-712a-408e-8aee-146ce28ee80f	ReferenceError: decrypt is not defined	GET	/users	undefined}
+20240622	10:29:06	5ada0723-c74a-4fd9-8478-bf836eaaad5d	TypeError: Invalid initialization vector	GET	/users	undefined}
+20240622	16:45:03	f0a93f0b-0bf3-410f-b6cd-39241b4a238b	TypeError: Invalid initialization vector	GET	/users	http://localhost:3000}

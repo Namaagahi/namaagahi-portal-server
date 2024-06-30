@@ -75,11 +75,18 @@ projectCodeSchema.pre("save", async function (next) {
     if (doc.isNew) {
       if (!month && !code) {
         const counter = await ProjectCodeCounter.findById("count").exec();
-        if (!counter)
+        if (!counter) {
           await ProjectCodeCounter.create({
             _id: "count",
-            sequence_value: 200,
+            sequence_value: 299, // Change the initial value to 299
           });
+        } else if (counter.sequence_value < 299) {
+          await ProjectCodeCounter.findByIdAndUpdate(
+            "count",
+            { sequence_value: 299 },
+            { new: true }
+          );
+        }
 
         const updatedCounter = await ProjectCodeCounter.findByIdAndUpdate(
           "count",
