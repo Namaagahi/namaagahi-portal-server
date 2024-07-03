@@ -27,7 +27,7 @@ const projectCodeSchema = new Schema(
     media: {
       type: String,
       required: true,
-      enum: ["BB", "MTR", "BUS", "NMV"],
+      enum: ["BB", "MTR", "BUS", "NMV", "STR", "BRB"],
     },
     year: {
       type: Number,
@@ -142,6 +142,8 @@ function generateProjectCode(media, year, counter) {
     MTR: "20",
     BUS: "30",
     NMV: "40",
+    STR: "50",
+    BRB: "60",
   };
 
   const mediaCode = mediaCodeMap[media] || "00";
