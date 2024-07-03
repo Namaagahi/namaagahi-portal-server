@@ -142,8 +142,8 @@ function generateProjectCode(media, year, counter) {
     MTR: "20",
     BUS: "30",
     NMV: "40",
-    STR: "50",
-    BRB: "60",
+    BRB: "50",
+    STR: "60",
   };
 
   const mediaCode = mediaCodeMap[media] || "00";
