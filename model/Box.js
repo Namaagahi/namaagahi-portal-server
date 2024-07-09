@@ -89,11 +89,11 @@ const boxSchema = new Schema(
               required: true,
             },
             length: {
-              type: Number,
+              type: String,
               required: true,
             },
             width: {
-              type: Number,
+              type: String,
               required: true,
             },
             printSize: {
