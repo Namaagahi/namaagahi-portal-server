@@ -59,8 +59,6 @@ const login = asyncHandler(async (req, res) => {
 
   res.cookie("jwt", refreshToken, {
     httpOnly: true,
-    secure: true,
-    sameSite: "Strict",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
@@ -121,8 +119,6 @@ const refresh = async (req, res) => {
         // Set the new refresh token as a HTTP-Only cookie
         res.cookie("jwt", newRefreshToken, {
           httpOnly: true,
-          secure: true, // use 'true' if you're using https
-          sameSite: "Strict",
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         });
 
