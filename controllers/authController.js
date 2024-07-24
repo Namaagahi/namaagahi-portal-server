@@ -54,12 +54,14 @@ const login = asyncHandler(async (req, res) => {
   const refreshToken = jwt.sign(
     { username: foundUser.username },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "7d" }
+    { expiresIn: "14d" }
   );
 
   res.cookie("jwt", refreshToken, {
     httpOnly: true,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
+    secure: true,
+    sameSite: "Strict",
+    maxAge: 15 * 24 * 60 * 60 * 1000,
   });
 
   res.json({ accessToken, socketAccessToken });
@@ -113,13 +115,15 @@ const refresh = async (req, res) => {
         const newRefreshToken = jwt.sign(
           { username: foundUser.username },
           process.env.REFRESH_TOKEN_SECRET,
-          { expiresIn: "7d" }
+          { expiresIn: "14d" }
         );
 
         // Set the new refresh token as a HTTP-Only cookie
         res.cookie("jwt", newRefreshToken, {
           httpOnly: true,
-          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+          secure: true, // use 'true' if you're using https
+          sameSite: "Strict",
+          maxAge: 15 * 24 * 60 * 60 * 1000, // 7 days
         });
 
         res.json({ accessToken });
@@ -138,7 +142,7 @@ const logout = (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(204).json({ message: "No Content" });
 
-  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+  res.clearCookie("jwt", { expiresIn: new Date(0) });
   res.json({ message: "Cookie cleared" });
 };
 
