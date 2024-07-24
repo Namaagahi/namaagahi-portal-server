@@ -54,7 +54,7 @@ const login = asyncHandler(async (req, res) => {
   const refreshToken = jwt.sign(
     { username: foundUser.username },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "15d" }
+    { expiresIn: "7d" }
   );
 
   res.cookie("jwt", refreshToken, {
@@ -113,7 +113,7 @@ const refresh = async (req, res) => {
         const newRefreshToken = jwt.sign(
           { username: foundUser.username },
           process.env.REFRESH_TOKEN_SECRET,
-          { expiresIn: "15d" }
+          { expiresIn: "7d" }
         );
 
         // Set the new refresh token as a HTTP-Only cookie
@@ -138,7 +138,7 @@ const logout = (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(204).json({ message: "No Content" });
 
-  res.clearCookie("jwt", { expiresIn: new Date(0) });
+  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
   res.json({ message: "Cookie cleared" });
 };
 

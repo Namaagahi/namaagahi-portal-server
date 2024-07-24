@@ -26,15 +26,11 @@ const updateStructuresOnBoxDeletion = async (boxId) => {
 // @access Private
 const archiveExpiredBoxes = asyncHandler(async () => {
   const now = moment().unix();
-  console.log("Current Unix timestamp:", now);
-
   // Find expired boxes that are not yet archived
   const expiredBoxes = await Box.find({
     "duration.endDate": { $lt: now },
     isArchived: false,
   }).exec();
-
-  console.log("Expired boxes:", expiredBoxes);
 
   if (!expiredBoxes.length) {
     console.log("No expired boxes found.");
