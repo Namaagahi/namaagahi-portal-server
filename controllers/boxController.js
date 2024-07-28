@@ -90,7 +90,9 @@ const createNewBox = asyncHandler(async (req, res) => {
       .status(400)
       .json({ message: "BAD REQUEST : All fields are required" });
 
-  const duplicate = await Box.findOne({ name }).lean().exec();
+  const duplicate = await Box.findOne({ name, isArchived: false })
+    .lean()
+    .exec();
   if (duplicate)
     return res.status(409).json({ message: "CONFLICT :Duplicate box name" });
 
