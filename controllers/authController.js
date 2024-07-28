@@ -9,20 +9,16 @@ const asyncHandler = require("express-async-handler");
 // @access Public
 const login = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
-
   if (!username || !password)
     return res
       .status(400)
       .json({ message: "Username and password are required." });
-
   const foundUser = await User.findOne({ username }).exec();
   if (!foundUser || !foundUser.active)
     return res.status(401).json({ message: "Unauthorized: banned." });
-
   const match = await bcrypt.compare(password, foundUser.password);
   if (!match)
     return res.status(401).json({ message: "Unauthorized: wrong password." });
-
   const accessToken = jwt.sign(
     {
       UserInfo: {
@@ -33,8 +29,8 @@ const login = asyncHandler(async (req, res) => {
         roles: foundUser.roles,
       },
     },
-    process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "15m" }
+    process.env.ACCESS_TOKEN_SECRET
+    // { expiresIn: '15m' }
   );
 
   const socketAccessToken = await socketToken.sign(
@@ -47,21 +43,18 @@ const login = asyncHandler(async (req, res) => {
         roles: foundUser.roles,
       },
     },
-    process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "15m" }
+    process.env.ACCESS_TOKEN_SECRET
   );
 
   const refreshToken = jwt.sign(
     { username: foundUser.username },
-    process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "14d" }
+    process.env.REFRESH_TOKEN_SECRET
+    // { expiresIn: '7d' }
   );
 
   res.cookie("jwt", refreshToken, {
     httpOnly: true,
-    secure: true,
-    sameSite: "Strict",
-    maxAge: 15 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
   res.json({ accessToken, socketAccessToken });
@@ -70,67 +63,40 @@ const login = asyncHandler(async (req, res) => {
 // @desc Refresh
 // @route GET /auth/refresh
 // @access Public - because access token has expired
-const refresh = async (req, res) => {
+const refresh = (req, res) => {
   const cookies = req.cookies;
-
   if (!cookies?.jwt)
     return res.status(401).json({ message: "Unauthorized: no cookies" });
-
   const refreshToken = cookies.jwt;
 
   jwt.verify(
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
+
     async (err, decoded) => {
-      if (err) {
-        console.error("Token verification failed:", err);
-        return res.status(403).json({ message: "Forbidden: invalid token" });
-      }
+      if (err) return res.status(403).json({ message: "Forbidden" });
 
-      try {
-        const foundUser = await User.findOne({
-          username: decoded.username,
-        }).exec();
-        if (!foundUser) {
-          return res
-            .status(401)
-            .json({ message: "Unauthorized: no user found" });
-        }
+      const foundUser = await User.findOne({
+        username: decoded.username,
+      }).exec();
+      if (!foundUser)
+        return res.status(401).json({ message: "Unauthorized: no user found" });
 
-        const accessToken = jwt.sign(
-          {
-            UserInfo: {
-              id: foundUser.id,
-              username: foundUser.username,
-              name: foundUser.name,
-              avatar: foundUser.avatar,
-              roles: foundUser.roles,
-            },
+      const accessToken = jwt.sign(
+        {
+          UserInfo: {
+            id: foundUser.id,
+            username: foundUser.username,
+            name: foundUser.name,
+            avatar: foundUser.avatar,
+            roles: foundUser.roles,
           },
-          process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: "15m" } // Set to a practical duration in production
-        );
+        },
+        process.env.ACCESS_TOKEN_SECRET
+        // { expiresIn: "15m" }
+      );
 
-        // Generate a new refresh token
-        const newRefreshToken = jwt.sign(
-          { username: foundUser.username },
-          process.env.REFRESH_TOKEN_SECRET,
-          { expiresIn: "14d" }
-        );
-
-        // Set the new refresh token as a HTTP-Only cookie
-        res.cookie("jwt", newRefreshToken, {
-          httpOnly: true,
-          secure: true, // use 'true' if you're using https
-          sameSite: "Strict",
-          maxAge: 15 * 24 * 60 * 60 * 1000, // 7 days
-        });
-
-        res.json({ accessToken });
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        res.status(500).json({ message: "Internal Server Error" });
-      }
+      res.json({ accessToken });
     }
   );
 };
