@@ -26,16 +26,16 @@ const archiveExpiredBoxes = asyncHandler(async () => {
     "duration.endDate": { $lt: now },
     isArchived: false,
   }).exec();
-  console.log(expiredBoxes);
 
   if (!expiredBoxes.length) {
     console.log("No expired boxes found.");
   } else {
     for (const box of expiredBoxes) {
       box.isArchived = true;
-      await updateStructures(box.structures, box.boxId, false);
       await box.save();
       console.log("Archived boxId:", box.boxId);
+
+      await updateStructuresOnBoxDeletion(box.boxId);
     }
   }
 });
@@ -148,7 +148,7 @@ const updateBox = asyncHandler(async (req, res) => {
   box.structures = structures;
 
   // Update structures
-  await updateStructures(structures, box.boxId, false);
+  // await updateStructures(structures, box.boxId, false);
   await box.save();
 
   res.json(`'${box.name}' updated`);
