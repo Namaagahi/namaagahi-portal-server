@@ -10,11 +10,6 @@ const updateStructuresOnBoxDeletion = async (boxId) => {
       { parent: boxId },
       { $set: { isChosen: false, parent: "" } }
     );
-    console.log(
-      `Updated ${
-        result.nModified || result.modifiedCount
-      } structures for boxId ${boxId}`
-    );
     return result;
   } catch (error) {
     console.error("Error updating structures:", error);
@@ -31,27 +26,18 @@ const archiveExpiredBoxes = asyncHandler(async () => {
     "duration.endDate": { $lt: now },
     isArchived: false,
   }).exec();
+  console.log(expiredBoxes);
 
   if (!expiredBoxes.length) {
     console.log("No expired boxes found.");
   } else {
     for (const box of expiredBoxes) {
       box.isArchived = true;
+      await updateStructures(box.structures, box.boxId, false);
       await box.save();
       console.log("Archived boxId:", box.boxId);
     }
   }
-
-  // Find all boxes that are archived (whether they just became archived or were archived before)
-  const allArchivedBoxes = await Box.find({
-    isArchived: true,
-  }).exec();
-
-  for (const box of allArchivedBoxes) {
-    await updateStructuresOnBoxDeletion(box.boxId);
-  }
-
-  console.log("Finished archiving expired boxes.");
 });
 
 // @desc Get all boxes
@@ -106,11 +92,17 @@ const createNewBox = asyncHandler(async (req, res) => {
   });
 
   if (box) {
-    await updateStructures(structures, box.boxId, true);
-
-    return res
-      .status(201)
-      .json({ message: `CREATED: Box ${req.body.name} created successfully!` });
+    const updatedStructures = await updateStructures(
+      structures,
+      box.boxId,
+      true
+    );
+    console.log("updatedStructures", updatedStructures);
+    return res.status(201).json({
+      message: `CREATED: Box ${req.body.name} created successfully!`,
+      box,
+      updatedStructures,
+    });
   } else {
     return res
       .status(400)
@@ -203,34 +195,39 @@ const getBoxById = asyncHandler(async (req, res) => {
 // @desc update box structures when create or update
 // @middleware
 // @access Private
-async function updateStructures(structures, boxId, isCreation) {
+const updateStructures = async (structures, boxId, isCreation) => {
   const updatedStructures = [];
-
-  for (const structure of structures) {
-    const structureId = structure.structureId;
-    const foundStructure = await Structure.findOne({ _id: structureId }).exec();
-    if (foundStructure) {
-      foundStructure.isChosen = true;
-      foundStructure.parent = boxId;
-      await foundStructure.save();
-      updatedStructures.push(foundStructure);
+  try {
+    for (const structure of structures) {
+      const structureId = structure.structureId;
+      const foundStructure = await Structure.findById(structureId).exec();
+      if (foundStructure) {
+        foundStructure.isChosen = true;
+        foundStructure.parent = boxId;
+        await foundStructure.save();
+        updatedStructures.push(foundStructure);
+      } else {
+        console.warn(`Structure with ID ${structureId} not found.`);
+      }
     }
-  }
 
-  if (!isCreation) {
-    const removedStructures = await Structure.find({
-      _id: { $nin: structures.map((s) => s.structureId) },
-      parent: boxId,
-    }).exec();
-    for (const structure of removedStructures) {
-      structure.isChosen = false;
-      structure.parent = "";
-      await structure.save();
+    if (!isCreation) {
+      const removedStructures = await Structure.find({
+        _id: { $nin: structures.map((s) => s.structureId) },
+        parent: boxId,
+      }).exec();
+      for (const structure of removedStructures) {
+        structure.isChosen = false;
+        structure.parent = "";
+        await structure.save();
+      }
     }
+  } catch (error) {
+    console.error("Error updating structures:", error);
   }
 
   return updatedStructures;
-}
+};
 
 // @desc update box structures when delete
 // @middleware
