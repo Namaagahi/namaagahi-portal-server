@@ -83,6 +83,7 @@ const updatePlan = asyncHandler(async (req, res) => {
     username,
     initialCustomerId,
     finalCustomerId,
+    proposalCode,
     projectCodeId,
     userDefinedMonthlyFeeWithDiscount,
     brand,
@@ -117,6 +118,7 @@ const updatePlan = asyncHandler(async (req, res) => {
   plan.mark = mark;
   plan.username = username;
   plan.planId = planId;
+  plan.proposalCode = proposalCode;
   plan.initialCustomerId = initialCustomerId;
   plan.finalCustomerId = finalCustomerId;
   plan.projectCodeId = projectCodeId;
