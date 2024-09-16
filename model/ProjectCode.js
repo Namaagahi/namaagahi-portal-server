@@ -110,7 +110,7 @@ projectCodeSchema.pre("save", async function (next) {
         doc.code = generatedCode;
         doc.count = Math.random(new Date().getTime()).toFixed(3);
       }
-      if (code) {
+      if (code && !month) {
         const generatedCode = expandProjectCode(code);
         doc.code = generatedCode;
         doc.count = Math.random(new Date().getTime()).toFixed(3);
