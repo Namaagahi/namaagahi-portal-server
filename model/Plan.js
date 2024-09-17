@@ -144,7 +144,7 @@ planSchema.virtual("structures.structureDurationDiff").get(function () {
       moment(structure.duration.sellEnd * 1000).diff(
         moment(structure.duration.sellStart * 1000),
         "days"
-      ) + 2
+      ) + 1
     );
   });
 });
@@ -167,7 +167,7 @@ planSchema.pre("save", function (next) {
         moment(structure.duration.sellEnd * 1000).diff(
           moment(structure.duration.sellStart * 1000),
           "days"
-        ) + 2;
+        ) + 1;
       doc.structures[index].duration.diff = structureDiff;
     }
   });
@@ -249,7 +249,7 @@ planSchema.pre("save", function (next) {
         moment(structure.duration.sellEnd * 1000).diff(
           moment(structure.duration.sellStart * 1000),
           "days"
-        ) + 2;
+        ) + 1;
       doc.structures[index].duration.diff = structureDiff;
     }
   });
