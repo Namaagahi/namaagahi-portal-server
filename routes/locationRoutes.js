@@ -1,11 +1,12 @@
-const express = require("express")
-const router = express.Router()
-const locationController =  require('../controllers/locationController')
+const express = require("express");
+const router = express.Router();
+const locationController = require("../controllers/locationController");
 
-router.route('/')
-    .get(locationController.getAllLocations)
-    .post(locationController.createNewLocation)
-    // .put(boxController.updateBox)
-    // .delete(boxController.deleteBox)
+router
+  .route("/")
+  .get(locationController.getAllLocations)
+  .post(locationController.createNewLocation)
+  .put(locationController.updateLocation)
+  .delete(locationController.deleteLocation);
 
-module.exports = router 
+module.exports = router;
