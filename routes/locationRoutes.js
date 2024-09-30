@@ -6,7 +6,7 @@ router
   .route("/")
   .get(locationController.getAllLocations)
   .post(locationController.createNewLocation)
-  .put(locationController.updateLocation)
+  .patch(locationController.updateLocation)
   .delete(locationController.deleteLocation);
 
 module.exports = router;

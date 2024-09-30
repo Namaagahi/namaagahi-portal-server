@@ -1,6 +1,7 @@
 const Location = require("../model/Location");
 const asyncHandler = require("express-async-handler");
 const User = require("../model/User");
+const Structure = require("../model/Structure");
 
 // @desc Get all locations
 // @route GET /locations
@@ -15,7 +16,14 @@ const getAllLocations = asyncHandler(async (req, res) => {
   const locationsWithUser = await Promise.all(
     locations.map(async (location) => {
       const user = await User.findById(location.userId).lean().exec();
-      return { ...location, username: user.username };
+      const structure = await Structure.findById(location.structureId)
+        .lean()
+        .exec();
+      return {
+        structure,
+        username: user.username,
+        ...location,
+      };
     })
   );
 
@@ -53,7 +61,7 @@ const createNewLocation = asyncHandler(async (req, res) => {
   });
   if (location)
     return res.status(201).json({
-      message: `CREATED: Location ${req.body.name} created successfully!`,
+      message: `CREATED: Location ${req.body.structureId} created successfully!`,
     });
   else
     return res
