@@ -70,6 +70,7 @@ const getAllBoxes = asyncHandler(async (req, res) => {
 // @access Private
 const createNewBox = asyncHandler(async (req, res) => {
   const { boxId, userId, name, mark, duration, structures } = req.body;
+  console.log("Request Body:", req.body); // Debugging line
 
   if (!boxId || !userId || !name || !mark || !duration || !structures)
     return res
@@ -148,10 +149,141 @@ const updateBox = asyncHandler(async (req, res) => {
   box.structures = structures;
 
   // Update structures
-  // await updateStructures(structures, box.boxId, false);
+  await updateStructures(structures, box.boxId, false);
   await box.save();
 
   res.json(`'${box.name}' updated`);
+});
+
+// @desc Create a structure and update the corresponding box
+// @route POST /boxes/createStructureAndUpdate
+// @access Private
+const createStructureAndUpdateBox = asyncHandler(async (req, res) => {
+  const { boxId, structures } = req.body;
+
+  if (
+    !boxId ||
+    !structures ||
+    !structures.userId ||
+    !structures.name ||
+    !structures.location
+  ) {
+    return res.status(400).json({
+      message: "BAD REQUEST: Box ID, userId, name, and location are required",
+    });
+  }
+
+  const {
+    costs = {
+      squareCost: 0,
+      variableCosts: [{ figures: 0, name: "" }],
+    },
+    duration = { diff: 0, startDate: null, endDate: null },
+    marks = {
+      markOptions: {
+        docSize: 0,
+        face: "",
+        length: 0,
+        printSize: 0,
+        style: "",
+        width: 0,
+      },
+      name: "",
+    },
+    monthlyBaseFee = 0, // Provide a default value
+  } = structures;
+
+  if (
+    isNaN(costs.fixedCosts?.dailyCost) ||
+    isNaN(costs.fixedCosts?.monthlyCost) ||
+    isNaN(monthlyBaseFee)
+  ) {
+    return res.status(400).json({
+      message: "BAD REQUEST: Costs and monthlyBaseFee must be valid numbers.",
+    });
+  }
+
+  try {
+    const newStructure = await Structure.create({
+      userId: structures.userId,
+      name: structures.name,
+      location: structures.location,
+      parent: boxId,
+      isChosen: true,
+    });
+
+    const boxStructure = {
+      costs: {
+        dailyVariableCost: 0,
+        fixedCosts: {
+          dailyCost: costs.fixedCosts?.dailyCost || 0,
+          monthlyCost: costs.fixedCosts?.monthlyCost || 0,
+          periodCost: costs.fixedCosts?.periodCost || 0,
+          squareCost: costs.fixedCosts?.squareCost || 0, // Ensure a default value
+        },
+        monthlyVariableCost: 0,
+        totalDailyCost: 0,
+        totalMonthlyCost: 0,
+        totalPeriodCost: 0,
+        variableCosts: newStructure._id,
+      },
+      duration: {
+        diff: duration.diff || 0,
+        endDate: duration.endDate || new Date(), // Default to current date if missing
+        startDate: duration.startDate || new Date(),
+      },
+      marks: {
+        markOptions: {
+          docSize: marks.markOptions?.docSize || 0, // Provide default values
+          face: marks.markOptions?.face || "",
+          length: marks.markOptions?.length || 0,
+          printSize: marks.markOptions?.printSize || 0,
+          style: marks.markOptions?.style || "",
+          width: marks.markOptions?.width || 0,
+        },
+        name: marks.name || "",
+      },
+      monthlyBaseFee: monthlyBaseFee, // Ensure it's provided or has a default
+      structureId: newStructure._id,
+    };
+    // Find and update the box with the new structure
+    const box = await Box.findOne({ boxId: boxId });
+    if (!box) {
+      return res
+        .status(404)
+        .json({ message: "NOT FOUND: Box with the specified ID not found" });
+    }
+
+    // Push the new structure to the box's structures array
+    box.structures.push(boxStructure);
+    await box.save();
+
+    const boxes = await Box.find().lean();
+    const boxesWithUser = await Promise.all(
+      boxes.map(async (box) => {
+        const user = await User.findById(box.userId).lean().exec();
+        return { ...box, username: user.username };
+      })
+    );
+
+    const structures1 = await Structure.find().lean();
+    const structures1WithUser = await Promise.all(
+      structures1.map(async (structure) => {
+        const user = await User.findById(structure.userId).lean().exec();
+        return { ...structure, username: user.username };
+      })
+    );
+
+    res.status(201).json({
+      message: "Structure created and box updated successfully!",
+      newStructure,
+      updatedAllStructures: structures1WithUser,
+      updatedAllBoxes: boxesWithUser,
+    });
+  } catch (error) {
+    console.error("Error creating structure and updating box:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 // @desc Delete a box
@@ -165,7 +297,7 @@ const deleteBox = asyncHandler(async (req, res) => {
   if (!id || !boxId)
     return res.status(400).json({ message: "Box ID required" });
 
-  const box = await Box.findById(id).exec();
+  const box = await Box.findOne({ boxId }).exec();
   if (!box) return res.status(400).json({ message: "Box not found" });
 
   const result = await box.deleteOne();
@@ -239,4 +371,5 @@ module.exports = {
   updateBox,
   deleteBox,
   getBoxById,
+  createStructureAndUpdateBox,
 };
