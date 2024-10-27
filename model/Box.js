@@ -216,6 +216,10 @@ const boxSchema = new Schema(
           type: Number,
           required: true,
         },
+        coWorkerCompany: {
+          type: String,
+          required: false,
+        },
       },
     ],
     isArchived: {

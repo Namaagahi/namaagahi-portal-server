@@ -190,6 +190,7 @@ const createStructureAndUpdateBox = asyncHandler(async (req, res) => {
       },
       name: "",
     },
+    coWorkerCompany,
     monthlyBaseFee = 0, // Provide a default value
   } = structures;
 
@@ -244,6 +245,7 @@ const createStructureAndUpdateBox = asyncHandler(async (req, res) => {
         name: marks.name || "",
       },
       monthlyBaseFee: monthlyBaseFee, // Ensure it's provided or has a default
+      coWorkerCompany: coWorkerCompany,
       structureId: newStructure._id,
     };
     // Find and update the box with the new structure

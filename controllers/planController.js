@@ -39,6 +39,8 @@ const createNewPlan = asyncHandler(async (req, res) => {
     totalPackagePrice,
   } = req.body;
 
+  console.log(structures);
+
   if (!userId || !initialCustomerId || !brand || !structures)
     return res
       .status(400)
