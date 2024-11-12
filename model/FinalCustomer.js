@@ -7,6 +7,11 @@ const finalCustomerSchema = new Schema(
       type: String,
       required: true,
     },
+    identityCode: {
+      type: String,
+      unique: true,
+      required: true,
+    },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

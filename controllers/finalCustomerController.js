@@ -41,9 +41,10 @@ const createNewFinalCustomer = asyncHandler(async (req, res) => {
     postalCode,
     phone,
     planId,
+    identityCode,
   } = req.body;
 
-  if (!userId || !finalCustomerId || !name)
+  if (!userId || !finalCustomerId || !name || !identityCode)
     return res.status(400).json({
       success: false,
       message: "BAD REQUEST : company name is required",
@@ -72,6 +73,7 @@ const createNewFinalCustomer = asyncHandler(async (req, res) => {
     postalCode,
     phone,
     planIds: planId ? [planId] : [],
+    identityCode,
   });
 
   if (finalCustomer)
@@ -106,9 +108,10 @@ const updateFinalCustomer = asyncHandler(async (req, res) => {
     phone,
     planId,
     planIds,
+    identityCode,
   } = req.body;
 
-  if (!userId || !finalCustomerId || !name || !nationalId)
+  if (!userId || !finalCustomerId || !name || !nationalId || !identityCode)
     return res.status(400).json({
       success: false,
       message: "BAD REQUEST : company name and nationalId are required",
@@ -137,6 +140,7 @@ const updateFinalCustomer = asyncHandler(async (req, res) => {
   finalCustomer.postalCode = postalCode;
   finalCustomer.phone = phone;
   finalCustomer.planIds = planIds;
+  finalCustomer.identityCode = identityCode;
 
   const duplicate = await FinalCustomer.findOne({ nationalId }).lean().exec();
   if (duplicate && duplicate._id.toString() !== id)
