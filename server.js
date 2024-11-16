@@ -86,6 +86,7 @@ app.use("/chatrooms", require("./routes/chatroomRoutes"));
 app.use("/messages", require("./routes/messageRouter"));
 app.use("/proposals", require("./routes/proposalRoutes"));
 app.use("/send-email", require("./routes/sendEmailRoute"));
+app.use("/generalProjectCodes", require("./routes/generalProjectCodeRoutes"));
 
 // Custom 404 page
 app.all("*", (req, res) => {
