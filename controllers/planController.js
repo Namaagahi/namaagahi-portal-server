@@ -33,6 +33,7 @@ const createNewPlan = asyncHandler(async (req, res) => {
     finalCustomerId,
     projectCodeId,
     proposalCode,
+    generalProjectCode,
     userDefinedMonthlyFeeWithDiscount,
     brand,
     structures,
@@ -58,6 +59,7 @@ const createNewPlan = asyncHandler(async (req, res) => {
     finalCustomerId,
     projectCodeId,
     proposalCode,
+    generalProjectCode,
     userDefinedMonthlyFeeWithDiscount,
     brand,
     structures,
@@ -86,6 +88,7 @@ const updatePlan = asyncHandler(async (req, res) => {
     initialCustomerId,
     finalCustomerId,
     proposalCode,
+    generalProjectCode,
     projectCodeId,
     userDefinedMonthlyFeeWithDiscount,
     brand,
@@ -93,6 +96,7 @@ const updatePlan = asyncHandler(async (req, res) => {
     structures,
     totalPackagePrice,
   } = req.body;
+  console.log("generalProjectCode", generalProjectCode);
 
   if (
     !id ||
@@ -121,6 +125,7 @@ const updatePlan = asyncHandler(async (req, res) => {
   plan.username = username;
   plan.planId = planId;
   plan.proposalCode = proposalCode;
+  plan.generalProjectCode = generalProjectCode;
   plan.initialCustomerId = initialCustomerId;
   plan.finalCustomerId = finalCustomerId;
   plan.projectCodeId = projectCodeId;
