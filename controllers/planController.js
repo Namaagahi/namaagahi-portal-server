@@ -36,13 +36,14 @@ const createNewPlan = asyncHandler(async (req, res) => {
     generalProjectCode,
     userDefinedMonthlyFeeWithDiscount,
     brand,
+    type,
     structures,
     totalPackagePrice,
   } = req.body;
 
   console.log(structures);
 
-  if (!userId || !initialCustomerId || !brand || !structures)
+  if (!userId || !initialCustomerId || !brand || !structures || !type)
     return res
       .status(400)
       .json({ message: "BAD REQUEST : All fields are required" });
@@ -62,6 +63,7 @@ const createNewPlan = asyncHandler(async (req, res) => {
     generalProjectCode,
     userDefinedMonthlyFeeWithDiscount,
     brand,
+    type,
     structures,
     totalPackagePrice,
   });
@@ -92,6 +94,7 @@ const updatePlan = asyncHandler(async (req, res) => {
     projectCodeId,
     userDefinedMonthlyFeeWithDiscount,
     brand,
+    type,
     status,
     structures,
     totalPackagePrice,
@@ -106,6 +109,7 @@ const updatePlan = asyncHandler(async (req, res) => {
     !initialCustomerId ||
     !brand ||
     !status ||
+    !type ||
     !structures
   )
     return res
@@ -131,6 +135,7 @@ const updatePlan = asyncHandler(async (req, res) => {
   plan.projectCodeId = projectCodeId;
   plan.userDefinedMonthlyFeeWithDiscount = userDefinedMonthlyFeeWithDiscount;
   plan.brand = brand;
+  plan.type = type;
   plan.status = status;
   plan.structures = structures;
   plan.totalPackagePrice = totalPackagePrice;
